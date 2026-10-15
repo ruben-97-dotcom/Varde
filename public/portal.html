@@ -9,18 +9,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/varde.css">
+<script src="js/tema.js"></script>
+<meta name="theme-color" content="#f7f7f9">
 <style>
-html { color-scheme: light; }
 body { margin: 0; }
 [hidden] { display: none !important; }
 /* Portal: bredere arbeidsflate for PC, stabler seg på mobil */
 .p-shell { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
-.p-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(247,247,249,.86); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.p-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--glass-top); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
 .p-top-in { max-width: 1120px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; min-height: 58px; }
 .p-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.03em; font-size: 1.05rem; }
 .p-brand .mark { width: 30px; height: 30px; }
 .p-brand span { color: var(--muted); font-weight: 500; letter-spacing: -0.01em; }
-.p-user { margin-left: auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.p-user { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .p-user small { color: var(--muted); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .p-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; padding: 28px 0 18px; }
 .p-head h1 { font-size: 2rem; }
@@ -59,9 +60,9 @@ body { margin: 0; }
 .weekchart .grid line { stroke: var(--line); }
 .weekchart .axis text { fill: var(--muted); font-size: 11px; font-family: var(--font); }
 .weekchart rect.bar { fill: var(--bek); }
-.weekchart rect.bar.on { fill: #2a4cc0; }
 .weekchart rect.stub { fill: var(--line-2); }
-.tip { position: absolute; pointer-events: none; background: var(--ink); color: #fff; font-size: .82rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; transform: translate(-50%, -100%); margin-top: -8px; }
+.weekchart .barfill { fill: var(--bek); }
+.tip { position: absolute; pointer-events: none; background: var(--solid); color: var(--solid-ink); font-size: .82rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; transform: translate(-50%, -100%); margin-top: -8px; }
 .empty { color: var(--muted); font-size: .9rem; }
 /* tabell */
 .tbl-wrap { overflow-x: auto; margin: 0 -18px -18px; }
@@ -105,7 +106,8 @@ td.muted { color: var(--muted); }
       <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#111216"/><rect x="13" y="41" width="38" height="11" rx="5.5" fill="#fff"/><rect x="18.5" y="29" width="27" height="10" rx="5" fill="#fff"/><rect x="24" y="17.5" width="16" height="9.5" rx="4.75" fill="#14b39f"/></svg>
       Varde <span>Portal</span>
     </a>
-    <div class="p-user" id="pUser" hidden><small id="pUserName"></small><button class="linkbtn" id="logout" style="border:0;background:var(--sunken);border-radius:999px;padding:7px 12px;font-weight:600;font-size:.82rem;cursor:pointer">Logg ut</button></div>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center"><button class="themebtn" data-tema aria-label="Bytt til mørk modus" aria-pressed="false"><svg class="maane" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <div class="p-user" id="pUser" hidden><small id="pUserName"></small><button class="linkbtn" id="logout" style="border:0;background:var(--sunken);border-radius:999px;padding:7px 12px;font-weight:600;font-size:.82rem;cursor:pointer">Logg ut</button></div></div>
   </div>
 </header>
 <main class="p-shell" id="main"><p class="lead" style="padding-top:40px">Laster …</p></main>
@@ -188,7 +190,7 @@ td.muted { color: var(--muted); }
     data.forEach(function (d, i) {
       var x = ml + i * bw + gap / 2, bwi = Math.max(1, bw - gap);
       if (d.n === null) s += "<rect class='stub' x='" + x + "' y='" + (y(0) - 3) + "' width='" + bwi + "' height='3' rx='1.5'/>";
-      else if (d.n > 0) { var top = y(d.n), hh = y(0) - top, r = Math.min(4, bwi / 2, hh); s += "<path class='bar-p' d='M" + x + " " + y(0) + "V" + (top + r) + "Q" + x + " " + top + " " + (x + r) + " " + top + "H" + (x + bwi - r) + "Q" + (x + bwi) + " " + top + " " + (x + bwi) + " " + (top + r) + "V" + y(0) + "Z' fill='#3e63dd'/>"; }
+      else if (d.n > 0) { var top = y(d.n), hh = y(0) - top, r = Math.min(4, bwi / 2, hh); s += "<path class='bar-p barfill' d='M" + x + " " + y(0) + "V" + (top + r) + "Q" + x + " " + top + " " + (x + r) + " " + top + "H" + (x + bwi - r) + "Q" + (x + bwi) + " " + top + " " + (x + bwi) + " " + (top + r) + "V" + y(0) + "Z'/>"; }
       s += "<rect data-i='" + i + "' x='" + (ml + i * bw) + "' y='" + mt + "' width='" + bw + "' height='" + ih + "' fill='transparent'/>";
     });
     s += "</g></svg><div class='tip' hidden></div>";
