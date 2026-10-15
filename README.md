@@ -1,41 +1,82 @@
 # Varde
 
-**Varde** er en trinnvis veileder for lærere og andre ansatte i skolen. Den hjelper deg å håndtere elever som er ruset på skolen, og elever som kan være i et miljø med rus, tobakk eller snus.
+**Varde** er en trinnvis veileder for lærere og andre ansatte i skolen om elever og rus, tobakk og snus. En portal gir skoler, kommuner og fylkeskommuner anonym oversikt over hva ansatte bruker Varde til, slik at de kan se hvor de største utfordringene er.
 
-En varde er steiner stablet for å vise vei i terrenget. Appen skal vise vei når du står i en vanskelig situasjon med en elev.
+> **Status: demo.** Se [docs/LEVERANSE.md](docs/LEVERANSE.md) før løsningen tas i bruk med ekte brukere.
 
-## Hva appen gjør
+## Innhold
 
-- **Veivisere med spørsmål.** Du svarer på ett spørsmål om gangen og får en veiledning tilpasset svarene dine:
-  - En elev er ruset nå (akutt)
-  - Jeg er bekymret
-  - Eleven forteller noe
-  - Funn eller salg av rusmidler
-  - Belastet miljø (rekruttering, gjeld, kriminalitet)
-- **Veiledningen** viser hvor alvorlig situasjonen er, en sjekkliste over hva du skal gjøre, hvem du kontakter, nyttige telefonnummer og svarene dine.
-- **Kjenn igjen rusmidler, tobakk og snus.** Egne sider for alkohol, cannabis, piller, sentralstimulerende, snus og nikotinposer, og vape og røyk, med tegn, farer, hva du gjør og regler på skolen.
-- **Verktøy:** tegn å se etter, samtaleguide, plikter og lovverk, kontakter og notatmal.
+**Appen for ansatte** (`public/index.html`)
+- Innlogging. Hver ansatt har egen bruker knyttet til en skole.
+- Veivisere med ett spørsmål om gangen: elev ruset nå, bekymring, eleven forteller, funn eller salg, belastet miljø. Svarene gir en tilpasset veiledning.
+- Sider om alkohol, cannabis, piller, sentralstimulerende, snus og nikotinposer, og vape og røyk.
+- Skolens egne kontakter (styres i portalen), nødnummer, samtaleguide, plikter og lovverk, notatmal.
 
-## Personvern
+**Portalen** (`public/portal.html`)
+- Skoleleder og rusansvarlig: statistikk for egen skole og skolens kontakter.
+- Skoleleder: brukere, roller og endringslogg.
+- Kommune og fylkeskommune: samlet statistikk for sine skoler, med «største utfordringer» i klartekst.
 
-Appen sender ingen data noe sted. Svar og notater ligger bare i nettleseren mens siden er åpen. Skolens egne kontakter og valget om større tekst lagres lokalt på enheten. Notater skal kopieres inn i skolens eget system.
+## Personvern i korte trekk
 
-## Kjøre appen
+- Bruksstatistikken har **ingen bruker-ID**. Bare skole, uke og faste kategorier lagres.
+- Aktive brukere telles med en ukekode som ikke kan spores tilbake.
+- Tall under 5 vises aldri.
+- Ingen opplysninger om elever lagres. Notater lagres ikke.
+- Tilgang styres av roller og håndheves på serveren. Alle endringer logges.
 
-Appen er én fil, `index.html`. Åpne den i en nettleser, eller publiser den med GitHub Pages:
+Detaljer: [docs/PERSONVERN-OG-SIKKERHET.md](docs/PERSONVERN-OG-SIKKERHET.md).
 
-1. Gå til **Settings → Pages** i repoet.
-2. Velg **Deploy from a branch**, branch `main` og mappen `/ (root)`.
-3. Appen får adressen `https://<brukernavn>.github.io/varde/`.
+## Kjøre lokalt
 
-GitHub Pages på private repoer krever et betalt GitHub-abonnement. Med gratis konto må repoet være offentlig for at Pages skal fungere.
+Krever Node.js 22.5 eller nyere. Ingen pakker å installere.
 
-## Kilder
+```bash
+npm start          # http://localhost:3000
+npm test           # automatiske tester av personvern og tilgang
+```
 
-Rådene bygger på informasjon fra Helsedirektoratet, helsenorge.no, politiet, Bufdir, Utdanningsdirektoratet, Statsforvalteren, RUSinfo, Norsk resuscitasjonsråd og Lovdata.
+Første oppstart legger inn **eksempeldata** (merket demo). Demobrukere, passord `demo1234`:
+
+| Bruker | Rolle |
+|---|---|
+| laerer@karmsund.demo | Lærer, Karmsund vgs |
+| rusansvarlig@karmsund.demo | Rusansvarlig / helsesykepleier, Karmsund vgs |
+| rektor@karmsund.demo | Skoleleder, Karmsund vgs |
+| analyse@rogfk.demo | Rogaland fylkeskommune |
+| analyse@haugesund.demo | Haugesund kommune |
+
+Tallene i demoen er generert og sier ingenting om virkelig bruk. De andre skolene i demoen er oppdiktet.
+
+Åpnes `public/index.html` direkte i nettleseren uten server, kjører appen i **demomodus** med eksempeldata i nettleseren.
+
+### Innstillinger
+
+| Variabel | Standard | Betydning |
+|---|---|---|
+| `PORT` | 3000 | Port |
+| `VARDE_DB` | `data/varde.db` | Databasefil |
+| `VARDE_DEMO` | på | `0` = ikke legg inn eksempeldata |
+| `VARDE_SECURE_COOKIE` | av | `1` bak HTTPS |
+| `VARDE_LAGRINGSTID_UKER` | 104 | Hvor lenge statistikk lagres |
+
+## Struktur
+
+```
+server/server.js        API, innlogging, tilgangskontroll, statiske filer
+server/db.js            database, eksempeldata, sletting av gamle data
+public/js/varde-core.js roller, tilgang, tillatte hendelser, aggregering (felles for server og nettleser)
+public/js/api.js        API-klient med demomodus
+public/index.html       appen for ansatte
+public/portal.html      portalen
+test/                   tester
+docs/                   personvern, sikkerhet og leveranse
+```
+
+## Skolens logo
+
+Logoen vises i appen når feltet `logo` for skolen peker på en bildefil, for eksempel `assets/skoler/karmsund.svg`. Legg bare inn logoer dere har fått tillatelse til å bruke.
 
 ## Viktig
 
-Appen gir generelle råd. Den erstatter ikke skolens beredskapsplan, kommunens rutiner eller faglig vurdering. Rådene bør gjennomgås av helsesykepleier, SLT-koordinator eller politikontakt før appen tas i bruk. Ved fare for liv: ring 113.
-
-Illustrasjonene er tegnet for appen og er ikke fotografier.
+Appen gir generelle råd og erstatter ikke skolens beredskapsplan, kommunens rutiner eller faglig vurdering. Ved fare for liv: ring 113.

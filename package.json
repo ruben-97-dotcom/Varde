@@ -1,0 +1,13 @@
+{
+  "name": "varde",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Varde – veileder for skoleansatte om elever og rus, med anonym bruksstatistikk for skoler, kommuner og fylkeskommuner",
+  "engines": { "node": ">=22.5" },
+  "scripts": {
+    "start": "node server/server.js",
+    "start:uten-demo": "VARDE_DEMO=0 node server/server.js",
+    "fjern-demo": "node server/server.js --fjern-demo",
+    "test": "node --test test/*.test.js"
+  }
+}

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Varde Portal</title>
+<link rel="icon" href="assets/varde-ikon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/varde.css">
+<style>
+html { color-scheme: light; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+/* Portal: bredere arbeidsflate for PC, stabler seg på mobil */
+.p-shell { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
+.p-top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(247,247,249,.86); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.p-top-in { max-width: 1120px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; min-height: 58px; }
+.p-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.03em; font-size: 1.05rem; }
+.p-brand .mark { width: 30px; height: 30px; }
+.p-brand span { color: var(--muted); font-weight: 500; letter-spacing: -0.01em; }
+.p-user { margin-left: auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.p-user small { color: var(--muted); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; padding: 28px 0 18px; }
+.p-head h1 { font-size: 2rem; }
+.p-head .kicker { margin-bottom: 6px; }
+.seg { display: inline-flex; background: var(--sunken); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: .88rem; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.banner { display: flex; gap: 10px; align-items: start; background: var(--amber-tint); color: var(--ink-2); border-radius: var(--r-md); padding: 12px 16px; font-size: .92rem; margin-bottom: 16px; }
+.banner b { color: var(--amber); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 820px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kpi { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 16px 18px; display: grid; gap: 4px; }
+.kpi span { color: var(--muted); font-size: .86rem; font-weight: 500; }
+.kpi b { font-size: 2rem; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.kpi small { color: var(--muted); font-size: .8rem; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 820px) { .grid2 { grid-template-columns: 1fr; } }
+.stack { display: grid; gap: 12px; margin-top: 12px; }
+.panel h2 { font-size: 1.05rem; letter-spacing: -0.01em; }
+.panel .p-sub { color: var(--muted); font-size: .86rem; margin-top: -6px; }
+.insight { display: grid; gap: 10px; }
+.insight ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; color: var(--ink-2); }
+.insight li::marker { color: var(--muted); font-weight: 600; }
+/* liggende stolper */
+.hbars { display: grid; gap: 10px; }
+.hbar { display: grid; grid-template-columns: minmax(0, 11rem) 1fr 3rem; align-items: center; gap: 12px; font-size: .9rem; }
+.hbar .lbl { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar .track { height: 12px; background: var(--sunken); border-radius: 4px; overflow: hidden; }
+.hbar .fill { height: 100%; background: var(--bek); border-radius: 0 4px 4px 0; }
+.hbar .val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.hbar.skjult .val { color: var(--muted); font-weight: 500; }
+@media (max-width: 460px) { .hbar { grid-template-columns: minmax(0, 8rem) 1fr 2.6rem; gap: 8px; } }
+/* stolper per uke */
+.weekchart { position: relative; }
+.weekchart svg { display: block; width: 100%; height: 220px; overflow: visible; }
+.weekchart .grid line { stroke: var(--line); }
+.weekchart .axis text { fill: var(--muted); font-size: 11px; font-family: var(--font); }
+.weekchart rect.bar { fill: var(--bek); }
+.weekchart rect.bar.on { fill: #2a4cc0; }
+.weekchart rect.stub { fill: var(--line-2); }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: #fff; font-size: .82rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; transform: translate(-50%, -100%); margin-top: -8px; }
+.empty { color: var(--muted); font-size: .9rem; }
+/* tabell */
+.tbl-wrap { overflow-x: auto; margin: 0 -18px -18px; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { text-align: left; padding: 11px 18px; border-top: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 500; color: var(--muted); font-size: .8rem; border-top: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.muted { color: var(--muted); }
+/* brukere */
+.users-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.users-row:first-child { border-top: 0; }
+.users-row b { font-weight: 600; display: block; }
+.users-row small { color: var(--muted); word-break: break-all; }
+.role { font-size: .76rem; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--sunken); color: var(--ink-2); }
+.users-row.off { opacity: .5; }
+.addform { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; }
+@media (max-width: 640px) { .addform { grid-template-columns: 1fr; } }
+.ok { background: var(--green-tint); border-radius: 12px; padding: 12px 14px; font-size: .92rem; }
+.ok code { font-family: ui-monospace, Menlo, monospace; font-weight: 600; user-select: all; }
+.tabs-p { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: -4px 0 18px; overflow-x: auto; }
+.tabs-p button { border: 0; background: transparent; padding: 10px 14px; font-weight: 600; font-size: .92rem; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs-p button[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+.sel { height: 38px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); padding: 0 10px; font: inherit; font-size: .88rem; max-width: 100%; }
+.addform { grid-template-columns: 1fr 1fr 1fr auto; }
+@media (max-width: 820px) { .addform { grid-template-columns: 1fr; } }
+.users-row { grid-template-columns: minmax(0, 1fr) auto auto; }
+@media (max-width: 560px) { .users-row { grid-template-columns: 1fr; } }
+.kfs { border: 0; padding: 14px 0 0; margin: 0; border-top: 1px solid var(--line); }
+.kfs legend { font-weight: 600; padding: 0; margin-bottom: 8px; float: left; width: 100%; }
+.kgrid { clear: both; display: grid; grid-template-columns: 1fr 12rem; gap: 10px; }
+.kwide { grid-column: 1 / -1; }
+@media (max-width: 560px) { .kgrid { grid-template-columns: 1fr; } }
+.login { max-width: 420px; margin: 0 auto; padding-top: 40px; display: grid; gap: 18px; }
+.err { color: var(--red); font-size: .9rem; font-weight: 500; }
+</style>
+</head>
+<body>
+<header class="p-top">
+  <div class="p-top-in">
+    <a class="p-brand" href="index.html" style="text-decoration:none;color:inherit">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#111216"/><rect x="13" y="41" width="38" height="11" rx="5.5" fill="#fff"/><rect x="18.5" y="29" width="27" height="10" rx="5" fill="#fff"/><rect x="24" y="17.5" width="16" height="9.5" rx="4.75" fill="#14b39f"/></svg>
+      Varde <span>Portal</span>
+    </a>
+    <div class="p-user" id="pUser" hidden><small id="pUserName"></small><button class="linkbtn" id="logout" style="border:0;background:var(--sunken);border-radius:999px;padding:7px 12px;font-weight:600;font-size:.82rem;cursor:pointer">Logg ut</button></div>
+  </div>
+</header>
+<main class="p-shell" id="main"><p class="lead" style="padding-top:40px">Laster …</p></main>
+
+<script src="js/varde-core.js"></script>
+<script src="js/api.js"></script>
+<script>
+(function () {
+  "use strict";
+  var main = document.getElementById("main");
+  var USER = null, UKER = 12, FANE = "oversikt";
+  var FANER = [["oversikt", "Oversikt", "statistikk"], ["kontakter", "Skolens kontakter", "kontakter"], ["brukere", "Brukere og tilgang", "brukere"], ["logg", "Endringslogg", "brukere"]];
+  function faner() { return USER.role === "eier" ? [] : FANER.filter(function (f) { return VardeCore.kan(USER.role, f[2]); }); }
+  function topp(ekstra) {
+    var erEier = USER.role === "eier", org = erEier ? USER.eier.name : USER.skole.name;
+    var kick = erEier ? "Alle skoler" : "Skoleportal · " + VardeCore.ROLLER[USER.role].label;
+    var f = faner();
+    return "<div class='p-head'><div><p class='kicker'>" + esc(kick) + "</p><h1>" + esc(org) + "</h1></div>" + (ekstra || "") + "</div>" +
+      (f.length > 1 ? "<nav class='tabs-p' aria-label='Portal'>" + f.map(function (x) { return "<button data-fane='" + x[0] + "' aria-current='" + (x[0] === FANE ? "page" : "false") + "'>" + x[1] + "</button>"; }).join("") + "</nav>" : "");
+  }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function tall(n) { return n === null ? "<" + VardeCore.MIN_ANTALL : n.toLocaleString("nb-NO"); }
+
+  /* ---------- innlogging ---------- */
+  function visLogin(melding) {
+    document.getElementById("pUser").hidden = true;
+    var h = "<section class='login'><div><p class='kicker'>Varde Portal</p><h1 style='font-size:2rem'>Logg inn</h1><p class='lead'>For skoleledere, kommuner og fylkeskommuner.</p></div>" +
+      "<form class='panel' id='lf'><div class='field'><label for='le'>E-post</label><input id='le' type='email' autocomplete='username' required></div>" +
+      "<div class='field'><label for='lp'>Passord</label><input id='lp' type='password' autocomplete='current-password' required></div>" +
+      "<p class='err' id='lerr'" + (melding ? "" : " hidden") + ">" + esc(melding || "") + "</p><button class='btn' type='submit'>Logg inn</button></form>";
+    if (VardeAPI.erDemo()) {
+      h += "<p class='label' style='padding:0'>Demobrukere · passord: " + VardeCore.DEMO.passord + "</p><div class='list plain'>" +
+        VardeCore.DEMO.brukere.filter(function (b) { return b.role !== "laerer"; }).map(function (b) {
+          var rolle = b.role === "eier" ? (b.owner_id === "rogfk" ? "Rogaland fylkeskommune" : "Haugesund kommune") : VardeCore.ROLLER[b.role].label + ", Karmsund vgs";
+          return "<button class='row choice' type='button' data-demo='" + b.email + "'><span class='row-txt'><b>" + rolle + "</b><small>" + b.email + "</small></span><svg class='ic chev' viewBox='0 0 24 24'><path d='M9 18l6-6-6-6'/></svg></button>";
+        }).join("") + "</div>";
+    }
+    h += "</section>";
+    main.innerHTML = h;
+    document.getElementById("lf").addEventListener("submit", function (e) { e.preventDefault(); logg(document.getElementById("le").value, document.getElementById("lp").value); });
+  }
+  function logg(e, p) {
+    VardeAPI.login(e, p).then(function (r) { start(r.bruker); }).catch(function (er) { var el = document.getElementById("lerr"); el.textContent = er.message; el.hidden = false; });
+  }
+  function start(b) {
+    if (!VardeCore.kan(b.role, "statistikk")) { VardeAPI.logout(); visLogin("Du har ikke tilgang til portalen. Lærere bruker appen."); return; }
+    USER = b;
+    document.getElementById("pUser").hidden = false;
+    document.getElementById("pUserName").textContent = b.name;
+    last();
+  }
+
+  /* ---------- diagrammer ---------- */
+  function hbars(liste, tom) {
+    if (!liste || !liste.length) return "<p class='empty'>" + (tom || "Ingen data i perioden.") + "</p>";
+    var maks = Math.max.apply(null, liste.map(function (x) { return x.n || 0; })) || 1;
+    return "<div class='hbars'>" + liste.map(function (x) {
+      var pst = x.n === null ? 0 : Math.max(2, Math.round(x.n / maks * 100));
+      return "<div class='hbar" + (x.n === null ? " skjult" : "") + "' title='" + esc(x.label) + ": " + tall(x.n) + "'><span class='lbl'>" + esc(x.label) + "</span><span class='track'><span class='fill' style='display:block;width:" + pst + "%'></span></span><span class='val'>" + tall(x.n) + "</span></div>";
+    }).join("") + "</div>";
+  }
+
+  function ukeTekst(w) { var m = w.match(/^(\d+)-W(\d+)$/); return "Uke " + Number(m[2]) + ", " + m[1]; }
+  function ukeKort(w) { return String(Number(w.split("-W")[1])); }
+
+  function weekChart(el, data) {
+    var w = el.clientWidth || 600, h = 220, ml = 34, mb = 26, mt = 10, mr = 6;
+    var maks = Math.max(5, Math.max.apply(null, data.map(function (d) { return d.n || 0; })));
+    var steg = maks <= 10 ? 2 : maks <= 25 ? 5 : maks <= 60 ? 10 : maks <= 150 ? 25 : 50;
+    var topp = Math.ceil(maks / steg) * steg;
+    var iw = w - ml - mr, ih = h - mt - mb, bw = iw / data.length, gap = Math.min(4, bw * 0.25);
+    var y = function (v) { return mt + ih - v / topp * ih; };
+    var s = "<svg viewBox='0 0 " + w + " " + h + "' role='img' aria-label='Veiledninger per uke'><g class='grid'>";
+    for (var v = 0; v <= topp; v += steg) s += "<line x1='" + ml + "' x2='" + (w - mr) + "' y1='" + y(v) + "' y2='" + y(v) + "'/>";
+    s += "</g><g class='axis'>";
+    for (v = 0; v <= topp; v += steg) s += "<text x='" + (ml - 8) + "' y='" + (y(v) + 4) + "' text-anchor='end'>" + v + "</text>";
+    var hver = Math.ceil(data.length / Math.max(1, Math.floor(iw / 42)));
+    data.forEach(function (d, i) { if (i % hver === 0 || i === data.length - 1) s += "<text x='" + (ml + i * bw + bw / 2) + "' y='" + (h - 6) + "' text-anchor='middle'>" + ukeKort(d.week) + "</text>"; });
+    s += "</g><g>";
+    data.forEach(function (d, i) {
+      var x = ml + i * bw + gap / 2, bwi = Math.max(1, bw - gap);
+      if (d.n === null) s += "<rect class='stub' x='" + x + "' y='" + (y(0) - 3) + "' width='" + bwi + "' height='3' rx='1.5'/>";
+      else if (d.n > 0) { var top = y(d.n), hh = y(0) - top, r = Math.min(4, bwi / 2, hh); s += "<path class='bar-p' d='M" + x + " " + y(0) + "V" + (top + r) + "Q" + x + " " + top + " " + (x + r) + " " + top + "H" + (x + bwi - r) + "Q" + (x + bwi) + " " + top + " " + (x + bwi) + " " + (top + r) + "V" + y(0) + "Z' fill='#3e63dd'/>"; }
+      s += "<rect data-i='" + i + "' x='" + (ml + i * bw) + "' y='" + mt + "' width='" + bw + "' height='" + ih + "' fill='transparent'/>";
+    });
+    s += "</g></svg><div class='tip' hidden></div>";
+    el.innerHTML = s;
+    var tip = el.querySelector(".tip"), bars = el.querySelectorAll(".bar-p");
+    el.querySelector("svg").addEventListener("mousemove", function (e) {
+      var t = e.target.closest("[data-i]"); if (!t) { tip.hidden = true; return; }
+      var d = data[+t.getAttribute("data-i")];
+      tip.textContent = ukeTekst(d.week) + ": " + (d.n === null ? "under " + VardeCore.MIN_ANTALL : d.n) + " veiledninger";
+      var rect = el.getBoundingClientRect(), sx = rect.width / w;
+      tip.style.left = ((ml + (+t.getAttribute("data-i") + 0.5) * bw) * sx) + "px";
+      tip.style.top = (y(d.n || 0) * sx) + "px";
+      tip.hidden = false;
+    });
+    el.querySelector("svg").addEventListener("mouseleave", function () { tip.hidden = true; });
+  }
+
+  /* ---------- innsikt i klartekst ---------- */
+  function innsikt(S) {
+    var ut = [];
+    var k = S.kategori.filter(function (x) { return x.n !== null; });
+    if (k[0]) ut.push("Flest veiledninger gjelder <b>" + esc(k[0].label.toLowerCase()) + "</b> (" + tall(k[0].n) + " av " + tall(S.totalt.veiledninger) + ").");
+    var st = S.stoff.filter(function (x) { return x.n !== null; });
+    if (st[0]) ut.push("Når en elev er ruset på skolen, er det oftest <b>" + esc(st[0].label.toLowerCase()) + "</b>.");
+    var r = S.rus.filter(function (x) { return x.n !== null; });
+    if (r[0]) ut.push("Ansatte leser mest om <b>" + esc(r[0].label.toLowerCase()) + "</b>" + (r[1] ? " og <b>" + esc(r[1].label.toLowerCase()) + "</b>" : "") + ".");
+    var f = S.funn.filter(function (x) { return x.n !== null; });
+    if (f[0]) ut.push("Vanligste hendelse om funn og salg: <b>" + esc(f[0].label.toLowerCase()) + "</b>.");
+    if (S.skoler) {
+      var a = S.skoler.filter(function (x) { return x.akutt !== null && x.akutt > 0; }).sort(function (x, y) { return y.akutt - x.akutt; });
+      if (a[0]) ut.push("Flest akutte situasjoner: <b>" + esc(a[0].name) + "</b> (" + tall(a[0].akutt) + ").");
+    }
+    var p = S.perUke.filter(function (x) { return x.n !== null; });
+    if (p.length >= 8) {
+      var half = Math.floor(p.length / 2), sum = function (a) { return a.reduce(function (s, x) { return s + x.n; }, 0) / a.length; };
+      var for_ = sum(p.slice(0, half)), etter = sum(p.slice(half));
+      if (for_ > 0) { var end = Math.round((etter - for_) / for_ * 100); if (Math.abs(end) >= 10) ut.push("Bruken har " + (end > 0 ? "<b>økt med " + end + " %</b>" : "<b>gått ned med " + Math.abs(end) + " %</b>") + " i siste halvdel av perioden."); }
+    }
+    return ut;
+  }
+
+  /* ---------- hovedvisning ---------- */
+  function last() {
+    if (FANE === "kontakter") return visKontakter();
+    if (FANE === "brukere") return visBrukere();
+    if (FANE === "logg") return visLogg();
+    main.innerHTML = "<p class='lead' style='padding-top:40px'>Henter tall …</p>";
+    VardeAPI.statistikk(UKER).then(vis).catch(function (e) { if (e.status === 401) visLogin(); else if (e.status === 403) visLogin(e.message); else main.innerHTML = "<p class='err' style='padding-top:40px'>" + esc(e.message) + "</p>"; });
+  }
+
+  function vis(S) {
+    var h = topp("<div class='seg' role='group' aria-label='Periode'>" + [[4, "4 uker"], [12, "12 uker"], [52, "12 måneder"]].map(function (p) {
+        return "<button data-uker='" + p[0] + "' aria-pressed='" + (p[0] === UKER) + "'>" + p[1] + "</button>"; }).join("") + "</div>");
+    if (S.demo) h += "<div class='banner'><span><b>Eksempeldata.</b> Tallene er generert for å vise hvordan portalen fungerer. De sier ingenting om virkelig bruk på skolene.</span></div>";
+
+    h += "<div class='kpis'>" +
+      kpi("Veiledninger", S.totalt.veiledninger, "fullførte veivisere") +
+      kpi("Alvorlige og akutte", S.totalt.alvorlig, "veiledninger med høy alvorlighet") +
+      kpi("Aktive brukere", S.totalt.aktiveSnitt, "i snitt per uke") +
+      kpi("Oppslag om rusmidler", S.totalt.rusoppslag, "sider om rusmidler, tobakk og snus") + "</div>";
+
+    var ins = innsikt(S);
+    h += "<div class='stack'><div class='panel insight'><h2>Største utfordringer i perioden</h2>" + (ins.length ? "<ol>" + ins.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>" : "<p class='empty'>For lite data til å vise mønstre ennå.</p>") + "</div>";
+    h += "<div class='panel'><h2>Veiledninger per uke</h2><p class='p-sub'>Alle veivisere samlet. Uker med under " + VardeCore.MIN_ANTALL + " vises som en grå strek.</p><div class='weekchart' id='wc'></div></div>";
+    h += "<div class='grid2'><div class='panel'><h2>Hva veiledningene gjelder</h2>" + hbars(S.kategori) + "</div>" +
+      "<div class='panel'><h2>Rusmidler når elever er ruset</h2><p class='p-sub'>Fra akutt-veiviseren</p>" + hbars(S.stoff) + "</div></div>";
+    h += "<div class='grid2'><div class='panel'><h2>Mest leste om rusmidler</h2>" + hbars(S.rus) + "</div>" +
+      "<div class='panel'><h2>Funn og salg</h2><p class='p-sub'>Fra veiviseren for funn og salg</p>" + hbars(S.funn) + "</div></div>";
+
+    if (S.skoler) {
+      h += "<div class='panel'><h2>Skolene</h2><p class='p-sub'>Tall under " + VardeCore.MIN_ANTALL + " vises ikke.</p><div class='tbl-wrap'><table><thead><tr><th>Skole</th><th class='num'>Veiledninger</th><th class='num'>Elev ruset nå</th><th>Vanligste situasjon</th><th>Vanligste rusmiddel</th></tr></thead><tbody>" +
+        S.skoler.map(function (s) {
+          return "<tr><td>" + esc(s.name) + "</td><td class='num'>" + tall(s.veiledninger) + "</td><td class='num'>" + tall(s.akutt) + "</td><td" + (s.vanligst ? "" : " class='muted'") + ">" + esc(s.vanligst || "–") + "</td><td" + (s.rusmiddel ? "" : " class='muted'") + ">" + esc(s.rusmiddel || "–") + "</td></tr>";
+        }).join("") + "</tbody></table></div></div>";
+    }
+    h += "<div class='panel'><h2>Om tallene</h2><ul class='bullets'><li>Tallene viser hva ansatte har brukt Varde til, ikke hvor mange hendelser som har skjedd.</li>" +
+      "<li>Ingen opplysninger om hvem som har brukt appen lagres sammen med bruken. Tid lagres bare som uke.</li>" +
+      "<li>Tall under " + VardeCore.MIN_ANTALL + " vises aldri, så enkelthendelser ikke kan kjennes igjen.</li>" +
+      "<li>Tallene skal ikke brukes til å vurdere enkeltansatte.</li></ul></div></div>";
+    main.innerHTML = h;
+    var wc = document.getElementById("wc");
+    weekChart(wc, S.perUke);
+    window.onresize = function () { weekChart(wc, S.perUke); };
+  }
+  function kpi(t, n, sub) { return "<div class='kpi'><span>" + t + "</span><b>" + tall(n) + "</b><small>" + sub + "</small></div>"; }
+
+  /* ---------- skolens kontakter ---------- */
+  function visKontakter(melding) {
+    main.innerHTML = topp() + "<p class='lead'>Henter …</p>";
+    VardeAPI.kontakter().then(function (r) {
+      var finn = function (key) { return r.kontakter.filter(function (k) { return k.key === key; })[0] || {}; };
+      var h = topp() + "<div class='stack' style='margin-top:0'>";
+      if (melding) h += melding;
+      h += "<form class='panel' id='kf'><h2>Skolens kontakter</h2><p class='p-sub'>Vises for alle ansatte på skolen under «Kontakter» i appen. Bruk jobbnummer, ikke private nummer.</p>";
+      VardeCore.KONTAKTER.forEach(function (d) {
+        var k = finn(d.key);
+        h += "<fieldset class='kfs'><legend>" + esc(d.label) + "</legend><div class='kgrid'>" +
+          "<div class='field'><label for='kn-" + d.key + "'>Navn eller funksjon</label><input id='kn-" + d.key + "' value='" + esc(k.name || "") + "' maxlength='100'></div>" +
+          "<div class='field'><label for='kp-" + d.key + "'>Telefon</label><input id='kp-" + d.key + "' value='" + esc(k.phone || "") + "' maxlength='30' inputmode='tel'></div>" +
+          "<div class='field kwide'><label for='km-" + d.key + "'>Merknad</label><input id='km-" + d.key + "' value='" + esc(k.note || "") + "' maxlength='200' placeholder='F.eks. åpningstider'></div></div></fieldset>";
+      });
+      h += "<p class='err' id='kerr' hidden></p><button class='btn' type='submit'>Lagre kontakter</button></form></div>";
+      main.innerHTML = h;
+      document.getElementById("kf").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var liste = VardeCore.KONTAKTER.map(function (d) { return { key: d.key, name: document.getElementById("kn-" + d.key).value, phone: document.getElementById("kp-" + d.key).value, note: document.getElementById("km-" + d.key).value }; });
+        VardeAPI.lagreKontakter(liste).then(function () { visKontakter("<div class='ok'>Kontaktene er lagret og vises nå i appen.</div>"); })
+          .catch(function (er) { var x = document.getElementById("kerr"); x.textContent = er.message; x.hidden = false; });
+      });
+    }).catch(feilVis);
+  }
+
+  /* ---------- brukere og tilgang (skoleleder) ---------- */
+  function rolleValg(id, valgt) {
+    return "<select id='" + id + "' class='sel'>" + VardeCore.SKOLEROLLER.map(function (r) { return "<option value='" + r + "'" + (r === valgt ? " selected" : "") + ">" + esc(VardeCore.ROLLER[r].label) + "</option>"; }).join("") + "</select>";
+  }
+  function visBrukere(melding) {
+    main.innerHTML = topp() + "<p class='lead'>Henter …</p>";
+    VardeAPI.brukere().then(function (r) {
+      var h = topp() + "<div class='stack' style='margin-top:0'>" + (melding || "");
+      h += "<form class='panel' id='af'><h2>Legg til bruker</h2><p class='p-sub'>Brukeren får et midlertidig passord som vises én gang.</p><div class='addform'>" +
+        "<div class='field'><label for='an'>Navn</label><input id='an' required autocomplete='off'></div><div class='field'><label for='ae'>E-post</label><input id='ae' type='email' required autocomplete='off'></div>" +
+        "<div class='field'><label for='ar'>Rolle</label>" + rolleValg("ar", "laerer") + "</div><button class='btn' type='submit'>Legg til</button></div><p class='err' id='aerr' hidden></p></form>";
+      h += "<div class='panel'><h2>Brukere på skolen</h2><p class='err' id='uerr' hidden></p><div>" + r.brukere.map(function (u) {
+        var meg = u.email === USER.email;
+        return "<div class='users-row" + (u.active ? "" : " off") + "'><span><b>" + esc(u.name) + (meg ? " (deg)" : "") + "</b><small>" + esc(u.email) + "</small></span>" +
+          (meg ? "<span class='role'>" + esc(VardeCore.ROLLER[u.role].label) + "</span><span></span>"
+               : rolleValg("r-" + u.id, u.role).replace("<select", "<select data-rolle='" + u.id + "'" + (u.active ? "" : " disabled")) +
+                 "<button class='btn ghost' style='height:34px;padding:0 14px;font-size:.85rem' data-akt='" + u.id + "' data-on='" + (u.active ? 0 : 1) + "'>" + (u.active ? "Deaktiver" : "Aktiver") + "</button>") + "</div>";
+      }).join("") + "</div></div>";
+      h += "<div class='panel'><h2>Hva rollene får tilgang til</h2><div class='tbl-wrap'><table><thead><tr><th>Rolle</th><th>Appen</th><th>Statistikk</th><th>Skolens kontakter</th><th>Brukere og tilgang</th></tr></thead><tbody>" +
+        VardeCore.SKOLEROLLER.map(function (rl) { var j = function (t) { return VardeCore.kan(rl, t) ? "Ja" : "–"; }; return "<tr><td>" + esc(VardeCore.ROLLER[rl].label) + "</td><td>Ja</td><td>" + j("statistikk") + "</td><td>" + j("kontakter") + "</td><td>" + j("brukere") + "</td></tr>"; }).join("") +
+        "</tbody></table></div><ul class='bullets'><li>Du kan ikke endre din egen rolle eller deaktivere deg selv.</li><li>Skolen må alltid ha minst én aktiv skoleleder.</li><li>Når en rolle endres eller en bruker deaktiveres, logges vedkommende ut med en gang.</li><li>Alle endringer lagres i endringsloggen.</li></ul></div></div>";
+      main.innerHTML = h;
+      document.getElementById("af").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var n = document.getElementById("an").value, m = document.getElementById("ae").value, ro = document.getElementById("ar").value;
+        VardeAPI.nyBruker(n, m, ro).then(function (res) {
+          visBrukere("<div class='ok'>Bruker opprettet for " + esc(m) + " (" + esc(VardeCore.ROLLER[ro].label) + "). Midlertidig passord: <code>" + esc(res.midlertidigPassord) + "</code><br>Gi passordet til brukeren på en trygg måte. Det vises bare nå.</div>");
+        }).catch(function (er) { var x = document.getElementById("aerr"); x.textContent = er.message; x.hidden = false; });
+      });
+    }).catch(feilVis);
+  }
+  function brukerFeil(er) { var x = document.getElementById("uerr"); if (x) { x.textContent = er.message; x.hidden = false; } }
+
+  function visLogg() {
+    main.innerHTML = topp() + "<p class='lead'>Henter …</p>";
+    VardeAPI.endringslogg().then(function (r) {
+      main.innerHTML = topp() + "<div class='panel'><h2>Endringslogg</h2><p class='p-sub'>Hvem som har endret brukere, roller og kontakter. Bruken av appen logges ikke her.</p>" +
+        (r.logg.length ? "<div class='tbl-wrap'><table><thead><tr><th>Tid</th><th>Utført av</th><th>Endring</th><th>Detaljer</th></tr></thead><tbody>" +
+          r.logg.map(function (l) { return "<tr><td>" + esc(l.tid) + "</td><td>" + esc(l.utfort_av) + "</td><td>" + esc(l.handling) + "</td><td>" + esc(l.detalj) + "</td></tr>"; }).join("") + "</tbody></table></div>"
+          : "<p class='empty'>Ingen endringer ennå.</p>") + "</div>";
+    }).catch(feilVis);
+  }
+  function feilVis(e) { if (e.status === 401) visLogin(); else main.innerHTML = topp() + "<p class='err'>" + esc(e.message) + "</p>"; }
+
+  document.addEventListener("click", function (e) {
+    var d = e.target.closest("[data-demo]"); if (d) { logg(d.getAttribute("data-demo"), VardeCore.DEMO.passord); return; }
+    var u = e.target.closest("[data-uker]"); if (u) { UKER = +u.getAttribute("data-uker"); last(); return; }
+    var f = e.target.closest("[data-fane]"); if (f) { FANE = f.getAttribute("data-fane"); last(); return; }
+    var a = e.target.closest("[data-akt]"); if (a) { VardeAPI.settAktiv(+a.getAttribute("data-akt"), a.getAttribute("data-on") === "1").then(function () { visBrukere(); }).catch(brukerFeil); }
+  });
+  document.addEventListener("change", function (e) {
+    var s = e.target.closest("[data-rolle]"); if (!s) return;
+    VardeAPI.settRolle(+s.getAttribute("data-rolle"), s.value).then(function () { visBrukere("<div class='ok'>Rollen er endret.</div>"); }).catch(function (er) { visBrukere(); setTimeout(function () { brukerFeil(er); }, 50); });
+  });
+  document.getElementById("logout").addEventListener("click", function () { VardeAPI.logout().then(function () { USER = null; FANE = "oversikt"; visLogin(); }); });
+
+  VardeAPI.me().then(function (r) { start(r.bruker); }).catch(function () { visLogin(); });
+})();
+</script>
+</body>
+</html>
