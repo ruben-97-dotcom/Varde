@@ -115,6 +115,12 @@
       demoLogg(b, "Endret rolle", u.email + ": " + C.ROLLER[u.role].label + " → " + C.ROLLER[role].label);
       return Promise.resolve({ ok: true });
     },
+    sendArkiv: function (felter) {
+      var b = demoMeg(); if (!b || !b.school_id || !C.kan(b.role, "arkiv")) return feil(403, "Du har ikke tilgang til å sende notater.");
+      if (!C.validerNotat(felter)) return feil(400, "Notatet må ha elev og minst ett utfylt felt. Hvert felt kan ha maks 5000 tegn.");
+      // Demo: notatet forkastes og lagres ikke noe sted.
+      return new Promise(function (ok) { setTimeout(function () { ok({ referanse: "DEMO-" + new Date().getFullYear() + "/" + (1000 + Math.floor(Math.random() * 9000)) + "-1", arkiv: "Demoarkiv (notatet ble ikke lagret)", demo: true }); }, 600); });
+    },
     kontakter: function () {
       var b = demoMeg(); if (!b || !b.school_id) return feil(403, "Kontakter finnes bare for skolebrukere.");
       var lagret = ls("varde-demo-kontakter-" + b.school_id);
@@ -149,6 +155,7 @@
     nyBruker: function (name, email, role) { return kall("POST", "api/brukere", { name: name, email: email, role: role }); },
     settAktiv: function (id, aktiv) { return kall("POST", "api/brukere/" + id + "/" + (aktiv ? "aktiver" : "deaktiver"), {}); },
     settRolle: function (id, role) { return kall("POST", "api/brukere/" + id + "/rolle", { role: role }); },
+    sendArkiv: function (felter) { return kall("POST", "api/arkiv", { felter: felter }); },
     kontakter: function () { return kall("GET", "api/kontakter"); },
     lagreKontakter: function (liste) { return kall("PUT", "api/kontakter", { kontakter: liste }); },
     endringslogg: function () { return kall("GET", "api/endringslogg"); }
@@ -163,7 +170,7 @@
   });
 
   var API = {};
-  ["login", "logout", "me", "hendelse", "aktiv", "statistikk", "brukere", "nyBruker", "settAktiv", "settRolle", "kontakter", "lagreKontakter", "endringslogg"].forEach(function (k) {
+  ["login", "logout", "me", "hendelse", "aktiv", "statistikk", "brukere", "nyBruker", "settAktiv", "settRolle", "sendArkiv", "kontakter", "lagreKontakter", "endringslogg"].forEach(function (k) {
     API[k] = function () { var a = arguments; return klar.then(function () { return (modus === "server" ? SERVER_API : DEMO_API)[k].apply(null, a); }); };
   });
   API.klar = klar;

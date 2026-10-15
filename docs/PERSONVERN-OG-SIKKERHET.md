@@ -20,7 +20,7 @@ Dette dokumentet beskriver hvordan Varde er bygget for å beskytte personvernet,
 | Skolens kontakter | Navn/funksjon og jobbnummer for rektor, helsesykepleier osv. | Ja, jobbopplysninger | Til de endres |
 | Bruksstatistikk | Skole, ISO-uke, veiviser, alvorlighet, rusmiddel/hendelsestype, åpnede sider | Nei, ikke koblet til person (se under) | 104 uker, slettes automatisk |
 | Aktive brukere | Skole, uke og en ukekode | Nei, kan ikke kobles til person (se under) | 104 uker |
-| Notater | **Lagres ikke** (se kapittel 6) | – | – |
+| Notater | **Lagres ikke i Varde.** Sendes rett til skolens arkiv (se kapittel 6) | – | – |
 
 **Varde lagrer aldri opplysninger om elever.** Veiviserne spør ikke om navn, og svarene sendes ikke til serveren. Bare kategorien og alvorligheten av veiledningen logges.
 
@@ -88,11 +88,31 @@ Dagens kode lagrer alt i én SQLite-fil (`data/varde.db`). Før leveranse må de
 
 Notater om elever vil nesten alltid inneholde **navn og helseopplysninger om barn** (rusbruk regnes som helseopplysning). Det er en *særlig kategori* personopplysninger etter personvernforordningen artikkel 9, og krever den strengeste beskyttelsen.
 
-### Slik fungerer det nå (anbefalt)
+### Slik fungerer det nå: rett til skolens arkiv
 
-- Notatet skrives i nettleseren og **lagres ikke** i Varde, verken på serveren eller i nettleserens lagring.
-- Innholdet sendes aldri til serveren. Statistikken registrerer bare at notatmalen ble åpnet.
-- Den ansatte kopierer teksten inn i **skolens eget arkiv eller saksbehandlingssystem**. Der finnes allerede tilgangsstyring, journalføring og arkivering som oppfyller opplæringslova, forvaltningsloven og arkivlova.
+- Notatet skrives i appen og sendes med knappen **Send til skolens arkiv**.
+- Serveren holder notatet bare i minnet mens det sendes videre (`server/arkiv.js`). Det skrives aldri til database, logg eller disk i Varde, og lagres ikke i nettleseren. Dette er dekket av en automatisk test.
+- Arkivet journalfører notatet i elevens mappe med skolens vanlige tilgangsstyring, skjerming og arkivering.
+- Den ansatte får tilbake en referanse (journalpostnummer) som kvittering.
+- Leverandøren av Varde har **ingen tilgang til arkivet**. Varde kan bare sende.
+- Kopiering finnes som reserve hvis arkivkoblingen er nede. Teksten skal da limes inn i arkivet, ikke i e-post eller chat.
+
+#### Koblingen til arkivet (KS Fiks Arkiv)
+
+Kommuner og fylkeskommuner kobler fagsystemer til arkivet (f.eks. Public 360 eller Elements) gjennom KS sin plattform Fiks og protokollen Fiks Arkiv. Det passer godt her:
+
+- Varde får en egen **avsenderkonto** i Fiks IO. Den kan bare sende meldinger til arkivets mottakerkonto, ikke lese fra arkivet.
+- Meldingene krypteres med arkivets offentlige nøkkel. Etter sending kan bare arkivet lese dem.
+- Skoleeier oppretter og styrer kontoen, og kan stenge den når som helst.
+
+Dette må avtales med skoleeier før koblingen slås på (`VARDE_ARKIV=fiks`):
+1. Fiks IO-konto for Varde og mottakerkonto for arkivet, satt opp av skoleeier
+2. Hvordan notatet journalføres: dokumenttype, arkivdel, klassering, skjerming (offentleglova § 13)
+3. Hvordan riktig elevmappe finnes. Navn og klasse er ikke nok i et stort arkiv; ofte brukes elevens ID fra skolens elevsystem
+4. Test i KS sitt testmiljø før produksjon
+5. Nøkler og sertifikater lagres i et nøkkelhvelv, aldri i koden
+
+I demoen brukes et **demoarkiv** som gir en referanse og forkaster innholdet.
 
 ### Hvis notater skal lagres i Varde
 
@@ -110,7 +130,7 @@ Da må alt dette være på plass før funksjonen slås på:
 10. **Sikkerhetstest** (penetrasjonstest) av funksjonen før den tas i bruk.
 11. **Ingen kobling til statistikken.** Notatinnhold skal aldri brukes i portalen.
 
-Anbefalingen er å la Varde være uten notatlagring, og heller lage en eksport til skolens arkivsystem hvis dere ønsker det.
+Anbefalingen er å la Varde være uten notatlagring og bruke overføringen til skolens arkiv.
 
 ## 7. Øvrige krav før leveranse
 

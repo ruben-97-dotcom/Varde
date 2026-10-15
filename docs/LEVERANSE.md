@@ -16,6 +16,11 @@ Varde er i dag en **demo**. Dette må være gjort før løsningen tas i bruk med
 - [ ] Første skoleleder per skole opprettet av skoleeier, og rutine for dette avtalt
 - [ ] Rutine for halvårlig gjennomgang av brukere og roller
 
+## Arkiv
+- [ ] Fiks IO-konto for Varde og mottakerkonto for arkivet satt opp av skoleeier
+- [ ] Journalføring, klassering, skjerming og oppslag av elevmappe avklart med arkivtjenesten
+- [ ] Fiks Arkiv-adapteren ferdigstilt og testet i KS testmiljø, `VARDE_ARKIV=fiks`
+
 ## Drift
 - [ ] Kjører bak HTTPS med `VARDE_SECURE_COOKIE=1`
 - [ ] Eksempeldata fjernet: `VARDE_DEMO=0` og `npm run fjern-demo`

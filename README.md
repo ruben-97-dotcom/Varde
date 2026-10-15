@@ -10,7 +10,8 @@
 - Innlogging. Hver ansatt har egen bruker knyttet til en skole.
 - Veivisere med ett spørsmål om gangen: elev ruset nå, bekymring, eleven forteller, funn eller salg, belastet miljø. Svarene gir en tilpasset veiledning.
 - Sider om alkohol, cannabis, piller, sentralstimulerende, snus og nikotinposer, og vape og røyk.
-- Skolens egne kontakter (styres i portalen), nødnummer, samtaleguide, plikter og lovverk, notatmal.
+- Skolens egne kontakter (styres i portalen), nødnummer, samtaleguide, plikter og lovverk.
+- Notat som sendes rett til skolens arkiv. Det lagres aldri i Varde eller på telefonen.
 
 **Portalen** (`public/portal.html`)
 - Skoleleder og rusansvarlig: statistikk for egen skole og skolens kontakter.
@@ -22,7 +23,7 @@
 - Bruksstatistikken har **ingen bruker-ID**. Bare skole, uke og faste kategorier lagres.
 - Aktive brukere telles med en ukekode som ikke kan spores tilbake.
 - Tall under 5 vises aldri.
-- Ingen opplysninger om elever lagres. Notater lagres ikke.
+- Ingen opplysninger om elever lagres. Notater sendes rett til skolens arkiv uten å lagres i Varde.
 - Tilgang styres av roller og håndheves på serveren. Alle endringer logges.
 
 Detaljer: [docs/PERSONVERN-OG-SIKKERHET.md](docs/PERSONVERN-OG-SIKKERHET.md).
@@ -59,12 +60,14 @@ Tallene i demoen er generert og sier ingenting om virkelig bruk. De andre skolen
 | `VARDE_DEMO` | på | `0` = ikke legg inn eksempeldata |
 | `VARDE_SECURE_COOKIE` | av | `1` bak HTTPS |
 | `VARDE_LAGRINGSTID_UKER` | 104 | Hvor lenge statistikk lagres |
+| `VARDE_ARKIV` | `demo` | `demo` = demoarkiv, `fiks` = KS Fiks Arkiv (må settes opp) |
 
 ## Struktur
 
 ```
 server/server.js        API, innlogging, tilgangskontroll, statiske filer
 server/db.js            database, eksempeldata, sletting av gamle data
+server/arkiv.js         overføring av notater til skolens arkiv
 public/js/varde-core.js roller, tilgang, tillatte hendelser, aggregering (felles for server og nettleser)
 public/js/api.js        API-klient med demomodus
 public/index.html       appen for ansatte

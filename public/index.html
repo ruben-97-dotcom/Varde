@@ -553,7 +553,7 @@ img { max-width: 100%; }
           "<li>For akutt-veiviseren: hvilket rusmiddel. For funn og salg: hva slags hendelse</li>" +
           "<li>Hvilke sider om rusmidler og verktøy som ble åpnet</li></ul></div>" +
           "<div class='panel'><h3>Dette lagres aldri</h3><ul class='bullets'><li>Hvem du er sammen med bruken. Bruksdataene har ingen kobling til brukeren din</li>" +
-          "<li>Navn, alder eller andre opplysninger om elever</li><li>Notater, fritekst eller svarene dine i detalj</li><li>Klokkeslett, sted eller enhet</li></ul></div>" +
+          "<li>Navn, alder eller andre opplysninger om elever</li><li>Notater. De sendes rett til skolens arkiv og lagres ikke i Varde eller på enheten</li><li>Fritekst eller svarene dine i detalj</li><li>Klokkeslett, sted eller enhet</li></ul></div>" +
           "<div class='panel'><h3>Slik brukes dataene</h3><ul class='bullets'><li>Skolens ledelse ser samlede tall for skolen</li>" +
           "<li>Kommunen eller fylkeskommunen ser samlede tall for sine skoler</li>" +
           "<li>Tall under " + VardeCore.MIN_ANTALL + " vises aldri, så enkelthendelser ikke kan kjennes igjen</li>" +
@@ -932,47 +932,67 @@ img { max-width: 100%; }
   }
 
   var NOTE_FIELDS = [
-    ["n-tid", "Dato og tid", "input", "", ""],
-    ["n-sted", "Sted", "input", "F.eks. klasserom 2B, skolegården", ""],
-    ["n-elev", "Elev", "input", "Initialer og klasse, ikke fullt navn", ""],
-    ["n-obs", "Hva så og hørte du?", "textarea", "Bare fakta. F.eks. «Kom 20 min for sent, luktet hasj, røde øyne, svarte langsomt.»", "Skill mellom det du observerte og det du tror."],
-    ["n-sitat", "Hva sa eleven?", "textarea", "Elevens egne ord i anførselstegn", ""],
-    ["n-tilstede", "Hvem var til stede?", "input", "Ansatte og eventuelt elever", ""],
-    ["n-tiltak", "Hva ble gjort?", "textarea", "F.eks. tatt ut av klassen, helsesykepleier tilkalt, foresatte ringt kl. 10.15", ""],
-    ["n-varslet", "Hvem er varslet?", "input", "Rektor, foresatte, barnevern, politi …", ""],
-    ["n-videre", "Videre oppfølging", "textarea", "Hvem gjør hva, og når", ""],
-    ["n-skrevet", "Skrevet av", "input", "Navn og rolle", ""]
+    ["tid", "Dato og tid", "input", "", ""],
+    ["sted", "Sted", "input", "F.eks. klasserom 2B, skolegården", ""],
+    ["elev", "Elev", "input", "Navn og klasse", "Brukes for å legge notatet i riktig elevmappe i arkivet."],
+    ["obs", "Hva så og hørte du?", "textarea", "Bare fakta. F.eks. «Kom 20 min for sent, luktet hasj, røde øyne, svarte langsomt.»", "Skill mellom det du observerte og det du tror."],
+    ["sitat", "Hva sa eleven?", "textarea", "Elevens egne ord i anførselstegn", ""],
+    ["tilstede", "Hvem var til stede?", "input", "Ansatte og eventuelt elever", ""],
+    ["tiltak", "Hva ble gjort?", "textarea", "F.eks. tatt ut av klassen, helsesykepleier tilkalt, foresatte ringt kl. 10.15", ""],
+    ["varslet", "Hvem er varslet?", "input", "Rektor, foresatte, barnevern, politi …", ""],
+    ["videre", "Videre oppfølging", "textarea", "Hvem gjør hva, og når", ""],
+    ["skrevet", "Skrevet av", "input", "Navn og rolle", ""]
   ];
 
   function renderNotat() {
     spor({ type: "verktoy", kategori: "notat" });
-    setWhere("Notatmal");
-    var h = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Notatmal", "Skriv ned det som skjedde mens det er ferskt, og kopier teksten inn i skolens system.", "doc");
-    h += "<div class='callout amber'><h3>Lagres ikke</h3><div>Notatet forsvinner når du lukker siden. Taushetsbelagte opplysninger hører hjemme i skolens arkiv eller saksbehandlingssystem, ikke på privat telefon, e-post eller chat.</div></div>";
-    h += "<form class='panel' id='noteForm'>";
+    setWhere("Notat");
+    var skole = USER && USER.skole ? USER.skole.name : "skolen";
+    var h = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Notat", "Skriv ned det som skjedde mens det er ferskt, og send det rett til skolens arkiv.", "doc");
+    h += "<div class='callout green'><h3>Lagres ikke på telefonen</h3><div>Notatet sendes direkte til arkivet for " + esc(skole) + ". Det lagres verken på denne enheten eller i Varde, og forsvinner fra skjermen når det er sendt.</div></div>";
+    h += "<form class='panel' id='noteForm' autocomplete='off'>";
     NOTE_FIELDS.forEach(function (f) {
-      var val = f[0] === "n-tid" ? nowLocal() : "";
-      h += "<div class='field'><label for='" + f[0] + "'>" + f[1] + "</label>" +
-        (f[2] === "textarea" ? "<textarea id='" + f[0] + "' placeholder='" + esc(f[3]) + "'></textarea>" : "<input id='" + f[0] + "' value='" + esc(val) + "' placeholder='" + esc(f[3]) + "'>") +
+      var id = "n-" + f[0], val = f[0] === "tid" ? nowLocal() : f[0] === "skrevet" && USER ? USER.name : "";
+      h += "<div class='field'><label for='" + id + "'>" + f[1] + (f[0] === "elev" ? " <span style='color:var(--red)'>*</span>" : "") + "</label>" +
+        (f[2] === "textarea" ? "<textarea id='" + id + "' placeholder='" + esc(f[3]) + "' maxlength='5000'></textarea>" : "<input id='" + id + "' value='" + esc(val) + "' placeholder='" + esc(f[3]) + "' maxlength='5000'>") +
         (f[4] ? "<span class='hint'>" + f[4] + "</span>" : "") + "</div>";
     });
-    h += "<div class='btnrow'><button class='btn' type='submit'>Kopier notat</button><button class='btn ghost' type='button' id='clearNote'>Tøm</button></div>";
-    h += "<pre class='out' id='noteOut'></pre></form></section>";
+    h += "<p class='err' id='noteErr' hidden></p>";
+    h += "<div id='noteActions' class='btnrow'><button class='btn' type='submit'>Send til skolens arkiv</button><button class='btn ghost' type='button' id='copyNote'>Kopier i stedet</button><button class='btn ghost' type='button' id='clearNote'>Tøm</button></div>";
+    h += "<div id='noteConfirm' class='callout amber' hidden><h3>Send notatet?</h3><div>Notatet sendes til arkivet for " + esc(skole) + ". Du kan ikke endre det i Varde etterpå. Rettelser gjøres i arkivet.</div>" +
+      "<div class='btnrow' style='margin-top:8px'><button class='btn' type='button' id='sendNow'>Send nå</button><button class='btn ghost' type='button' id='cancelSend'>Avbryt</button></div></div>";
+    h += "</form></section>";
     app.innerHTML = h;
-    var form = document.getElementById("noteForm"), out = document.getElementById("noteOut");
-    function build() {
-      var lines = ["NOTAT – HENDELSE / BEKYMRING KNYTTET TIL RUS", ""];
-      NOTE_FIELDS.forEach(function (f) { lines.push(f[1].replace("?", "") + ": " + (document.getElementById(f[0]).value.trim() || "–")); });
-      return lines.join("\n");
-    }
-    function update() { out.textContent = build(); }
+    var form = document.getElementById("noteForm");
+    function felter() { var o = {}; NOTE_FIELDS.forEach(function (f) { o[f[0]] = document.getElementById("n-" + f[0]).value; }); return o; }
+    function visFeil(m) { var e = document.getElementById("noteErr"); e.textContent = m; e.hidden = !m; }
+    function bekreft(vis) { document.getElementById("noteConfirm").hidden = !vis; document.getElementById("noteActions").hidden = vis; }
     if (NOTE_PREFILL) { document.getElementById("n-obs").value = NOTE_PREFILL.obs; document.getElementById("n-videre").value = NOTE_PREFILL.videre; NOTE_PREFILL = null; }
-    form.addEventListener("input", update);
-    update();
-    form.addEventListener("submit", function (e) { e.preventDefault(); copy(build(), out); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); visFeil("");
+      if (!VardeCore.validerNotat(felter())) { visFeil("Fyll inn elev og minst ett felt om hva som skjedde."); document.getElementById("n-elev").focus(); return; }
+      bekreft(true);
+    });
+    document.getElementById("cancelSend").addEventListener("click", function () { bekreft(false); });
+    document.getElementById("sendNow").addEventListener("click", function () {
+      var knapp = this; knapp.disabled = true; knapp.textContent = "Sender …";
+      VardeAPI.sendArkiv(felter()).then(function (k) {
+        form.reset();
+        app.innerHTML = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Sendt til arkivet", "", "doc") +
+          "<div class='panel'><div class='tel' style='padding:0'><div><span class='tel-lbl'>Referanse i arkivet</span><span class='tel-n'>" + esc(k.referanse) + "</span><small>" + esc(k.arkiv) + "</small></div></div>" +
+          "<ul class='bullets'><li>Notatet er ikke lagret på denne enheten eller i Varde.</li><li>Noter gjerne referansen hvis du skal følge opp saken.</li>" + (k.demo ? "<li>Dette er en demo. Ingen arkivkobling er satt opp, og notatet ble forkastet.</li>" : "") + "</ul></div>" +
+          "<div class='q-block'><button class='cta' data-go='notat'><span>Skriv nytt notat</span>" + ico("arrow") + "</button><div class='list plain'><button class='row choice' data-go='hjem'><span class='row-txt'><b>Til forsiden</b></span>" + ico("chev", "chev") + "</button></div></div></section>";
+      }).catch(function (er) {
+        knapp.disabled = false; knapp.textContent = "Send nå"; bekreft(false);
+        visFeil(er.message + (er.status === 503 ? "" : " Notatet er ikke sendt. Du kan prøve igjen eller kopiere det."));
+      });
+    });
+    document.getElementById("copyNote").addEventListener("click", function () {
+      var t = VardeCore.notatTekst(Object.keys(felter()).reduce(function (o, k) { o[k] = felter()[k].trim(); return o; }, {}), skole);
+      copy(t, null); toast("Kopiert. Lim inn i skolens arkiv, ikke i e-post eller chat.");
+    });
     document.getElementById("clearNote").addEventListener("click", function () {
-      NOTE_FIELDS.forEach(function (f) { document.getElementById(f[0]).value = f[0] === "n-tid" ? nowLocal() : ""; });
-      update(); toast("Skjemaet er tømt");
+      form.reset(); document.getElementById("n-tid").value = nowLocal(); if (USER) document.getElementById("n-skrevet").value = USER.name; bekreft(false); visFeil(""); toast("Skjemaet er tømt");
     });
   }
 

@@ -166,3 +166,28 @@ test("endringer i tilgang og kontakter havner i endringsloggen", async () => {
   assert.ok(logg.some((l) => l.handling === "Endret rolle"));
   assert.ok(logg.some((l) => l.handling === "Endret skolens kontakter" && l.utfort_av.includes("rusansvarlig@karmsund.demo")));
 });
+
+/* ---------- notat til arkiv ---------- */
+test("notat sendes til arkivet og lagres aldri i Varde", async () => {
+  const c = await login("laerer@karmsund.demo");
+  const hemmelig = "Testelev-" + Date.now();
+  const r = await post("/api/arkiv", c, { felter: { elev: hemmelig + " 2STA", obs: "Luktet " + hemmelig } });
+  assert.equal(r.status, 201);
+  const k = await r.json();
+  assert.match(k.referanse, /^DEMO-\d{4}\/\d{4}-1$/);
+  const db = new DatabaseSync(process.env.VARDE_DB);
+  db.exec("PRAGMA wal_checkpoint(FULL)");
+  const filer = fs.readdirSync(path.dirname(process.env.VARDE_DB)).map((f) => fs.readFileSync(path.join(path.dirname(process.env.VARDE_DB), f)));
+  assert.ok(filer.every((buf) => !buf.includes(hemmelig)), "notatinnhold funnet i databasefilene");
+});
+
+test("notat uten elev avvises, og for store notater stoppes", async () => {
+  const c = await login("laerer@karmsund.demo");
+  assert.equal((await post("/api/arkiv", c, { felter: { obs: "noe" } })).status, 400);
+  assert.equal((await post("/api/arkiv", c, { felter: { elev: "x", obs: "a".repeat(70000) } })).status, 413);
+});
+
+test("kommune og fylkeskommune kan ikke sende notater", async () => {
+  const c = await login("analyse@rogfk.demo");
+  assert.equal((await post("/api/arkiv", c, { felter: { elev: "x", obs: "y" } })).status, 403);
+});

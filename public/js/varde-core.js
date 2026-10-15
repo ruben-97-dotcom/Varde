@@ -29,9 +29,9 @@
     eier: { label: "Kommune / fylkeskommune", beskrivelse: "Ser samlet statistikk for sine skoler. Ingen tilgang til brukere eller kontakter på skolene." }
   };
   var TILGANG = {
-    laerer: [],
-    ressurs: ["statistikk", "kontakter"],
-    skoleleder: ["statistikk", "kontakter", "brukere"],
+    laerer: ["arkiv"],
+    ressurs: ["arkiv", "statistikk", "kontakter"],
+    skoleleder: ["arkiv", "statistikk", "kontakter", "brukere"],
     eier: ["statistikk"]
   };
   function kan(rolle, handling) { return (TILGANG[rolle] || []).indexOf(handling) > -1; }
@@ -60,6 +60,30 @@
       if (navn || tlf || merk) ut.push({ key: k.key, name: navn, phone: tlf, note: merk });
     }
     return ut;
+  }
+
+  /* ---------- Notat til arkiv ----------
+   * Notatet sendes rett videre til skolens arkiv. Det lagres aldri i Varde. */
+  var NOTATFELT = [
+    { key: "tid", label: "Dato og tid" }, { key: "sted", label: "Sted" }, { key: "elev", label: "Elev" },
+    { key: "obs", label: "Hva så og hørte du" }, { key: "sitat", label: "Hva sa eleven" }, { key: "tilstede", label: "Hvem var til stede" },
+    { key: "tiltak", label: "Hva ble gjort" }, { key: "varslet", label: "Hvem er varslet" }, { key: "videre", label: "Videre oppfølging" }, { key: "skrevet", label: "Skrevet av" }
+  ];
+  function validerNotat(f) {
+    if (!f || typeof f !== "object") return null;
+    var ut = {}, noe = false;
+    for (var i = 0; i < NOTATFELT.length; i++) {
+      var k = NOTATFELT[i].key, v = f[k] == null ? "" : String(f[k]);
+      if (v.length > 5000) return null;
+      ut[k] = v.trim(); if (ut[k] && k !== "tid" && k !== "skrevet") noe = true;
+    }
+    if (!ut.elev || !noe) return null;
+    return ut;
+  }
+  function notatTekst(f, skole) {
+    var linjer = ["NOTAT – HENDELSE / BEKYMRING KNYTTET TIL RUS", skole ? "Skole: " + skole : "", ""];
+    NOTATFELT.forEach(function (d) { linjer.push(d.label + ": " + (f[d.key] || "–")); });
+    return linjer.filter(function (l, i) { return l !== "" || i > 1; }).join("\n");
   }
 
   /* Bare disse feltene og verdiene kan lagres. Alt annet avvises.
@@ -225,5 +249,5 @@
     return { hendelser: hendelser, aktive: aktive };
   }
 
-  return { ROLLER: ROLLER, TILGANG: TILGANG, kan: kan, SKOLEROLLER: SKOLEROLLER, KONTAKTER: KONTAKTER, validerKontakter: validerKontakter, MIN_ANTALL: MIN_ANTALL, LABELS: LABELS, validerHendelse: validerHendelse, isoUke: isoUke, ukerBakover: ukerBakover, aggreger: aggreger, DEMO: DEMO, lagDemoHendelser: lagDemoHendelser };
+  return { NOTATFELT: NOTATFELT, validerNotat: validerNotat, notatTekst: notatTekst, ROLLER: ROLLER, TILGANG: TILGANG, kan: kan, SKOLEROLLER: SKOLEROLLER, KONTAKTER: KONTAKTER, validerKontakter: validerKontakter, MIN_ANTALL: MIN_ANTALL, LABELS: LABELS, validerHendelse: validerHendelse, isoUke: isoUke, ukerBakover: ukerBakover, aggreger: aggreger, DEMO: DEMO, lagDemoHendelser: lagDemoHendelser };
 });

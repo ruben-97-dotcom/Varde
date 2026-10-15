@@ -15,6 +15,7 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const core = require("../public/js/varde-core.js");
 const D = require("./db.js");
+const arkiv = require("./arkiv.js");
 
 const PORT = Number(process.env.PORT || 3000);
 const DB_FIL = process.env.VARDE_DB || path.join(__dirname, "..", "data", "varde.db");
@@ -36,12 +37,14 @@ function send(res, status, body, extra) {
   res.end(data);
 }
 function feil(res, status, melding) { send(res, status, { feil: melding }); }
-function lesJson(req) {
+function lesJson(req, maks) {
+  maks = maks || 10000;
   return new Promise((ok, nei) => {
     if (!/^application\/json/.test(req.headers["content-type"] || "")) return nei(Object.assign(new Error("Forventet JSON"), { status: 415 }));
     let b = "";
-    req.on("data", (c) => { b += c; if (b.length > 10000) { req.destroy(); nei(Object.assign(new Error("For stor forespørsel"), { status: 413 })); } });
-    req.on("end", () => { try { ok(b ? JSON.parse(b) : {}); } catch (e) { nei(Object.assign(new Error("Ugyldig JSON"), { status: 400 })); } });
+    let forStor = false;
+    req.on("data", (c) => { if (forStor) return; b += c; if (b.length > maks) { forStor = true; b = ""; nei(Object.assign(new Error("Notatet eller forespørselen er for stor."), { status: 413 })); } });
+    req.on("end", () => { if (forStor) return; try { ok(b ? JSON.parse(b) : {}); } catch (e) { nei(Object.assign(new Error("Ugyldig JSON"), { status: 400 })); } });
   });
 }
 function cookies(req) {
@@ -137,6 +140,15 @@ async function api(req, res, url) {
     const aktive = db.prepare(`SELECT school_id, week, token FROM aktive WHERE school_id IN (${ph}) AND week >= ?`).all(...ids, uker[0]);
     const demo = db.prepare(`SELECT COUNT(*) AS n FROM hendelser WHERE demo = 1 AND school_id IN (${ph})`).get(...ids).n > 0;
     return send(res, 200, Object.assign(core.aggreger(hendelser, aktive, skoler, uker), { demo: demo, antallSkoler: skoler.length }));
+  }
+
+  // Notat til skolens arkiv. Sendes rett videre og lagres aldri i Varde.
+  if (rute === "POST /api/arkiv") {
+    if (!b.school_id || !core.kan(b.role, "arkiv")) return feil(res, 403, "Du har ikke tilgang til å sende notater.");
+    const body = await lesJson(req, 60000);
+    const skole = db.prepare("SELECT id, name FROM skoler WHERE id = ?").get(b.school_id);
+    const k = await arkiv.send({ skole, avsender: b, felter: body.felter });
+    return send(res, 201, k);
   }
 
   // Skolens kontakter: alle på skolen kan lese, bare roller med tilgangen «kontakter» kan endre.
