@@ -998,8 +998,9 @@ img { max-width: 100%; }
       var navn = {}; VardeCore.KONTAKTER.forEach(function (k) { navn[k.key] = k.label; });
       var rader = VardeCore.KONTAKTER.map(function (d) { return r.kontakter.filter(function (k) { return k.key === d.key; })[0]; }).filter(Boolean);
       el.innerHTML = (rader.length ? rader.map(function (k) {
-        return "<div class='tel'><div><span class='tel-lbl'>" + esc(navn[k.key]) + "</span><span class='tel-n' style='font-size:1.1rem'>" + esc(k.name || "–") + "</span></div>" +
-          (k.phone ? "<div class='tel-act'><a class='ring' href='tel:" + esc(k.phone.replace(/[^0-9+]/g, "")) + "'>Ring</a><button class='copy' data-copy='" + esc(k.phone) + "'>" + esc(k.phone) + "</button></div>" : "<div></div>") +
+        return "<div class='tel kontakt'><div><span class='tel-lbl'>" + esc(navn[k.key]) + "</span><b class='k-navn'>" + esc(k.name || "–") + "</b>" +
+          (k.phone ? "<span class='k-tlf' data-copy='" + esc(k.phone) + "'>" + esc(k.phone) + "</span>" : "") + "</div>" +
+          (k.phone ? "<div class='tel-act'><a class='ring' href='tel:" + esc(k.phone.replace(/[^0-9+]/g, "")) + "'>Ring</a></div>" : "<div></div>") +
           (k.note ? "<small>" + esc(k.note) + "</small>" : "") + "</div>";
       }).join("") : "<div class='tel'><div><span class='tel-lbl'>Skolen har ikke lagt inn kontakter ennå.</span></div></div>") +
         "<div class='tel'><div><small style='grid-column:auto'>" + (r.kanEndre ? "Du kan endre kontaktene i <a href='portal.html'>portalen</a>." : "Kontaktene styres av skolens ledelse.") + "</small></div></div>";
