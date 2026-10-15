@@ -88,8 +88,8 @@ function seedDemo(db) {
   try {
     const ie = db.prepare("INSERT INTO eiere (id, name, type, demo) VALUES (?, ?, ?, 1)");
     D.eiere.forEach((e) => ie.run(e.id, e.name, e.type));
-    const is = db.prepare("INSERT INTO skoler (id, name, short, owner_id, logo, demo) VALUES (?, ?, ?, ?, NULL, 1)");
-    D.skoler.forEach((s) => is.run(s.id, s.name, s.short, s.owner_id));
+    const is = db.prepare("INSERT INTO skoler (id, name, short, owner_id, logo, demo) VALUES (?, ?, ?, ?, ?, 1)");
+    D.skoler.forEach((s) => is.run(s.id, s.name, s.short, s.owner_id, s.logo || null));
     const ib = db.prepare("INSERT INTO brukere (email, name, password_hash, role, school_id, owner_id, demo, created_week) VALUES (?, ?, ?, ?, ?, ?, 1, ?)");
     D.brukere.forEach((b) => ib.run(b.email, b.name, hashPassord(D.passord), b.role, b.school_id || null, b.owner_id || null, uke));
     const ik = db.prepare("INSERT INTO kontakter (school_id, key, name, phone, note) VALUES (?, ?, ?, ?, ?)");

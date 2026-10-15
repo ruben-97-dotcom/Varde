@@ -27,7 +27,7 @@ img { max-width: 100%; }
 .demo-users .row-txt small { word-break: break-all; }
 .err { color: var(--red); font-size: .9rem; font-weight: 500; }
 .school { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; background: var(--surface); box-shadow: var(--shadow); border-radius: var(--r-lg); padding: 12px 14px; }
-.school-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: #e6f6f3; color: #0e8a7c; font-weight: 700; letter-spacing: -0.02em; overflow: hidden; }
+.school-logo { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; background: #e6f6f3; color: #0e8a7c; font-weight: 700; letter-spacing: -0.02em; overflow: hidden; }
 .school-logo img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
 .school b { display: block; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
 .school small { color: var(--muted); font-size: .82rem; }
@@ -809,7 +809,10 @@ img { max-width: 100%; }
   /* ---------- Innlogging ---------- */
   var USER = null;
   function initialer(navn) { return String(navn || "").replace(/\bskole\b/gi, "").trim().split(/\s+/).slice(0, 2).map(function (w) { return w[0]; }).join("").toUpperCase(); }
-  function skoleLogo(s) { return s && s.logo ? "<img src='" + esc(s.logo) + "' alt=''>" : esc(initialer(s ? s.name : "")); }
+  function skoleLogo(s) {
+    var ini = esc(initialer(s ? s.name : ""));
+    return s && s.logo ? "<img src='" + esc(s.logo) + "' alt='Logo for " + esc(s.name) + "' data-ini='" + ini + "' onerror='this.parentNode.textContent=this.dataset.ini'>" : ini;
+  }
 
   function renderLogin(melding) {
     document.body.classList.add("locked");

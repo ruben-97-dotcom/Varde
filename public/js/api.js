@@ -29,7 +29,7 @@
     var skole = b.school_id ? C.DEMO.skoler.filter(function (s) { return s.id === b.school_id; })[0] : null;
     var eierId = b.owner_id || (skole && skole.owner_id);
     var eier = C.DEMO.eiere.filter(function (e) { return e.id === eierId; })[0] || null;
-    return { name: b.name, email: b.email, role: b.role, tilganger: C.TILGANG[b.role] || [], skole: skole ? { id: skole.id, name: skole.name, short: skole.short, logo: null } : null, eier: eier, demo: true };
+    return { name: b.name, email: b.email, role: b.role, tilganger: C.TILGANG[b.role] || [], skole: skole ? { id: skole.id, name: skole.name, short: skole.short, logo: skole.logo || null } : null, eier: eier, demo: true };
   }
   function demoMeg() { var e = ls("varde-demo-sesjon"); var b = e && demoBrukere().filter(function (x) { return x.email === e && x.active; })[0]; return b || null; }
   function leder() { var b = demoMeg(); return b && C.kan(b.role, "brukere") ? b : null; }
