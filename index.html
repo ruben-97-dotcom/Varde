@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Varde – trinnvis veileder for lærere og skoleansatte om elever og rus, tobakk og snus.">
+<meta name="theme-color" content="#f7f7f9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%20width%3D%22512%22%20height%3D%22512%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%23111216%22/%3E%0A%20%20%3Crect%20x%3D%2213%22%20y%3D%2241%22%20width%3D%2238%22%20height%3D%2211%22%20rx%3D%225.5%22%20fill%3D%22%23ffffff%22/%3E%0A%20%20%3Crect%20x%3D%2218.5%22%20y%3D%2229%22%20width%3D%2227%22%20height%3D%2210%22%20rx%3D%225%22%20fill%3D%22%23ffffff%22/%3E%0A%20%20%3Crect%20x%3D%2224%22%20y%3D%2217.5%22%20width%3D%2216%22%20height%3D%229.5%22%20rx%3D%224.75%22%20fill%3D%22%2314b39f%22/%3E%0A%3C/svg%3E">
+<link rel="apple-touch-icon" href="assets/varde-ikon.svg">
+<style>
+html { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>Varde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: bevisst alltid lyst. Hvit, luftig app-kolonne i iOS-stil: grupperte lister, hårfine linjer, én skriftfamilie, farge kun som små markører per situasjon */
+:root {
+  color-scheme: light;
+  --bg: #f7f7f9;
+  --surface: #ffffff;
+  --sunken: #f1f1f4;
+  --ink: #111216;
+  --ink-2: #3a3d46;
+  --muted: #6e7280;
+  --line: #e8e8ed;
+  --line-2: #d9dae1;
+  --red: #dc3545;
+  --red-tint: #fdecee;
+  --amber: #b35c00;
+  --amber-tint: #fff4e5;
+  --green: #1f8a5b;
+  --green-tint: #e8f6ef;
+  --focus: #3e63dd;
+  --font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-lg: 20px;
+  --r-md: 14px;
+  --shadow: 0 1px 2px rgba(17,18,22,.04), 0 4px 16px -8px rgba(17,18,22,.08);
+  /* situasjonsfarger: farge og tint */
+  --akutt: #dc3545; --akutt-t: #fdecee;
+  --bek: #3e63dd;   --bek-t: #edf1fd;
+  --fort: #8e4ec6;  --fort-t: #f5eefc;
+  --funn: #c4540a;  --funn-t: #fff1e7;
+  --miljo: #0e8a7c; --miljo-t: #e6f6f3;
+  --verk: #5b5f6b;  --verk-t: #f0f0f3;
+  --etter: #1f8a5b; --etter-t: #e8f6ef;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font-family: var(--font); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+html.big-text body { font-size: 19px; }
+.shell { max-width: 600px; margin: 0 auto; padding: 0 16px 120px; }
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; line-height: 1.15; }
+h1 { font-size: 2rem; letter-spacing: -0.035em; }
+h3 { font-size: 1rem; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+button, input, textarea { font: inherit; color: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 10px; }
+.ic { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* situasjon → farge */
+.screen { --c: var(--ink); --t: var(--sunken); }
+[data-sec="Akutt"], .c-akutt { --c: var(--akutt); --t: var(--akutt-t); }
+[data-sec="Bekymring"], .c-bek { --c: var(--bek); --t: var(--bek-t); }
+[data-sec="Eleven forteller"], .c-fort { --c: var(--fort); --t: var(--fort-t); }
+[data-sec="Funn og salg"], .c-funn { --c: var(--funn); --t: var(--funn-t); }
+[data-sec="Miljø"], .c-miljo { --c: var(--miljo); --t: var(--miljo-t); }
+[data-sec="Verktøy"], .c-verk { --c: var(--verk); --t: var(--verk-t); }
+[data-sec="Etterpå"], .c-etter { --c: var(--etter); --t: var(--etter-t); }
+
+/* topplinje */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(247,247,249,.82); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+.top.scrolled { box-shadow: 0 1px 0 var(--line); }
+.top-in { max-width: 600px; margin: 0 auto; padding: 8px 16px; display: flex; align-items: center; gap: 8px; min-height: 56px; }
+.back[hidden] { display: none; }
+.back { width: 36px; height: 36px; flex-shrink: 0; display: grid; place-items: center; border: 0; background: var(--surface); border-radius: 50%; box-shadow: var(--shadow); cursor: pointer; }
+.back .ic { width: 20px; height: 20px; stroke-width: 2.2; }
+.where { flex: 1; min-width: 0; font-weight: 600; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
+.textsize { height: 36px; flex-shrink: 0; border: 0; background: var(--surface); box-shadow: var(--shadow); border-radius: 999px; padding: 0 12px; font-weight: 600; font-size: .9rem; cursor: pointer; }
+.textsize[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.sos { height: 36px; flex-shrink: 0; border: 0; background: var(--red); color: #fff; border-radius: 999px; padding: 0 14px; font-weight: 600; font-size: .9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.sos::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+
+/* skjerm */
+.screen { display: grid; gap: 14px; padding-top: 12px; }
+.lead { color: var(--muted); font-size: 1.02rem; max-width: 56ch; }
+.label { font-size: .8rem; font-weight: 500; color: var(--muted); padding: 14px 4px 0; }
+.foot, .note { font-size: .82rem; color: var(--muted); padding: 8px 4px 0; line-height: 1.5; }
+
+/* merkevare */
+.mark { width: 28px; height: 28px; flex-shrink: 0; display: block; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 1.05rem; letter-spacing: -0.03em; }
+.about { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+.about .mark { width: 52px; height: 52px; }
+
+.hero-brand { display: flex; align-items: center; gap: 14px; padding: 22px 4px 4px; }
+.hero-brand .mark { width: 60px; height: 60px; filter: drop-shadow(0 8px 16px rgba(17,18,22,.18)); }
+.wordmark { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.045em; line-height: 1; margin-bottom: 4px; }
+
+/* forside */
+.home-head { display: grid; gap: 6px; padding: 14px 4px 6px; border-top: 1px solid var(--line); margin-top: 6px; }
+.kicker { font-size: .85rem; font-weight: 500; color: var(--muted); }
+.home-head h1 { font-size: 2.3rem; }
+.emergency { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; width: 100%; text-align: left; border: 0; cursor: pointer; background: var(--red); color: #fff; border-radius: var(--r-lg); padding: 18px; box-shadow: 0 10px 24px -14px rgba(220,53,69,.8); }
+.emergency .em-ic { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.18); display: grid; place-items: center; }
+.emergency .em-ic .ic { width: 22px; height: 22px; stroke-width: 2; }
+.emergency strong { display: block; font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
+.emergency small { display: block; font-size: .88rem; opacity: .85; }
+.emergency > .ic { opacity: .8; }
+
+/* grupperte lister */
+.list { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
+.row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; width: 100%; text-align: left; border: 0; background: transparent; padding: 14px 16px; cursor: pointer; position: relative; }
+.row + .row::before { content: ""; position: absolute; top: 0; right: 0; left: 66px; height: 1px; background: var(--line); }
+.list.plain .row + .row::before { left: 16px; }
+@media (hover: hover) { .row:hover { background: #fafafb; } }
+.row:active { background: var(--sunken); }
+.chip { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--t); color: var(--c); }
+.row-txt { min-width: 0; display: grid; gap: 1px; }
+.row-txt b { font-weight: 600; letter-spacing: -0.01em; }
+.row-txt small { color: var(--muted); font-size: .88rem; line-height: 1.4; }
+.chev { color: #b4b6be; width: 18px; height: 18px; stroke-width: 2; }
+
+/* verktøy-rutenett */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 460px) { .grid { grid-template-columns: 1fr 1fr; } }
+.sq { display: grid; gap: 14px; align-content: space-between; text-align: left; border: 0; background: var(--surface); box-shadow: var(--shadow); border-radius: var(--r-lg); padding: 14px; min-height: 104px; cursor: pointer; font-weight: 600; font-size: .92rem; letter-spacing: -0.01em; }
+.sq:active { transform: scale(.98); }
+
+/* sidehode */
+.page-head { display: grid; gap: 10px; padding: 14px 4px 6px; justify-items: start; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 600; color: var(--c); background: var(--t); padding: 5px 10px 5px 8px; border-radius: 999px; }
+.pill .ic { width: 15px; height: 15px; stroke-width: 2.2; }
+
+/* paneler */
+.panel, .card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 18px; display: grid; gap: 12px; min-width: 0; }
+.card .q { font-size: 1.12rem; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; line-height: 1.45; }
+.card .lead { font-size: .95rem; }
+.bullets { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.bullets li { position: relative; padding-left: 18px; color: var(--ink-2); }
+.bullets li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--c, var(--line-2)); opacity: .55; }
+.tag { justify-self: start; font-size: .76rem; font-weight: 500; color: var(--muted); background: var(--sunken); padding: 3px 9px; border-radius: 6px; }
+
+/* sjekkliste */
+.panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.panel-head span:first-child { font-weight: 600; }
+.count { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 4px; border-radius: 999px; background: var(--sunken); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--c); border-radius: 999px; transition: width .25s ease; }
+.checklist { list-style: none; margin: 0 -18px -18px; padding: 0; }
+.checklist li { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding: 14px 18px; cursor: pointer; border-top: 1px solid var(--line); align-items: start; }
+.checklist li:first-child { border-top-color: transparent; }
+@media (hover: hover) { .checklist li:hover { background: #fafafb; } }
+.box { width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; border: 1.5px solid var(--line-2); display: grid; place-items: center; transition: background .15s, border-color .15s; }
+.box svg { width: 13px; height: 13px; stroke: #fff; stroke-width: 3; fill: none; opacity: 0; }
+.checklist li.done .box { background: var(--c); border-color: var(--c); }
+.checklist li.done .box svg { opacity: 1; }
+.checklist li.done b { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line-2); }
+.checklist li > div, .steps li > div { min-width: 0; }
+.checklist b, .steps b { font-weight: 600; letter-spacing: -0.01em; }
+.checklist small, .steps small { display: block; color: var(--muted); font-size: .9rem; margin-top: 2px; line-height: 1.45; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 24px 1fr; gap: 14px; }
+.steps li::before { counter-increment: s; content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--t); color: var(--c); font-size: .8rem; font-weight: 600; display: grid; place-items: center; }
+
+/* meldinger */
+.callout { border-radius: var(--r-md); padding: 14px 16px; display: grid; gap: 4px; font-size: .95rem; color: var(--ink-2); }
+.callout h3 { font-size: .92rem; font-weight: 600; }
+.callout.red { background: var(--red-tint); } .callout.red h3 { color: var(--red); }
+.callout.amber { background: var(--amber-tint); } .callout.amber h3 { color: var(--amber); }
+.callout.green { background: var(--green-tint); } .callout.green h3 { color: var(--green); }
+.callout .bullets li::before { background: currentColor; opacity: .35; }
+
+/* spørsmål og valg */
+.q-block { display: grid; gap: 10px; padding-top: 10px; }
+.q-title { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; padding: 0 4px; }
+.choice { grid-template-columns: 1fr auto; min-height: 60px; }
+.choice .row-txt b { font-size: 1rem; }
+.choice.danger .row-txt b { color: var(--red); }
+.choice.danger { grid-template-columns: auto 1fr auto; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+.cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; cursor: pointer; text-align: left; background: var(--ink); color: #fff; border-radius: var(--r-md); padding: 16px 18px; font-weight: 600; letter-spacing: -0.01em; }
+.cta .ic { opacity: .7; }
+
+/* telefonnummer */
+.tel { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; padding: 14px 16px; position: relative; }
+.tel + .tel::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; height: 1px; background: var(--line); }
+.tel > div:first-child { min-width: 0; }
+.tel-lbl { display: block; font-size: .85rem; color: var(--muted); font-weight: 500; }
+.tel-n { display: block; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; user-select: all; }
+.tel small { grid-column: 1 / -1; display: block; color: var(--muted); font-size: .84rem; line-height: 1.4; margin-top: 2px; }
+.tel.urgent .tel-n { color: var(--red); }
+.tel-act { display: flex; gap: 6px; }
+.ring, .copy { height: 34px; display: inline-flex; align-items: center; border-radius: 999px; padding: 0 14px; font-size: .85rem; font-weight: 600; cursor: pointer; text-decoration: none; border: 0; }
+.ring { background: var(--ink); color: #fff; }
+.tel.urgent .ring { background: var(--red); }
+.copy { background: var(--sunken); color: var(--ink); }
+
+/* skjema */
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 500; font-size: .88rem; color: var(--ink-2); }
+.field input, .field textarea { width: 100%; border: 1px solid var(--line-2); background: var(--surface); border-radius: 12px; padding: 11px 13px; transition: border-color .15s, box-shadow .15s; }
+.field input::placeholder, .field textarea::placeholder { color: #a3a6b0; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(17,18,22,.08); }
+.field textarea { min-height: 88px; resize: vertical; }
+.hint { font-size: .8rem; color: var(--muted); }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { height: 44px; border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 0 20px; font-weight: 600; cursor: pointer; }
+.btn.ghost { background: var(--sunken); color: var(--ink); }
+pre.out { white-space: pre-wrap; word-break: break-word; background: var(--sunken); border-radius: 12px; padding: 14px; margin: 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .8rem; line-height: 1.6; color: var(--ink-2); }
+.toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 999px; font-weight: 500; font-size: .92rem; z-index: 20; box-shadow: 0 8px 24px -8px rgba(0,0,0,.35); }
+
+/* kilder */
+.src { display: grid; gap: 2px; padding: 14px 16px; position: relative; text-decoration: none; }
+.src + .src::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; height: 1px; background: var(--line); }
+.src b { font-weight: 600; }
+.src span { color: var(--muted); font-size: .88rem; }
+.src em { font-style: normal; font-size: .8rem; color: var(--bek); }
+
+
+/* veiviser */
+.wiz-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 4px 0; }
+.wiz-bar { margin: 0 4px; }
+.wiz-q { font-size: 1.75rem; padding: 6px 4px 0; }
+.screen > .lead { padding: 0 4px; }
+.opt { grid-template-columns: auto 1fr auto; min-height: 64px; }
+.opt .row-txt b { font-size: 1.02rem; }
+.radio { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line-2); transition: border .15s; }
+.opt.sel .radio { border: 7px solid var(--c); }
+.opt.sel { background: var(--t); }
+.opt.danger .row-txt b { color: var(--red); }
+.opt.danger .radio { border-color: #f1a9b0; }
+.opt.danger.sel .radio { border-color: var(--red); }
+.multi { grid-template-columns: auto 1fr; }
+.sq-box { border-radius: 7px; }
+.multi.on .sq-box { background: var(--c); border-color: var(--c); }
+.multi.on .sq-box svg { opacity: 1; }
+.result-head { display: grid; gap: 8px; padding: 20px; border-radius: var(--r-lg); background: var(--t); margin-top: 12px; justify-items: start; }
+.result-head h1 { font-size: 1.85rem; }
+.result-head .lead { color: var(--ink-2); }
+.result-head .kicker { color: var(--c); font-weight: 600; font-size: .82rem; }
+.lvl { display: inline-flex; align-items: center; gap: 8px; background: var(--c); color: #fff; font-weight: 600; font-size: .82rem; padding: 6px 12px; border-radius: 999px; }
+.lvl-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; }
+.c-akutt .lvl-dot { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+.ans { grid-template-columns: 1fr auto; }
+.ans .row-txt small { font-size: .78rem; }
+.edit { font-size: .85rem; font-weight: 600; color: var(--bek); }
+
+/* illustrasjoner */
+.illus svg { display: block; width: 100%; height: auto; border-radius: var(--r-lg); overflow: hidden; }
+.hero-illus { margin-top: 4px; }
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sub b { overflow-wrap: anywhere; hyphens: auto; }
+.sub { display: grid; gap: 10px; align-content: start; text-align: left; border: 0; background: var(--surface); box-shadow: var(--shadow); border-radius: var(--r-lg); padding: 8px 8px 14px; cursor: pointer; }
+.sub svg { border-radius: 14px; }
+.sub b { font-weight: 600; letter-spacing: -0.01em; padding: 0 6px; line-height: 1.25; }
+.sub small { display: block; color: var(--muted); font-size: .8rem; font-weight: 400; margin-top: 2px; }
+.sub:active { transform: scale(.98); }
+.illus-lg { max-width: 360px; }
+[data-sec="Rusmidler"] { --c: #0e8a7c; --t: #e6f6f3; }
+
+/* bunnmeny */
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: rgba(255,255,255,.9); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tabs-in { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tab { border: 0; background: transparent; padding: 9px 4px 10px; cursor: pointer; display: grid; justify-items: center; gap: 3px; font-size: .7rem; font-weight: 500; color: #9a9da7; }
+.tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tab[aria-current="page"] { color: var(--ink); }
+.tab[aria-current="page"] svg { stroke-width: 2.2; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .screen > * { animation: fade .28s cubic-bezier(.2,.8,.2,1) both; }
+  .screen > *:nth-child(2) { animation-delay: .02s; } .screen > *:nth-child(3) { animation-delay: .04s; } .screen > *:nth-child(n+4) { animation-delay: .06s; }
+  @keyframes fade { from { transform: translateY(6px); } to { transform: none; } }
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="top-in">
+    <button class="back" id="back" hidden aria-label="Tilbake"><svg class="ic" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="where" id="where">Varde</div>
+    <button class="textsize" id="textsize" aria-pressed="false" aria-label="Større tekst">Aa</button>
+    <button class="sos" id="sos">Akutt</button>
+  </div>
+</header>
+
+<main class="shell" id="app" aria-live="polite"></main>
+
+<nav class="tabs" aria-label="Hovedmeny">
+  <div class="tabs-in">
+    <button class="tab" data-go="hjem"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Hjem</button>
+    <button class="tab" data-go="kontakter"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Kontakter</button>
+    <button class="tab" data-go="notat"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Notat</button>
+    <button class="tab" data-go="kilder"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16"/></svg>Kilder</button>
+  </div>
+</nav>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Nasjonale nummer ---------- */
+  var N = {
+    amk: { lbl: "Ambulanse / AMK", n: "113", what: "Livstruende tilstand, bevisstløs, pustevansker, kramper. Ved tvil: ring." },
+    pol: { lbl: "Politiet – nød", n: "112", what: "Vold, trusler, våpen, fare for andre." },
+    pol2: { lbl: "Politiet – ikke akutt", n: "02800", what: "Tips om salg, funn av rusmidler, drøfting med politiet." },
+    gift: { lbl: "Giftinformasjonen", n: "22 59 13 00", what: "Døgnåpen. Råd når du er usikker på hva eleven har tatt." },
+    lv: { lbl: "Legevakt", n: "116 117", what: "Eleven trenger lege, men det er ikke livstruende." },
+    alarm: { lbl: "Alarmtelefonen for barn og unge", n: "116 111", what: "Gratis og døgnåpen. Setter deg i kontakt med barnevernsvakt utenom kontortid." },
+    mh: { lbl: "Mental Helse hjelpetelefonen", n: "116 123", what: "Døgnåpen samtaletelefon ved selvmordstanker og krise." },
+    kph: { lbl: "Kors på halsen (Røde Kors)", n: "800 33 321", what: "Gratis og anonym samtaletjeneste for barn og unge under 18." }
+  };
+
+  /* ---------- Lokale kontakter (lagres bare i denne nettleseren) ---------- */
+  var LOCAL_DEFS = [
+    ["rektor", "Rektor / ledelse"],
+    ["helse", "Helsesykepleier (skolehelsetjenesten)"],
+    ["politikontakt", "Politikontakt for skolen"],
+    ["slt", "SLT-koordinator i kommunen"],
+    ["barnevern", "Barneverntjenesten (dagtid)"],
+    ["rus", "Ruskonsulent / uteteam / ungdomsteam"],
+    ["ppt", "PPT / Oppfølgingstjenesten"]
+  ];
+  function loadLocal() { try { return JSON.parse(localStorage.getItem("rusveileder-lokale") || "{}"); } catch (e) { return {}; } }
+  function saveLocal(o) { try { localStorage.setItem("rusveileder-lokale", JSON.stringify(o)); return true; } catch (e) { return false; } }
+
+  /* ---------- Veivisere: spørsmål → veiledning ---------- */
+  var ALDER = { id: "alder", short: "Alder", q: "Hvor gammel er eleven?", options: [
+    { v: "u18", l: "Under 18 år" }, { v: "o18", l: "18 år eller eldre" }, { v: "vet", l: "Vet ikke" }
+  ] };
+  function u18(a) { return a.alder !== "o18"; }
+
+  var WIZ = {
+    /* ===== AKUTT ===== */
+    akutt: {
+      sec: "Akutt", title: "En elev er ruset nå",
+      questions: [
+        { id: "fare", short: "Faretegn", q: "Ser du noen av disse faretegnene?",
+          help: ["Bevisstløs eller lar seg ikke vekke ordentlig", "Puster langsomt, uregelmessig eller snorker", "Blå eller grå lepper, kald og klam hud", "Kramper", "Brystsmerter, svært høy puls eller veldig varm", "Sterk forvirring, hallusinasjoner eller panikk"],
+          options: [
+            { v: "ja", l: "Ja, ett eller flere", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+            { v: "usikker", l: "Jeg er usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+            { v: "nei", l: "Nei", s: "Eleven er våken, puster normalt og kan svare" }
+          ] },
+        { id: "tilstand", short: "Tilstand", q: "Hvordan virker eleven nå?", options: [
+          { v: "rolig", l: "Rolig og kontaktbar" },
+          { v: "slov", l: "Trøtt eller sløv", s: "Men lar seg vekke og svarer" },
+          { v: "urolig", l: "Urolig, redd eller aggressiv" }
+        ] },
+        { id: "stoff", short: "Rusmiddel", q: "Vet du hva eleven har tatt?", help: "Spør eleven direkte. Si at du spør for at eleven skal være trygg.", options: [
+          { v: "alkohol", l: "Alkohol" }, { v: "cannabis", l: "Hasj eller marihuana" },
+          { v: "piller", l: "Piller eller andre stoffer" }, { v: "ukjent", l: "Vet ikke" }
+        ] },
+        ALDER,
+        { id: "hjem", short: "Hjemmesituasjon", q: "Har du grunn til å tro at eleven har det vanskelig hjemme?", help: "For eksempel at foresatte ruser seg, vold eller omsorgssvikt.", showIf: u18, options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }, { v: "vet", l: "Vet ikke" }
+        ] },
+        { id: "andre", short: "Andre elever", q: "Er andre elever involvert?", options: [
+          { v: "nei", l: "Nei, bare denne eleven" },
+          { v: "tatt", l: "Andre kan også ha tatt noe" },
+          { v: "vold", l: "Det er trusler eller vold", tone: "red" }
+        ] },
+        { id: "funnet", short: "Rusmidler funnet", q: "Har eleven rusmidler på seg, eller er det funnet noe?", options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }, { v: "vet", l: "Vet ikke" }
+        ] }
+      ],
+      result: function (a) {
+        if (a.fare === "ja" || a.fare === "usikker") return {
+          level: "akutt", title: "Ring 113 nå",
+          summary: a.fare === "ja" ? "Eleven har faretegn. Dette kan være livstruende." : "Du er usikker. Ved tvil skal du alltid ringe. Det er bedre å ringe én gang for mye.",
+          nums: ["amk", "gift"],
+          groups: [
+            { title: "Gjør nå", items: [
+              ["Ring 113 og sett telefonen på høyttaler", "AMK veileder deg til ambulansen kommer."],
+              ["Sjekk om eleven puster normalt", "Se, lytt og kjenn i inntil 10 sekunder."],
+              ["Puster: stabilt sideleie", "Hold eleven varm og følg med på pusten hele tiden."],
+              ["Puster ikke normalt: start hjerte-lunge-redning", "30 kompresjoner og 2 innblåsninger. Send noen etter hjertestarter."],
+              ["Mistanke om opioider", "Har skolen nalokson nesespray, gi den slik AMK sier."],
+              ["Ikke forlat eleven", "Send andre etter hjelp, hjertestarter og ledelsen."]
+            ] },
+            { title: "Når ambulansen er der", items: [
+              ["Gi rester, pakninger eller tabletter til ambulansepersonellet", ""],
+              ["Varsle rektor og helsesykepleier", "Ledelsen kontakter foresatte."],
+              ["Ta vare på de andre elevene", "Noen kan ha tatt det samme. Få dem bort fra stedet med en voksen."],
+              ["Skriv notat samme dag", ""]
+            ] }
+          ]
+        };
+        var now = [
+          ["Ta eleven rolig ut av klassen", "Ikke konfronter foran andre."],
+          ["En voksen er med eleven hele tiden", "Helst to. Ikke la eleven gå alene, heller ikke på do."],
+          ["Bruk et skjermet, rolig rom", "Gi vann. Ikke gi medisiner eller noe annet."]
+        ];
+        if (a.tilstand === "slov") now.push(["Pass på pusten hele tiden", "Sovner eleven: legg i stabilt sideleie og sjekk pusten jevnlig. Lav terskel for å ringe 113."]);
+        if (a.tilstand === "urolig") now.push(["Snakk rolig og gi eleven plass", "Ikke hold fast og ikke konfronter. Få andre elever bort. Ved vold eller trusler: ring 112."]);
+        if (a.stoff === "alkohol") now.push(["Alkohol: ikke la eleven sove uten tilsyn", "Rusen kan øke i en time eller to etter siste drink. Hold eleven varm."]);
+        if (a.stoff === "cannabis") now.push(["Hasj kan gi angst og panikk", "Si rolig at det går over. Brystsmerter, sterk uro eller forvirring: ring 113."]);
+        if (a.stoff === "piller" || a.stoff === "ukjent") now.push(["Ring Giftinformasjonen 22 59 13 00", "Piller og ukjente stoffer kan gi forverring senere. Si hva, hvor mye og når hvis du vet det."]);
+        now.push(["Følg med på bevissthet og pust", "Blir eleven dårligere: ring 113 med en gang."]);
+
+        var kontakt = [["Varsle rektor og helsesykepleier", "Følg skolens beredskapsplan."]];
+        if (u18(a)) {
+          if (a.hjem === "ja") kontakt.push(["Kontakt barnevernet før foresatte", "Du har grunn til å tro at eleven har det vanskelig hjemme. Avtal med barnevernet hvordan foresatte skal varsles. Utenom kontortid: barnevernsvakt via 116 111."]);
+          else {
+            if (a.hjem === "vet") kontakt.push(["Usikker på hjemmesituasjonen?", "Drøft kort med barnevernet før dere ringer foresatte. Det kan gjøres anonymt."]);
+            kontakt.push(["Ledelsen ringer foresatte", "Fortell hva dere har sett, ikke hva dere tror. Be dem hente eleven."]);
+          }
+          kontakt.push(["Ikke send eleven hjem alene", "Eleven blir hos en voksen til noen henter. Får dere ikke tak i foresatte: legevakt eller barnevernsvakt."]);
+        } else {
+          kontakt.push(["Spør eleven hvem dere kan ringe", "Eleven er myndig. Del bare med samtykke, unntatt ved fare for liv og helse."]);
+          kontakt.push(["Ikke la eleven dra alene eller kjøre", "Kan eleven ikke ivareta seg selv: ring legevakt 116 117."]);
+        }
+
+        var groups = [{ title: "Gjør nå", items: now }, { title: "Varsle og kontakt", items: kontakt }];
+        var other = [];
+        if (a.andre === "vold") other.push(["Ring politiet 112", "Få andre elever i sikkerhet. Ikke gå imellom alene."]);
+        if (a.andre === "tatt") other.push(["Finn ut om flere har tatt noe", "Sjekk dem med de samme spørsmålene, med en voksen til stede hos hver."]);
+        if (a.funnet === "ja") {
+          other.push(["Sikre rusmidlene", "Ikke smak eller lukt. Legg i en konvolutt, skriv tid og sted, og lås inn."]);
+          other.push(["Ring politiet på 02800", "Eller politikontakten. Politiet henter beslaget."]);
+        }
+        if (a.funnet === "vet") other.push(["Ikke ransak eleven", "Eleven kan vise frem frivillig. Ellers er det politiets oppgave."]);
+        if (other.length) groups.push({ title: a.andre === "vold" ? "Sikkerhet" : "Andre elever og rusmidler", items: other });
+
+        var later = [
+          ["Skriv notat samme dag", "Fakta: tid, sted, hva du så og hørte, hva som ble gjort."],
+          ["Snakk med eleven når hen er edru", "Helst dagen etter, sammen med helsesykepleier."]
+        ];
+        if (u18(a)) later.push(["Inviter foresatte til et møte", "Snakk om hvordan eleven har det, ikke bare om hendelsen."]);
+        if (u18(a)) later.push(["Vurder melding til barnevernet", "Ved alvorlig eller gjentatt rusbruk hos elever under 18 har du plikt til å melde."]);
+        if (a.stoff !== "alkohol") later.push(["Kontakt politikontakten eller SLT", "Narkotika hos unge bør drøftes med politiet, også for å finne ut hvor stoffet kommer fra."]);
+        later.push(["Lag en plan for oppfølging", "Hvem følger opp, og når snakker dere sammen igjen?"]);
+        later.push(["Reaksjon etter ordensreglementet", "Kombiner alltid reaksjonen med tilbud om hjelp."]);
+        groups.push({ title: "I dag og i morgen", items: later });
+
+        var nums = [];
+        if (a.andre === "vold") nums.push("pol");
+        nums.push("amk");
+        if (a.stoff === "piller" || a.stoff === "ukjent") nums.push("gift");
+        if (u18(a) && a.hjem !== "nei") nums.push("alarm");
+        if (!u18(a)) nums.push("lv");
+        return {
+          level: a.andre === "vold" ? "akutt" : "hoy",
+          title: a.andre === "vold" ? "Ring politiet og ivareta eleven" : "Ivareta eleven og varsle",
+          summary: "Eleven er ikke i livsfare nå, men skal ikke være alene. Målet er sikkerhet. Samtale og reaksjoner tar dere senere.",
+          groups: groups, nums: nums
+        };
+      }
+    },
+
+    /* ===== BEKYMRING ===== */
+    bekymring: {
+      sec: "Bekymring", title: "Jeg er bekymret",
+      questions: [
+        { id: "grunn", short: "Grunnlag", q: "Hva bygger bekymringen på?", options: [
+          { v: "egne", l: "Ting jeg selv har sett eller hørt" },
+          { v: "andre", l: "Noe andre har fortalt meg", s: "Elever, kolleger, foresatte eller rykter" },
+          { v: "mage", l: "Mest en magefølelse" }
+        ] },
+        { id: "tegn", short: "Tegn", q: "Hva har du lagt merke til?", multi: true, help: "Velg alt som passer.", options: [
+          { v: "fravaer", l: "Mer fravær eller fall i skolearbeid" },
+          { v: "atferd", l: "Endret humør eller atferd" },
+          { v: "fysisk", l: "Lukt, røde øyne, sløvhet" },
+          { v: "venner", l: "Nye, eldre venner" },
+          { v: "penger", l: "Penger eller ting uten forklaring" },
+          { v: "sagt", l: "Eleven har sagt noe om rus" }
+        ] },
+        { id: "lengde", short: "Varighet", q: "Hvor lenge har du vært bekymret?", options: [
+          { v: "dager", l: "Noen dager" }, { v: "uker", l: "Noen uker" }, { v: "maneder", l: "Flere måneder" }
+        ] },
+        { id: "fare", short: "Fare", q: "Er det tegn på at eleven er i fare?", help: "For eksempel vold, omsorgssvikt, selvskading eller trusler.", options: [
+          { v: "ja", l: "Ja", tone: "red" }, { v: "nei", l: "Nei" }, { v: "vet", l: "Vet ikke" }
+        ] },
+        { id: "krim", short: "Kriminalitet", q: "Er det tegn til salg, kriminalitet eller press fra eldre?", options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }, { v: "vet", l: "Vet ikke" }
+        ] },
+        ALDER,
+        { id: "snakket", short: "Samtale", q: "Har noen på skolen snakket med eleven om dette?", options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei, ikke ennå" }
+        ] }
+      ],
+      result: function (a) {
+        var n = (a.tegn || []).length;
+        var level, title, summary;
+        if (a.fare === "ja") { level = "hoy"; title = u18(a) ? "Meld til barnevernet i dag" : "Handle i dag"; summary = "Du ser tegn på at eleven kan være i fare. Da skal du ikke vente."; }
+        else if (a.krim === "ja") { level = "hoy"; title = "Kontakt politikontakten eller SLT"; summary = "Tegn på salg, kriminalitet eller press fra eldre krever samarbeid med politiet og kommunen."; }
+        else if (a.lengde === "maneder" || n >= 3) { level = "middels"; title = "Drøft og lag en plan denne uka"; summary = "Flere tegn over tid gir god grunn til å handle. Del bekymringen, og sørg for at noen følger eleven tett."; }
+        else { level = "lav"; title = "Snakk med eleven og følg med"; summary = "Bekymringen er en grunn til å spørre hvordan eleven har det. Tegnene kan også ha andre forklaringer."; }
+
+        var forst = [];
+        if (a.snakket !== "ja") forst.push(["Snakk med eleven", "Den som kjenner eleven best. Si hva du har sett, at du er bekymret, og spør hvordan det går. Se samtaleguiden."]);
+        if (a.grunn === "andre") forst.push(["Bekreft med egne observasjoner", "Rykter kan være feil. Følg med selv, og ikke avslør hvem som har fortalt deg noe."]);
+        if (a.grunn === "mage") forst.push(["Følg med i en til to uker", "Noter konkrete ting med dato: fravær, humør, venner, skolearbeid."]);
+        forst.push(["Skriv ned det du vet", "Hva, når og hvor. Skill mellom det du har sett og det du tror."]);
+        forst.push(["Drøft med ledelsen og helsesykepleier", "Følg skolens rutine. Du kan også drøfte uten navn."]);
+
+        var kontakt = [];
+        if (u18(a)) {
+          if (a.fare === "ja") {
+            kontakt.push(["Send melding til barnevernet", "Plikten er personlig og går foran taushetsplikten. Du trenger ikke bevis. Ved akutt fare utenom kontortid: 116 111."]);
+            kontakt.push(["Avklar med barnevernet om foresatte skal informeres", "Ikke informer foresatte hvis det kan sette eleven i fare."]);
+          } else {
+            if (a.fare === "vet" || a.lengde === "maneder") kontakt.push(["Drøft anonymt med barnevernet", "De kan hjelpe deg å vurdere om du bør melde."]);
+            kontakt.push(["Inviter foresatte til en samtale", "Som samarbeid, ikke anklage. Foresatte er ofte elevens viktigste beskyttelse."]);
+          }
+        } else {
+          kontakt.push(["Tilby eleven kontakt med helsesykepleier eller fastlege", "Eleven er myndig og bestemmer selv over egne opplysninger."]);
+        }
+        if (a.krim === "ja" || a.krim === "vet") kontakt.push(["Kontakt politikontakten eller SLT-koordinator", a.krim === "ja" ? "Politiet kan også invitere eleven og foresatte til en bekymringssamtale." : "Drøft gjerne anonymt først."]);
+
+        var folg = [
+          ["Lag en enkel plan", "Hvem følger opp, hva følger dere med på, og når evaluerer dere?"],
+          ["Følg med på fravær", "Høyt eller økende fravær er et viktig varsel."],
+          ["Bruk kommunens tilbud", "Helsesykepleier, ungdomsteam, ruskonsulent, uteteam og fritidstilbud."],
+          ["Evaluer om to til fire uker", "Er det bedre, likt eller verre? Juster planen."]
+        ];
+        var groups = [{ title: "Først", items: forst }];
+        if (kontakt.length) groups.push({ title: "Kontakt", items: kontakt });
+        groups.push({ title: "Følg opp", items: folg });
+        var links = [{ l: "Samtaleguide", to: "samtale" }];
+        if ((a.tegn || []).indexOf("penger") > -1 || (a.tegn || []).indexOf("venner") > -1) links.push({ l: "Belastet miljø: tegn på rekruttering", to: "miljo" });
+        return { level: level, title: title, summary: summary, groups: groups, nums: u18(a) && a.fare !== "nei" ? ["alarm"] : [], links: links,
+          callout: { tone: "green", title: "Husk", html: "Tegnene kan også handle om psykisk helse, søvn, mobbing eller problemer hjemme. Uansett er det en grunn til å spørre hvordan eleven har det." } };
+      }
+    },
+
+    /* ===== ELEVEN FORTELLER ===== */
+    forteller: {
+      sec: "Eleven forteller", title: "Eleven forteller noe",
+      intro: "Lytt rolig, takk for at eleven forteller, og still åpne spørsmål. Ikke avhør. Svar på spørsmålene etterpå, eller mens eleven fortsatt er hos deg.",
+      questions: [
+        { id: "hva", short: "Tema", q: "Hva forteller eleven om?", options: [
+          { v: "egen", l: "Eget rusbruk" },
+          { v: "venn", l: "En venn eller annen elev" },
+          { v: "hjemme", l: "Noen hjemme ruser seg" },
+          { v: "press", l: "At noen presser eller truer eleven" },
+          { v: "salg", l: "Salg av rusmidler" }
+        ] },
+        { id: "fare", short: "Fare", q: "Er det fare for liv eller helse nå?", help: "Selvmordstanker, overdose, vold eller overgrep.", options: [
+          { v: "ja", l: "Ja", tone: "red" }, { v: "usikker", l: "Usikker" }, { v: "nei", l: "Nei" }
+        ] },
+        ALDER,
+        { id: "hemmelig", short: "Hemmelighold", q: "Har eleven bedt deg holde det hemmelig?", options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }
+        ] }
+      ],
+      result: function (a) {
+        var level = "middels", title = "Avtal neste steg sammen med eleven", summary = "Eleven har valgt å stole på deg. La eleven være med på å bestemme hva som skjer, så langt det er mulig.";
+        var groups = [], nums = [];
+        if (a.fare === "ja") { level = "akutt"; title = "Ikke la eleven gå alene"; summary = "Det er fare for liv eller helse. Få hjelp nå."; nums = ["amk", "pol", "alarm"]; }
+        else if (a.hva === "hjemme") { level = "hoy"; title = u18(a) ? "Meld til barnevernet" : "Hjelp eleven videre"; summary = "Rus hos foresatte kan bety alvorlig omsorgssvikt."; nums = ["alarm", "kph"]; }
+        else if (a.hva === "press") { level = "hoy"; title = "Kontakt politiet og barnevernet"; summary = "Trusler og press kan være straffbart, og eleven kan være utnyttet."; nums = ["pol", "pol2", "alarm"]; }
+        else if (a.hva === "salg") { level = "middels"; title = "Gi beskjed til politiet"; summary = "Ta tipset videre, og beskytt eleven som har fortalt."; nums = ["pol2"]; }
+        else if (a.hva === "venn") { title = "Hjelp eleven å hjelpe vennen"; }
+
+        groups.push({ title: "Nå i samtalen", items: [
+          ["Takk for at eleven forteller", "Vis at du tar det på alvor, uten å vise sjokk eller sinne."],
+          a.hemmelig === "ja" ? ["Forklar ærlig hvorfor du ikke kan love hemmelighold", "Si at du må snakke med noen for å hjelpe, hvem det er, og at eleven får vite hva som skjer."] : ["Si hva du gjør videre", "Eleven skal vite hvem du snakker med og hvorfor."],
+          ["Skriv ned det eleven sa, med elevens ord", "Gjør det rett etterpå."]
+        ] });
+
+        var na = [];
+        if (a.fare === "ja") {
+          na.push(["Ring 113 ved selvmordsfare eller overdose", "Ikke la eleven være alene før hjelp er på plass."]);
+          na.push(["Ring 112 ved vold eller trusler", ""]);
+          na.push(["Varsle ledelsen og helsesykepleier med en gang", ""]);
+        }
+        if (a.fare === "usikker") na.push(["Hent helsesykepleier eller ledelsen nå", "Vurder sammen om eleven trenger hjelp i dag. Legevakt: 116 117."]);
+        if (a.hva === "hjemme" || a.hva === "press" || a.fare === "ja") {
+          if (u18(a)) na.push(["Send melding til barnevernet samme dag", "Utenom kontortid: barnevernsvakt via 116 111. Plikten går foran taushetsplikten."]);
+          if (a.hva === "hjemme") na.push(["Ikke kontakt foresatte først", "La barnevernet vurdere hvordan og når foresatte skal involveres."]);
+        }
+        if (a.hva === "press") {
+          na.push(["Varsle politiet", "Avvergeplikten: får du vite om alvorlig kriminalitet som kan skje, skal du forsøke å hindre den."]);
+          na.push(["Ikke konfronter dem som presser", "Det kan sette eleven i fare."]);
+        }
+        if (a.hva === "salg") {
+          na.push(["Gi beskjed til politikontakten eller 02800", "Fortell hva, hvem, hvor og når, så langt du vet."]);
+          na.push(["Ikke avslør hvem som har fortalt", "Eleven kan bli utsatt for reaksjoner fra andre."]);
+          na.push(["Ikke etterforsk selv", "Ikke ta beslag i telefoner, og ikke be elever skaffe bevis."]);
+        }
+        if (a.hva === "egen") {
+          na.push(["Spør hva eleven ønsker hjelp til", "«Hva tenker du selv? Hva ville vært til hjelp?»"]);
+          na.push(["Tilby kontakt med helsesykepleier", "Gjerne at du blir med på første møte."]);
+          if (u18(a)) na.push(["Snakk om foresatte", "Foresatte bør som hovedregel involveres. Avtal hvordan, og hvem som sier det."]);
+          if (u18(a)) na.push(["Vurder melding til barnevernet", "Plikt ved alvorlig eller vedvarende rusbruk. Drøft gjerne anonymt først."]);
+        }
+        if (a.hva === "venn") {
+          na.push(["Si at eleven har gjort det riktige", "Å si fra er å bry seg, ikke å sladre."]);
+          na.push(["Ta det videre til ledelsen eller helsesykepleier", "Er vennen elev på skolen, kan skolen følge opp."]);
+          na.push(["Gi eleven råd om hva hen kan gjøre selv", "For eksempel ung.no eller Kors på halsen, 800 33 321."]);
+        }
+        if (na.length) groups.push({ title: a.fare === "ja" ? "Gjør nå" : "Neste steg", items: na });
+        groups.push({ title: "Følg opp", items: [
+          ["Avtal en ny samtale innen en uke", "Så eleven vet at du følger opp."],
+          ["Skriv notat", "Fakta og elevens egne ord."]
+        ] });
+        return { level: level, title: title, summary: summary, groups: groups, nums: nums, links: [{ l: "Plikter og lovverk", to: "plikter" }] };
+      }
+    },
+
+    /* ===== FUNN / SALG ===== */
+    funn: {
+      sec: "Funn og salg", title: "Funn eller salg",
+      questions: [
+        { id: "hva", short: "Hendelse", q: "Hva har skjedd?", options: [
+          { v: "funn", l: "Vi har funnet rusmidler eller utstyr" },
+          { v: "salg", l: "Mistanke om salg på eller ved skolen" },
+          { v: "some", l: "Salg via sosiale medier" },
+          { v: "kjopt", l: "En elev har kjøpt rusmidler" }
+        ] },
+        { id: "fare", short: "Fare", q: "Er det trusler, våpen eller vold involvert?", options: [
+          { v: "ja", l: "Ja", tone: "red", stop: true }, { v: "nei", l: "Nei" }
+        ] },
+        { id: "hvem", short: "Vet hvem", q: "Vet dere hvilke elever det gjelder?", options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }
+        ] },
+        { id: "alder", short: "Alder", q: "Hvor gamle er elevene?", showIf: function (a) { return a.hvem === "ja"; }, options: [
+          { v: "u18", l: "Under 18 år" }, { v: "o18", l: "18 år eller eldre" }, { v: "vet", l: "Vet ikke" }
+        ] }
+      ],
+      result: function (a) {
+        if (a.fare === "ja") return { level: "akutt", title: "Ring politiet 112", summary: "Trusler, våpen og vold håndteres av politiet. Ikke gå imellom alene.", nums: ["pol"],
+          groups: [{ title: "Gjør nå", items: [
+            ["Ring 112", ""], ["Få elever og ansatte i sikkerhet", "Følg skolens beredskapsplan for vold og trusler."], ["Varsle ledelsen", ""], ["Skriv notat etterpå", ""]
+          ] }] };
+        var groups = [], level = "hoy", title, summary;
+        if (a.hva === "funn") {
+          title = "Sikre funnet og ring politiet"; summary = "Rusmidler skal overleveres politiet. Skolen skal ikke etterforske.";
+          groups.push({ title: "Gjør nå", items: [
+            ["Ikke smak eller lukt på det", "Bruk hansker hvis mulig. Noen stoffer er farlige ved hudkontakt."],
+            ["Legg det i en konvolutt eller pose", "Skriv på tid, sted og hvem som fant det."],
+            ["Lås det inn og varsle rektor", "Ikke kast det eller skyll det ned."],
+            ["Ring politiet på 02800 eller politikontakten", "De henter og vurderer saken."],
+            ["Ikke ransak elever eller sekker", "Eleven kan vise frem frivillig. Ellers er det politiets oppgave."]
+          ] });
+        } else if (a.hva === "kjopt") {
+          level = "middels"; title = "Ivareta eleven og varsle"; summary = "En elev som kjøper rusmidler kan være i en sårbar situasjon. Hjelp kommer først.";
+          groups.push({ title: "Gjør nå", items: [
+            ["Snakk med eleven", "Spør hvordan hen har det. Ikke press for navn på selgere."],
+            ["Involver helsesykepleier", ""],
+            ["Gi beskjed til politiet om selgeren", "Politikontakten eller 02800."]
+          ] });
+        } else {
+          title = "Gi beskjed til politiet"; summary = "Unge som selger er ofte selv utnyttet av eldre. Skolen skal varsle, ikke etterforske.";
+          groups.push({ title: "Gjør nå", items: [
+            ["Ikke konfronter mistenkte selgere alene", "Det kan være farlig for deg og for eleven."],
+            ["Ikke etterforsk selv", "Ikke ta beslag i telefoner, og ikke be elever skaffe bevis."],
+            a.hva === "some" ? ["Noter brukernavn, plattform og tidspunkt", "Viser en elev deg noe, noter det. Ikke del skjermbilder videre."] : ["Noter hva, hvem, hvor og når", ""],
+            ["Gi beskjed til politikontakten eller 02800", "Tips kan også gis via politiet.no."],
+            ["Informer ledelsen", "Vurder om foresatte bør få generell informasjon."]
+          ] });
+        }
+        var k = [];
+        if (a.hvem === "ja") {
+          if (a.alder !== "o18") {
+            k.push(["Kontakt foresatte", "Ledelsen tar kontakt. Fortell hva dere vet, ikke hva dere tror."]);
+            k.push(["Vurder melding til barnevernet", a.hva === "kjopt" ? "Ved alvorlig eller gjentatt rusbruk har du plikt til å melde." : "Unge under 18 som selger kan være utnyttet eller rekruttert."]);
+          }
+          k.push(["Snakk med eleven, gjerne med helsesykepleier", "Tilby hjelp, i tillegg til eventuell reaksjon etter ordensreglementet."]);
+        } else {
+          k.push(["Følg med og del informasjon med politikontakten", "Politiet kan ha informasjon skolen ikke har."]);
+        }
+        groups.push({ title: "Videre", items: k.concat([["Skriv notat", ""]]) });
+        return { level: level, title: title, summary: summary, groups: groups, nums: ["pol2"], links: a.hva === "funn" ? [] : [{ l: "Belastet miljø: tegn på rekruttering", to: "miljo" }] };
+      }
+    },
+
+    /* ===== MILJØ ===== */
+    miljo: {
+      sec: "Miljø", title: "Belastet miljø",
+      questions: [
+        { id: "fare", short: "Akutt fare", q: "Er eleven eller andre i akutt fare?", help: "Trusler, vold, våpen, eller at eleven er savnet.", options: [
+          { v: "ja", l: "Ja", tone: "red", stop: true }, { v: "nei", l: "Nei" }
+        ] },
+        { id: "tegn", short: "Tegn", q: "Hva har du lagt merke til?", multi: true, help: "Velg alt som passer.", options: [
+          { v: "venner", l: "Nye, eldre venner" },
+          { v: "penger", l: "Penger, klær eller telefoner uten forklaring" },
+          { v: "gjeld", l: "Gjeld, eller at noen «venter på» eleven" },
+          { v: "frykt", l: "Frykt, skader eller trusler" },
+          { v: "frakt", l: "Frakter pakker eller tar oppdrag" },
+          { v: "borte", l: "Mye fravær, borte om kvelden eller natten" }
+        ] },
+        ALDER,
+        { id: "foresatte", short: "Foresatte", q: "Vet foresatte om bekymringen?", showIf: u18, options: [
+          { v: "ja", l: "Ja" }, { v: "nei", l: "Nei" }, { v: "del", l: "Foresatte kan være en del av problemet" }
+        ] }
+      ],
+      result: function (a) {
+        if (a.fare === "ja") return { level: "akutt", title: "Ring politiet 112", summary: "Eleven eller andre kan være i fare.", nums: ["pol", "alarm"],
+          groups: [{ title: "Gjør nå", items: [
+            ["Ring 112", ""], ["Sørg for at eleven og andre er trygge", "Hold eleven inne på skolen hvis trusselen er utenfor."],
+            ["Varsle ledelsen", ""], ["Kontakt barnevernet samme dag", "Utenom kontortid: barnevernsvakt via 116 111."]
+          ] }] };
+        var t = a.tegn || [];
+        var alvorlig = t.indexOf("gjeld") > -1 || t.indexOf("frykt") > -1 || t.indexOf("frakt") > -1;
+        var groups = [];
+        var k = [["Drøft med politikontakten eller SLT-koordinator", "Gjerne anonymt først. SLT er samarbeidet mellom kommunen og politiet om barn og unge."]];
+        if (u18(a)) k.push(["Meld til barnevernet", "Kriminalitet og rus kan være alvorlige atferdsvansker, og eleven kan være utnyttet."]);
+        if (u18(a) && a.foresatte === "del") k.push(["Ikke informer foresatte først", "La barnevernet vurdere hvordan foresatte skal involveres."]);
+        else if (u18(a) && a.foresatte === "nei") k.push(["Involver foresatte", "De vet ofte mindre enn skolen. Avklar først med barnevernet om det er trygt."]);
+        if (alvorlig) k.push(["Spør politiet om bekymringssamtale", "Politiet kan invitere eleven og foresatte til en frivillig samtale."]);
+        groups.push({ title: "Kontakt", items: k });
+        var s = [
+          ["Finn én trygg voksen på skolen", "Én som følger eleven tett, har stor betydning."],
+          ["Hold eleven på skolen", "Skolen er en viktig beskyttelse. Tilrettelegg heller enn å utvise når det er mulig."]
+        ];
+        if (t.indexOf("borte") > -1) s.push(["Følg opp fraværet samme dag", "Ring hjem ved ugyldig fravær. Vurder Oppfølgingstjenesten (videregående)."]);
+        if (t.indexOf("gjeld") > -1) s.push(["Snakk om gjeld uten å dømme", "Si tydelig at politiet og barnevernet kan beskytte, og at målet er å hjelpe."]);
+        s.push(["Skriv notat og del med dem som trenger det", "Innenfor reglene for taushetsplikt."]);
+        groups.push({ title: "På skolen", items: s });
+        return { level: alvorlig ? "hoy" : "middels", title: alvorlig ? "Samarbeid med politi og barnevern nå" : "Drøft med SLT og følg eleven tett",
+          summary: alvorlig ? "Gjeld, frykt og oppdrag for andre er tydelige tegn på at eleven kan være utnyttet." : "Unge blir rekruttert med penger, status og tilhørighet. Tidlig samarbeid kan bryte det.",
+          groups: groups, nums: ["pol2", "alarm"], links: [{ l: "Samtaleguide", to: "samtale" }] };
+      }
+    }
+  };
+
+  var LEVELS = {
+    akutt: { l: "Akutt – handle nå", c: "akutt" },
+    hoy: { l: "Alvorlig – handle i dag", c: "funn" },
+    middels: { l: "Følg opp denne uka", c: "bek" },
+    lav: { l: "Følg med", c: "etter" }
+  };
+
+  /* ---------- Illustrasjoner (egne, tegnet for Varde – ikke fotografier) ---------- */
+  var ILL = {"alkohol": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='albg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#f4dfcf'/></radialGradient>\n<filter id='alblur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='alsoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='algrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='alglass' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#123d22'/><stop offset='0.18' stop-color='#2f7a46'/><stop offset='0.32' stop-color='#7fc79a'/><stop offset='0.42' stop-color='#2f7a46'/><stop offset='0.85' stop-color='#0f3a1f'/><stop offset='1' stop-color='#0a2a16'/></linearGradient><linearGradient id='alcan' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#8d96a6'/><stop offset='0.15' stop-color='#f4f6fa'/><stop offset='0.3' stop-color='#c3c9d4'/><stop offset='0.55' stop-color='#e9ecf2'/><stop offset='0.8' stop-color='#8a93a3'/><stop offset='1' stop-color='#5c6575'/></linearGradient><linearGradient id='alcanc' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#b3361f'/><stop offset='0.2' stop-color='#ff7a4d'/><stop offset='0.35' stop-color='#ffb08a'/><stop offset='0.5' stop-color='#e8552f'/><stop offset='1' stop-color='#7d1f10'/></linearGradient><linearGradient id='allab' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#cdbf9c'/><stop offset='0.3' stop-color='#fbf3dc'/><stop offset='0.6' stop-color='#e9dcb8'/><stop offset='1' stop-color='#a8987a'/></linearGradient></defs><rect width='240' height='180' fill='url(#albg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#f4dfcf' opacity='.55'/><ellipse cx='95' cy='138' rx='40' ry='7' fill='#1b2030' opacity='0.35' filter='url(#alblur)'/><ellipse cx='165' cy='140' rx='30' ry='6' fill='#1b2030' opacity='0.35' filter='url(#alblur)'/>\n<path d='M88 22h14v26c0 6 18 14 18 32v54c0 6-4 9-10 9H80c-6 0-10-3-10-9V80c0-18 18-26 18-32z' fill='url(#alglass)'/>\n<rect x='86' y='16' width='18' height='9' rx='2.5' fill='#c9a227'/><rect x='86' y='16' width='18' height='3' rx='1.5' fill='#f2d675'/>\n<path d='M71 86h48v34H71z' fill='url(#allab)'/><path d='M71 86h48v3H71zM71 117h48v3H71z' fill='#8a6d2f' opacity='.6'/>\n<ellipse cx='95' cy='103' rx='14' ry='9' fill='none' stroke='#8a6d2f' stroke-width='1.6'/><path d='M86 103h18' stroke='#8a6d2f' stroke-width='2'/>\n<path d='M76 62c3-6 8-9 10-10v84c-4 0-8-1-10-3z' fill='#ffffff' opacity='.18'/>\n<path d='M140 64c0-4 3-6 25-6s25 2 25 6v70c0 4-3 6-25 6s-25-2-25-6z' fill='url(#alcanc)'/>\n<path d='M140 64c0-4 3-6 25-6s25 2 25 6v8c0-3-3-5-25-5s-25 2-25 5z' fill='url(#alcan)'/>\n<path d='M140 126c0 3 3 5 25 5s25-2 25-5v8c0 4-3 6-25 6s-25-2-25-6z' fill='url(#alcan)'/>\n<ellipse cx='165' cy='62' rx='25' ry='5' fill='#d9dde5' stroke='#9aa2b1' stroke-width='1'/><ellipse cx='171' cy='61' rx='7' ry='2' fill='#7d8697'/>\n<path d='M150 84h30v30h-30z' fill='#fff' opacity='.15'/><path d='M148 70c2 0 4 1 4 3v54c-2 0-4-1-4-3z' fill='#fff' opacity='.35'/>\n<text x='165' y='104' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#fff' text-anchor='middle' opacity='.9'>4,7%</text></svg>", "cannabis": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='cabg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#d4ecdf'/></radialGradient>\n<filter id='cablur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='casoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='cagrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='caleaf' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1e6b38'/><stop offset='0.5' stop-color='#3fa35f'/><stop offset='1' stop-color='#2a7f45'/></linearGradient><linearGradient id='capaper' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#d9d4c8'/><stop offset='0.35' stop-color='#ffffff'/><stop offset='0.7' stop-color='#ece7dc'/><stop offset='1' stop-color='#b8b1a2'/></linearGradient><linearGradient id='catip' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#c98b4f'/><stop offset='1' stop-color='#8e5a2b'/></linearGradient></defs><rect width='240' height='180' fill='url(#cabg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#d4ecdf' opacity='.55'/><ellipse cx='105' cy='140' rx='62' ry='8' fill='#1b2030' opacity='0.3' filter='url(#cablur)'/><ellipse cx='180' cy='146' rx='34' ry='5' fill='#1b2030' opacity='0.3' filter='url(#cablur)'/><path d='M105 112 Q104 130 98 142' stroke='#2a7f45' stroke-width='3.4' fill='none' stroke-linecap='round'/><g transform='rotate(-92 105 112)'><path d='M105.0 112.0 L105.0 112.0 L102.1 109.6 L102.0 107.1 L99.8 104.7 L100.3 102.3 L98.4 99.9 L99.5 97.4 L98.0 95.0 L99.6 92.6 L98.5 90.1 L100.6 87.7 L99.8 85.3 L102.3 82.9 L101.7 80.4 L105.0 78.0 L105.0 78.0 L108.3 80.4 L107.7 82.9 L110.2 85.3 L109.4 87.7 L111.5 90.1 L110.4 92.6 L112.0 95.0 L110.5 97.4 L111.6 99.9 L109.7 102.3 L110.2 104.7 L108.0 107.1 L107.9 109.6 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V82' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(-62 105 112)'><path d='M105.0 112.0 L105.0 112.0 L101.3 108.3 L100.7 104.6 L98.1 100.9 L98.3 97.1 L96.3 93.4 L97.2 89.7 L95.7 86.0 L97.4 82.3 L96.4 78.6 L98.8 74.9 L98.2 71.1 L101.2 67.4 L101.1 63.7 L105.0 60.0 L105.0 60.0 L108.9 63.7 L108.8 67.4 L111.8 71.1 L111.2 74.9 L113.6 78.6 L112.6 82.3 L114.3 86.0 L112.8 89.7 L113.7 93.4 L111.7 97.1 L111.9 100.9 L109.3 104.6 L108.7 108.3 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V64' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(-31 105 112)'><path d='M105.0 112.0 L105.0 112.0 L100.9 107.3 L100.0 102.6 L97.1 97.9 L97.1 93.1 L95.0 88.4 L95.8 83.7 L94.3 79.0 L96.0 74.3 L95.2 69.6 L97.7 64.9 L97.3 60.1 L100.5 55.4 L100.7 50.7 L105.0 46.0 L105.0 46.0 L109.3 50.7 L109.5 55.4 L112.7 60.1 L112.3 64.9 L114.8 69.6 L114.0 74.3 L115.7 79.0 L114.2 83.7 L115.0 88.4 L112.9 93.1 L112.9 97.9 L110.0 102.6 L109.1 107.3 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V50' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(0 105 112)'><path d='M105.0 112.0 L105.0 112.0 L100.6 106.7 L99.5 101.4 L96.5 96.1 L96.4 90.9 L94.1 85.6 L94.9 80.3 L93.4 75.0 L95.1 69.7 L94.3 64.4 L96.9 59.1 L96.7 53.9 L100.1 48.6 L100.4 43.3 L105.0 38.0 L105.0 38.0 L109.6 43.3 L109.9 48.6 L113.3 53.9 L113.1 59.1 L115.7 64.4 L114.9 69.7 L116.6 75.0 L115.1 80.3 L115.9 85.6 L113.6 90.9 L113.5 96.1 L110.5 101.4 L109.4 106.7 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V42' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(31 105 112)'><path d='M105.0 112.0 L105.0 112.0 L100.9 107.3 L100.0 102.6 L97.1 97.9 L97.1 93.1 L95.0 88.4 L95.8 83.7 L94.3 79.0 L96.0 74.3 L95.2 69.6 L97.7 64.9 L97.3 60.1 L100.5 55.4 L100.7 50.7 L105.0 46.0 L105.0 46.0 L109.3 50.7 L109.5 55.4 L112.7 60.1 L112.3 64.9 L114.8 69.6 L114.0 74.3 L115.7 79.0 L114.2 83.7 L115.0 88.4 L112.9 93.1 L112.9 97.9 L110.0 102.6 L109.1 107.3 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V50' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(62 105 112)'><path d='M105.0 112.0 L105.0 112.0 L101.3 108.3 L100.7 104.6 L98.1 100.9 L98.3 97.1 L96.3 93.4 L97.2 89.7 L95.7 86.0 L97.4 82.3 L96.4 78.6 L98.8 74.9 L98.2 71.1 L101.2 67.4 L101.1 63.7 L105.0 60.0 L105.0 60.0 L108.9 63.7 L108.8 67.4 L111.8 71.1 L111.2 74.9 L113.6 78.6 L112.6 82.3 L114.3 86.0 L112.8 89.7 L113.7 93.4 L111.7 97.1 L111.9 100.9 L109.3 104.6 L108.7 108.3 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V64' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(92 105 112)'><path d='M105.0 112.0 L105.0 112.0 L102.1 109.6 L102.0 107.1 L99.8 104.7 L100.3 102.3 L98.4 99.9 L99.5 97.4 L98.0 95.0 L99.6 92.6 L98.5 90.1 L100.6 87.7 L99.8 85.3 L102.3 82.9 L101.7 80.4 L105.0 78.0 L105.0 78.0 L108.3 80.4 L107.7 82.9 L110.2 85.3 L109.4 87.7 L111.5 90.1 L110.4 92.6 L112.0 95.0 L110.5 97.4 L111.6 99.9 L109.7 102.3 L110.2 104.7 L108.0 107.1 L107.9 109.6 L105.0 112.0Z' fill='url(#caleaf)'/><path d='M105 112V82' stroke='#9fe0b4' stroke-width='1' opacity='.7'/></g><g transform='rotate(-12 180 136)'><path d='M146 132l64-4 2 9-64 5z' fill='url(#capaper)'/><path d='M146 132l-4 1 1 9 5 0z' fill='url(#catip)'/>\n<path d='M210 128c4-2 8 1 7 5s-5 5-5 5z' fill='#e9e4d8'/><path d='M150 135l58-4' stroke='#c9c2b2' stroke-width='.8'/></g></svg>", "piller": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='pibg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#d9e2f5'/></radialGradient>\n<filter id='piblur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='pisoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='pigrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='pifoil' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#9aa3b2'/><stop offset='0.25' stop-color='#eef1f6'/><stop offset='0.5' stop-color='#b9c0cc'/><stop offset='0.75' stop-color='#f5f7fa'/><stop offset='1' stop-color='#8c95a5'/></linearGradient><radialGradient id='pibub' cx='0.4' cy='0.35' r='0.7'><stop offset='0' stop-color='#ffffff'/><stop offset='0.55' stop-color='#e6ebf3'/><stop offset='1' stop-color='#aab3c3'/></radialGradient><radialGradient id='pitab' cx='0.4' cy='0.35' r='0.7'><stop offset='0' stop-color='#ffffff'/><stop offset='0.6' stop-color='#f1f2f5'/><stop offset='1' stop-color='#c4c8d2'/></radialGradient><linearGradient id='picapA' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#1f3f9c'/><stop offset='0.35' stop-color='#5d86f0'/><stop offset='0.5' stop-color='#9bb5ff'/><stop offset='1' stop-color='#1b357f'/></linearGradient><linearGradient id='picapB' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#c8ccd6'/><stop offset='0.35' stop-color='#ffffff'/><stop offset='0.5' stop-color='#ffffff'/><stop offset='1' stop-color='#a9afbd'/></linearGradient><radialGradient id='pipink' cx='0.4' cy='0.35' r='0.7'><stop offset='0' stop-color='#ffe3ec'/><stop offset='0.6' stop-color='#f5a3bb'/><stop offset='1' stop-color='#c56f8b'/></radialGradient></defs><rect width='240' height='180' fill='url(#pibg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#d9e2f5' opacity='.55'/><ellipse cx='90' cy='128' rx='62' ry='9' fill='#1b2030' opacity='0.3' filter='url(#piblur)'/><g transform='rotate(-8 90 90)'><rect x='34' y='46' width='112' height='72' rx='8' fill='url(#pifoil)'/><ellipse cx='50' cy='68' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='50' cy='66' r='11' fill='url(#pibub)'/><circle cx='50' cy='66' r='7.5' fill='url(#pitab)'/><ellipse cx='46' cy='61' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='50' cy='100' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='50' cy='98' r='11' fill='url(#pibub)'/><circle cx='50' cy='98' r='7.5' fill='url(#pitab)'/><ellipse cx='46' cy='93' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='77' cy='68' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='77' cy='66' r='11' fill='url(#pibub)'/><circle cx='77' cy='66' r='7.5' fill='url(#pitab)'/><ellipse cx='73' cy='61' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='77' cy='100' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='77' cy='98' r='11' fill='url(#pibub)'/><circle cx='77' cy='98' r='7.5' fill='url(#pitab)'/><ellipse cx='73' cy='93' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='104' cy='68' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='104' cy='66' r='11' fill='url(#pibub)'/><circle cx='104' cy='66' r='7.5' fill='url(#pitab)'/><ellipse cx='100' cy='61' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='104' cy='100' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='104' cy='98' r='11' fill='url(#pibub)'/><circle cx='104' cy='98' r='7.5' fill='url(#pitab)'/><ellipse cx='100' cy='93' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='131' cy='68' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='131' cy='66' r='11' fill='url(#pibub)'/><circle cx='131' cy='66' r='7.5' fill='url(#pitab)'/><ellipse cx='127' cy='61' rx='3.5' ry='2' fill='#fff' opacity='.9'/><ellipse cx='131' cy='100' rx='11' ry='11' fill='#6f7888' opacity='.35'/><circle cx='131' cy='98' r='11' fill='url(#pibub)'/><circle cx='131' cy='98' r='7.5' fill='url(#pitab)'/><ellipse cx='127' cy='93' rx='3.5' ry='2' fill='#fff' opacity='.9'/><path d='M36 50h108' stroke='#fff' stroke-width='1.5' opacity='.7'/></g><ellipse cx='178' cy='148' rx='26' ry='4' fill='#1b2030' opacity='0.35' filter='url(#piblur)'/><g transform='rotate(-30 178 132)'><rect x='156' y='124' width='22' height='17' rx='8.5' fill='url(#picapA)'/><rect x='172' y='124' width='22' height='17' rx='8.5' fill='url(#picapB)'/><rect x='170' y='124' width='8' height='17' fill='url(#picapA)'/><path d='M160 128h30' stroke='#fff' stroke-width='2' stroke-linecap='round' opacity='.7'/></g>\n<ellipse cx='206' cy='152' rx='12' ry='3' fill='#1b2030' opacity='0.35' filter='url(#piblur)'/><circle cx='206' cy='142' r='11' fill='url(#pipink)'/><path d='M197 142h18' stroke='#b85d79' stroke-width='1.4'/><ellipse cx='202' cy='137' rx='3' ry='1.6' fill='#fff' opacity='.8'/>\n<ellipse cx='150' cy='156' rx='10' ry='3' fill='#1b2030' opacity='0.3' filter='url(#piblur)'/><ellipse cx='150' cy='149' rx='10' ry='7' fill='url(#pitab)'/><path d='M143 149h14' stroke='#b9bfcb' stroke-width='1.2'/></svg>", "stimulerende": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='stbg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#e7def5'/></radialGradient>\n<filter id='stblur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='stsoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='stgrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='stbag' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#ffffff' stop-opacity='0.55'/><stop offset='0.4' stop-color='#eaf0f8' stop-opacity='0.25'/><stop offset='0.7' stop-color='#ffffff' stop-opacity='0.6'/><stop offset='1' stop-color='#dfe6f1' stop-opacity='0.35'/></linearGradient><linearGradient id='stcard' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1d2b4f'/><stop offset='0.5' stop-color='#3e5ba8'/><stop offset='1' stop-color='#22346a'/></linearGradient><radialGradient id='stpow' cx='0.5' cy='0.4' r='0.6'><stop offset='0' stop-color='#ffffff'/><stop offset='0.55' stop-color='#e9ebf0'/><stop offset='1' stop-color='#aeb3be'/></radialGradient></defs><rect width='240' height='180' fill='url(#stbg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#e7def5' opacity='.55'/><ellipse cx='90' cy='140' rx='42' ry='7' fill='#1b2030' opacity='0.3' filter='url(#stblur)'/><g transform='rotate(-6 90 90)'>\n<path d='M58 98c8-14 52-14 64 0v30H58z' fill='url(#stpow)'/><path d='M58 98c8-14 52-14 64 0v30H58z' fill='#fff' filter='url(#stgrain)' opacity='.6'/>\n<rect x='54' y='34' width='72' height='98' rx='4' fill='url(#stbag)' stroke='#aeb8c8' stroke-width='1.4'/>\n<rect x='54' y='42' width='72' height='5' fill='#d9473f' opacity='.85'/><rect x='54' y='48' width='72' height='2.5' fill='#d9473f' opacity='.5'/>\n<path d='M62 56c0 20 0 50 2 70' stroke='#fff' stroke-width='3' opacity='.8' stroke-linecap='round'/><path d='M118 60v58' stroke='#fff' stroke-width='1.5' opacity='.6'/></g><ellipse cx='170' cy='152' rx='40' ry='5' fill='#1b2030' opacity='0.3' filter='url(#stblur)'/><g transform='rotate(-14 170 136)'><rect x='130' y='126' width='76' height='46' rx='6' fill='url(#stcard)'/><rect x='136' y='134' width='14' height='10' rx='2' fill='#d8b45a'/><path d='M140 160h40' stroke='#fff' stroke-width='2' opacity='.35'/>\n<path d='M142 140c10-5 34-5 48 0l-1 5c-12-3-34-3-46 0z' fill='url(#stpow)'/><path d='M142 140c10-5 34-5 48 0l-1 5c-12-3-34-3-46 0z' fill='#fff' filter='url(#stgrain)'/></g></svg>", "snus": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='snbg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#d9e2f5'/></radialGradient>\n<filter id='snblur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='snsoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='sngrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='snside' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#0f1c3a'/><stop offset='0.25' stop-color='#2c4787'/><stop offset='0.45' stop-color='#5b7bd0'/><stop offset='0.6' stop-color='#2c4787'/><stop offset='1' stop-color='#0b1530'/></linearGradient><radialGradient id='snlid' cx='0.4' cy='0.3' r='0.8'><stop offset='0' stop-color='#6f8fe6'/><stop offset='0.6' stop-color='#2d4b98'/><stop offset='1' stop-color='#162a5e'/></radialGradient><linearGradient id='snrim' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#c9d1e2'/><stop offset='0.5' stop-color='#ffffff'/><stop offset='1' stop-color='#98a3ba'/></linearGradient><radialGradient id='snpouch' cx='0.4' cy='0.35' r='0.7'><stop offset='0' stop-color='#ffffff'/><stop offset='0.7' stop-color='#f3f1ea'/><stop offset='1' stop-color='#cfcabd'/></radialGradient><radialGradient id='snbrown' cx='0.4' cy='0.35' r='0.7'><stop offset='0' stop-color='#c79a63'/><stop offset='0.7' stop-color='#8f6234'/><stop offset='1' stop-color='#5f3e1e'/></radialGradient></defs><rect width='240' height='180' fill='url(#snbg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#d9e2f5' opacity='.55'/><ellipse cx='100' cy='140' rx='52' ry='9' fill='#1b2030' opacity='0.35' filter='url(#snblur)'/>\n<path d='M50 84v38c0 12 22 20 50 20s50-8 50-20V84z' fill='url(#snside)'/>\n<ellipse cx='100' cy='84' rx='50' ry='19' fill='url(#snrim)'/>\n<ellipse cx='100' cy='81' rx='47' ry='17' fill='url(#snlid)'/>\n<ellipse cx='100' cy='81' rx='33' ry='11' fill='none' stroke='#9fb4ef' stroke-width='1.4' opacity='.6'/>\n<ellipse cx='86' cy='75' rx='18' ry='4' fill='#fff' opacity='.25'/>\n<path d='M58 96v26' stroke='#fff' stroke-width='3' opacity='.2' stroke-linecap='round'/>\n<text x='100' y='85' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#fff' text-anchor='middle' opacity='.85' transform='scale(1 1)'>EXTRA STRONG</text><ellipse cx='178' cy='141' rx='15' ry='3' fill='#1b2030' opacity='0.3' filter='url(#snblur)'/><g transform='rotate(-14 178 132)'><rect x='162' y='123' width='32' height='18' rx='8' fill='url(#snpouch)'/><rect x='162' y='123' width='32' height='18' rx='8' fill='#fff' filter='url(#sngrain)' opacity='.35'/><path d='M166 127h20' stroke='#fff' stroke-width='1.6' opacity='.7' stroke-linecap='round'/></g><ellipse cx='196' cy='157' rx='15' ry='3' fill='#1b2030' opacity='0.3' filter='url(#snblur)'/><g transform='rotate(18 196 148)'><rect x='180' y='139' width='32' height='18' rx='8' fill='url(#snpouch)'/><rect x='180' y='139' width='32' height='18' rx='8' fill='#fff' filter='url(#sngrain)' opacity='.35'/><path d='M184 143h20' stroke='#fff' stroke-width='1.6' opacity='.7' stroke-linecap='round'/></g><ellipse cx='166' cy='163' rx='15' ry='3' fill='#1b2030' opacity='0.3' filter='url(#snblur)'/><g transform='rotate(6 166 154)'><rect x='150' y='145' width='32' height='18' rx='8' fill='url(#snbrown)'/><rect x='150' y='145' width='32' height='18' rx='8' fill='#fff' filter='url(#sngrain)' opacity='.35'/><path d='M154 149h20' stroke='#fff' stroke-width='1.6' opacity='.7' stroke-linecap='round'/></g></svg>", "vape": "<svg viewBox='0 0 240 180' aria-hidden='true'><defs><radialGradient id='vabg' cx='50%' cy='35%' r='75%'><stop offset='0' stop-color='#ffffff'/><stop offset='1' stop-color='#f6dccf'/></radialGradient>\n<filter id='vablur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='6'/></filter>\n<filter id='vasoft' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='2.2'/></filter>\n<filter id='vagrain' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.4 1.1'/><feComposite in2='SourceGraphic' operator='in'/></filter><linearGradient id='vabody' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#7a1fa2'/><stop offset='0.3' stop-color='#e04fa0'/><stop offset='0.55' stop-color='#ff9a6b'/><stop offset='0.75' stop-color='#e04fa0'/><stop offset='1' stop-color='#5a1680'/></linearGradient><linearGradient id='vamouth' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#111'/><stop offset='0.5' stop-color='#3a3a3a'/><stop offset='1' stop-color='#111'/></linearGradient><linearGradient id='vacig' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#d7d2c8'/><stop offset='0.4' stop-color='#ffffff'/><stop offset='1' stop-color='#bdb6a9'/></linearGradient><linearGradient id='vafilt' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#b86a2c'/><stop offset='0.45' stop-color='#e9a25e'/><stop offset='1' stop-color='#9a5420'/></linearGradient><filter id='vacloud' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='5'/></filter></defs><rect width='240' height='180' fill='url(#vabg)'/><path d='M0 128 Q120 118 240 128 V180 H0Z' fill='#f6dccf' opacity='.55'/><g filter='url(#vacloud)' opacity='.95'><circle cx='150' cy='46' r='22' fill='#fff'/><circle cx='176' cy='36' r='18' fill='#fff'/><circle cx='190' cy='58' r='16' fill='#fff'/><circle cx='162' cy='66' r='14' fill='#fff'/><circle cx='200' cy='30' r='10' fill='#fff'/></g><ellipse cx='96' cy='142' rx='40' ry='7' fill='#1b2030' opacity='0.35' filter='url(#vablur)'/><g transform='rotate(-24 100 96)'>\n<rect x='82' y='44' width='34' height='96' rx='12' fill='url(#vabody)'/>\n<path d='M90 30h18l3 16H87z' fill='url(#vamouth)'/>\n<rect x='86' y='120' width='26' height='10' rx='3' fill='#000' opacity='.18'/>\n<path d='M88 52v80' stroke='#fff' stroke-width='3.5' opacity='.35' stroke-linecap='round'/>\n<text x='99' y='92' font-family='Helvetica, Arial, sans-serif' font-size='8' font-weight='700' fill='#fff' text-anchor='middle' transform='rotate(-90 99 92)' opacity='.9'>6000 PUFFS</text>\n<circle cx='99' cy='134' r='2.2' fill='#7df9ff'/></g><ellipse cx='180' cy='150' rx='34' ry='4' fill='#1b2030' opacity='0.3' filter='url(#vablur)'/><g transform='rotate(-8 180 142)'><rect x='150' y='137' width='46' height='9' fill='url(#vacig)'/><rect x='196' y='137' width='18' height='9' fill='url(#vafilt)'/>\n<rect x='145' y='137' width='6' height='9' fill='#6b6b6b'/><rect x='142' y='138' width='4' height='7' fill='#ff7a2f'/><circle cx='202' cy='140' r='.8' fill='#7a3d12'/><circle cx='207' cy='143' r='.8' fill='#7a3d12'/><circle cx='210' cy='139' r='.7' fill='#7a3d12'/></g></svg>", "hero": "<svg viewBox='0 0 360 190' role='img' aria-label='Illustrasjon: en skolepult med bøker og mobil, der en snusboks, en vape og noen piller ligger skjult blant skolesakene'><defs><linearGradient id='hedesk' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#e9d3b1'/><stop offset='1' stop-color='#c9a77c'/></linearGradient><linearGradient id='hebook' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#2f55c9'/><stop offset='1' stop-color='#1d3a94'/></linearGradient><linearGradient id='hepage' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fdfdfb'/><stop offset='1' stop-color='#e8e6df'/></linearGradient><linearGradient id='hephone' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1a1c22'/><stop offset='1' stop-color='#3a3e48'/></linearGradient><linearGradient id='hescr' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#5b7bd0'/><stop offset='1' stop-color='#14b39f'/></linearGradient><radialGradient id='helid' cx='0.4' cy='0.3' r='0.8'><stop offset='0' stop-color='#6f8fe6'/><stop offset='0.6' stop-color='#2d4b98'/><stop offset='1' stop-color='#162a5e'/></radialGradient><linearGradient id='hevape' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#7a1fa2'/><stop offset='0.4' stop-color='#e04fa0'/><stop offset='0.6' stop-color='#ff9a6b'/><stop offset='1' stop-color='#5a1680'/></linearGradient><linearGradient id='hepen' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#f4c430'/><stop offset='1' stop-color='#c99a0a'/></linearGradient><filter id='hewood'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.35' numOctaves='3' seed='2'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .38  0 0 0 0 .2  0 0 0 .35 0'/></filter><filter id='heblur' x='-50%' y='-50%' width='200%' height='200%'><feGaussianBlur stdDeviation='5'/></filter></defs><rect width='360' height='190' fill='url(#hedesk)'/><rect width='360' height='190' filter='url(#hewood)'/><ellipse cx='110' cy='112' rx='82' ry='60' fill='#3b2410' opacity='0.35' filter='url(#heblur)'/><g transform='rotate(-8 110 100)'><rect x='36' y='44' width='150' height='112' rx='6' fill='url(#hebook)'/><rect x='42' y='48' width='140' height='104' rx='4' fill='url(#hepage)'/><path d='M50 64h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 75h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 86h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 97h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 108h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 119h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 130h124' stroke='#c8d3ee' stroke-width='1'/><path d='M50 141h124' stroke='#c8d3ee' stroke-width='1'/><path d='M62 52v96' stroke='#f2a7a7' stroke-width='1'/><path d='M70 70c10-6 22 6 34-2s20 4 30-2' stroke='#2b3a55' stroke-width='1.6' fill='none'/><path d='M70 92c14-4 30 4 50-2' stroke='#2b3a55' stroke-width='1.6' fill='none'/></g><ellipse cx='150' cy='170' rx='60' ry='5' fill='#3b2410' opacity='0.3' filter='url(#heblur)'/><g transform='rotate(-4 160 166)'><rect x='96' y='161' width='110' height='9' rx='2' fill='url(#hepen)'/><path d='M206 161l14 4.5-14 4.5z' fill='#e7c79a'/><path d='M216 163.5l4 1-4 1z' fill='#333'/><rect x='88' y='161' width='10' height='9' rx='2' fill='#e88c9a'/><rect x='96' y='161' width='4' height='9' fill='#b9bcc4'/></g><ellipse cx='258' cy='108' rx='40' ry='64' fill='#3b2410' opacity='0.4' filter='url(#heblur)'/><g transform='rotate(10 258 98)'><rect x='226' y='34' width='64' height='124' rx='12' fill='url(#hephone)'/><rect x='231' y='40' width='54' height='112' rx='8' fill='url(#hescr)'/><rect x='238' y='52' width='40' height='14' rx='7' fill='#fff' opacity='.9'/><rect x='238' y='72' width='30' height='12' rx='6' fill='#fff' opacity='.55'/><rect x='246' y='90' width='32' height='12' rx='6' fill='#fff' opacity='.9'/><rect x='252' y='44' width='12' height='3' rx='1.5' fill='#000' opacity='.6'/></g><ellipse cx='196' cy='48' rx='30' ry='24' fill='#3b2410' opacity='0.4' filter='url(#heblur)'/><circle cx='194' cy='40' r='27' fill='#c9d1e2'/><circle cx='194' cy='40' r='24.5' fill='url(#helid)'/><circle cx='194' cy='40' r='16' fill='none' stroke='#9fb4ef' stroke-width='1.3' opacity='.6'/><ellipse cx='186' cy='31' rx='10' ry='4' fill='#fff' opacity='.25'/><ellipse cx='318' cy='150' rx='30' ry='10' fill='#3b2410' opacity='0.4' filter='url(#heblur)'/><g transform='rotate(-62 318 146)'><rect x='308' y='112' width='20' height='58' rx='7' fill='url(#hevape)'/><path d='M312 104h12l2 10h-16z' fill='#1a1a1a'/><path d='M312 118v46' stroke='#fff' stroke-width='2' opacity='.35'/></g><ellipse cx='214' cy='174' rx='14' ry='4' fill='#3b2410' opacity='0.35' filter='url(#heblur)'/><circle cx='210' cy='166' r='7' fill='#fbfbfd' stroke='#c7cbd5' stroke-width='1'/><path d='M204 166h12' stroke='#c7cbd5' stroke-width='1'/><ellipse cx='224' cy='172' rx='6' ry='4.5' fill='#f5a3bb'/></svg>"};
+
+  /* ---------- Rusmidler ---------- */
+  var RUS = [
+    { id: "alkohol", navn: "Alkohol", kort: "Øl, rusbrus, sprit",
+      tegn: ["Lukt av alkohol, ofte skjult med tyggis eller parfyme", "Ustø gang og utydelig tale", "Rød i ansiktet, blankt blikk", "Høylytt, grenseløs eller aggressiv", "Kvalme og oppkast"],
+      fare: ["Alkoholforgiftning: bevisstløs, langsom pust, kald hud", "Kvelning i oppkast hvis eleven ligger på ryggen", "Nedkjøling ute", "Rusen kan øke en stund etter siste drink", "Sammen med piller er alkohol ekstra farlig"],
+      gjor: ["Ikke la eleven sove uten tilsyn", "Stabilt sideleie hvis eleven sovner", "Hold eleven varm", "Kaffe og kald dusj hjelper ikke", "Ring 113 ved faretegn"] },
+    { id: "cannabis", navn: "Cannabis", kort: "Hasj, marihuana, THC-vape",
+      tegn: ["Røde øyne", "Søtlig, krydret lukt. THC-vape lukter lite", "Fnising, sløvhet og treg reaksjon", "Dårlig konsentrasjon og hukommelse", "Ved jevnlig bruk: fravær og lite motivasjon"],
+      fare: ["Angst og panikk, særlig ved høy styrke", "Psykoselignende symptomer hos noen", "Godteri og vape kan være mye sterkere enn eleven tror", "Kan inneholde syntetiske cannabinoider, som gir alvorligere forgiftning"],
+      gjor: ["Rolig rom. Si rolig at det går over", "Ikke la eleven være alene", "Ring 113 ved brystsmerter, kramper eller sterk forvirring"] },
+    { id: "piller", navn: "Piller", kort: "«Benzo», opioider, falske piller",
+      tegn: ["Sløv og «dopet», sovner lett", "Utydelig tale og ustø gange", "Små pupiller ved opioider", "Langsom eller svak pust"],
+      fare: ["Pustestans, særlig sammen med alkohol", "Falske piller kan inneholde svært sterke stoffer, som nitazener", "Det er umulig å se hva en pille inneholder"],
+      gjor: ["Ring 113 ved langsom pust eller hvis eleven er vanskelig å vekke", "Gi nalokson nesespray ved mistanke om opioider, hvis skolen har det", "Ta vare på piller og pakninger", "Usikker? Ring Giftinformasjonen 22 59 13 00"] },
+    { id: "stimulerende", navn: "Sentralstimulerende", kort: "Amfetamin, kokain, MDMA",
+      tegn: ["Store pupiller", "Rastløs, pratsom, overdreven selvtillit", "Kjevebevegelser og tanngnissing", "Svetter, høy puls", "Etterpå: utmattet, nedstemt og irritabel"],
+      fare: ["Overoppheting, særlig ved MDMA", "Brystsmerter og hjerterytmeforstyrrelser", "Panikk, aggresjon eller psykose", "Kramper"],
+      gjor: ["Kjølig og rolig rom", "Små slurker vann, ikke store mengder", "Ring 113 ved brystsmerter, høy temperatur, kramper eller forvirring"] },
+    { id: "snus", navn: "Snus og nikotinposer", kort: "Brun snus, «hvit snus»",
+      tegn: ["Rund boks i lomma eller sekken", "Kul under overleppa", "Lukt av mint eller tobakk", "Brukte porsjoner på do, i skolegården eller i pennalet", "Sår eller tilbaketrukket tannkjøtt", "Urolig, irritabel eller ukonsentrert i timene, og bedre etter friminuttet"],
+      fare: ["Avhengighet kommer raskt, særlig av sterk «hvit snus»", "Nikotinforgiftning hos nye brukere: kvalme, oppkast, svimmelhet, blekhet, svette og hjertebank", "Abstinens går ut over konsentrasjon, humør og søvn", "Salg mellom elever kan gi gjeld og press", "Skader på tannkjøtt og munnslimhinne"],
+      gjor: ["Snakk om det uten moralpreken. Spør hvor mye og hvor lenge", "Tilby hjelp til å slutte: helsesykepleier og appen Slutta fra Helsedirektoratet", "Kvalm, svimmel eller blek? Ta ut porsjonen, la eleven hvile, ring Giftinformasjonen 22 59 13 00", "Følg skolens ordensreglement og rutine for å informere foresatte", "Organisert salg eller press: ta det opp med ledelsen"],
+      regler: ["Det er 18-årsgrense for kjøp av snus og nikotinprodukter. Salg til mindreårige er ulovlig", "Bruk av tobakk og snus er forbudt i skolens lokaler og på skolens område", "Reaksjoner skal følge skolens ordensreglement"] },
+    { id: "vape", navn: "Vape og røyk", kort: "E-sigaretter, engangsvape, sigaretter",
+      tegn: ["Søtlig lukt av frukt eller godteri", "Små enheter som ligner USB-pinner, penner eller sminke", "Damp eller lukt på do", "Skjuler ting i ermer eller hettegenser", "Hoste og sår hals", "Lader ting i timene"],
+      fare: ["Sterk avhengighet. Engangsvaper kan ha svært mye nikotin", "En vape kan inneholde THC eller syntetiske cannabinoider uten at det synes", "Akutt forgiftning med kramper, panikk eller bevisstløshet kan skje hvis vapen inneholder cannabinoider", "Irritasjon i luftveiene", "Batterier kan ta fyr"],
+      gjor: ["Snakk med eleven og tilby hjelp til å slutte", "Mistanke om THC i vapen? Behandle det som cannabis, og se akutt-veilederen", "Ikke ransak. Eleven kan vise frem frivillig", "Funnet vape med ukjent innhold? Sikre den og kontakt politiet", "Følg skolens ordensreglement"],
+      regler: ["Det er 18-årsgrense for kjøp av tobakks- og nikotinprodukter", "Røyking og bruk av e-sigaretter er forbudt i skolens lokaler og på skolens område", "Reaksjoner skal følge skolens ordensreglement"] }
+  ];
+
+  /* ---------- Informasjonssider ---------- */
+  var INFO = {
+    tegn: {
+      sec: "Verktøy", title: "Tegn å se etter",
+      lead: "Ingen tegn alene beviser rusbruk. Se etter endringer over tid, og flere tegn samtidig.",
+      html: function () {
+        var g = [
+          ["Kropp", ["Røde øyne, store eller små pupiller", "Lukt av alkohol, hasj eller sterk parfyme / tyggis som skjuler lukt", "Sløv, trøtt, eller urolig og pratsom", "Endret appetitt, vekttap", "Hyppig snusing eller rennende nese"]],
+          ["Skole", ["Økende fravær, særlig enkelttimer og mandager", "Faller i karakterer og innsats", "Konsentrasjonsvansker", "Sover i timene"]],
+          ["Atferd", ["Raske humørsvingninger, irritabel", "Hemmelighetsfull, lyver", "Mister interessen for ting hen likte", "Trekker seg unna voksne"]],
+          ["Venner og penger", ["Nye venner, ofte eldre", "Bruker eller har mye penger, eller låner og skylder", "Selger eiendeler", "Nye dyre ting uten forklaring"]],
+          ["Digitalt", ["Koder og emojier for rusmidler i chat", "Kontakt med ukjente kontoer på Snapchat, Telegram e.l.", "Flere telefoner eller kontoer"]]
+        ];
+        return g.map(function (x) { return "<div class='card'><h3>" + x[0] + "</h3><ul class='bullets'>" + x[1].map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul></div>"; }).join("") +
+          "<div class='callout green'><h3>Andre forklaringer</h3><p>De samme tegnene kan skyldes psykiske plager, søvnmangel, mobbing, problemer hjemme eller sykdom. Uansett er det en grunn til å spørre hvordan eleven har det.</p></div>";
+      },
+      choices: [{ l: "Jeg er bekymret for en elev", to: "bekymring", tone: "primary" }, { l: "Forbered en samtale", to: "samtale" }]
+    },
+    samtale: {
+      sec: "Verktøy", title: "Samtaleguide",
+      lead: "Målet med første samtale er ikke å få en tilståelse, men at eleven opplever at noen bryr seg.",
+      html: function () {
+        return "<div class='card'><h3>Før samtalen</h3><ul class='bullets'><li>Velg et rolig sted og god tid. Ikke rett etter en konflikt.</li><li>Den med best relasjon til eleven bør snakke. Avtal om helsesykepleier skal være med.</li><li>Skriv ned 2–3 konkrete ting du har lagt merke til.</li><li>Vit hva du må gjøre videre hvis eleven forteller noe alvorlig.</li></ul></div>" +
+          "<div class='card'><h3>Slik kan du starte</h3><p class='q'>«Jeg har lagt merke til at du har vært mye borte i det siste, og at du virker sliten. Jeg blir litt bekymret. Hvordan har du det?»</p><p class='lead'>Fortell hva du har sett, si at du er bekymret, og spør. Bruk jeg-budskap.</p></div>" +
+          "<div class='card'><h3>Under samtalen</h3><ol class='steps'>" +
+          "<li><div><b>Åpne spørsmål</b><small>«Hvordan er det hjemme for tiden?» «Hva gjør du i helgene?»</small></div></li>" +
+          "<li><div><b>Bekreft</b><small>«Det er bra at du forteller meg dette.»</small></div></li>" +
+          "<li><div><b>Reflekter</b><small>Gjenta det eleven sier med egne ord, så hen føler seg forstått.</small></div></li>" +
+          "<li><div><b>Oppsummer</b><small>«Har jeg forstått deg riktig når…?»</small></div></li></ol>" +
+          "<p class='lead'>Spør gjerne direkte om rus når det er naturlig: «Har du prøvd hasj eller andre ting?» Direkte spørsmål stilt med ro oppleves sjelden som anklager.</p></div>" +
+          "<div class='callout amber'><h3>Unngå</h3><ul class='bullets'><li>Moralpreken, skremsler og trusler om straff</li><li>Avhør og ja/nei-spørsmål på rad</li><li>Å love at du ikke skal si det til noen</li><li>Å spørre om navn på selgere eller andre elever</li></ul></div>" +
+          "<div class='card'><h3>Avslutt med</h3><ul class='bullets'><li>Hva skjer nå, og hvem du eventuelt må snakke med</li><li>En ny avtale, gjerne innen en uke</li><li>Hvor eleven kan få hjelp: helsesykepleier, ung.no, Kors på halsen</li></ul></div>";
+      },
+      choices: [{ l: "Skriv notat etter samtalen", to: "notat", tone: "primary" }]
+    },
+    plikter: {
+      sec: "Verktøy", title: "Plikter og lovverk",
+      lead: "Kort oversikt. Følg også skolens og kommunens egne rutiner.",
+      html: function () {
+        var items = [
+          ["Opplysningsplikt til barnevernet", "Alle ansatte i skolen skal melde til barnevernet når det er grunn til å tro at et barn blir mishandlet, utsatt for alvorlig omsorgssvikt, eller har alvorlige og vedvarende atferdsvansker. Alvorlig rusbruk hos elever under 18 hører hit. Du trenger ikke være sikker. Plikten er personlig og går foran taushetsplikten.", "Barnevernsloven § 13-2 og opplæringslova"],
+          ["Avvergeplikt", "Alle har plikt til å forsøke å avverge visse alvorlige straffbare handlinger, som vold, overgrep og drap, når det er sannsynlig at de vil skje. Varsling av politiet er en måte å avverge på. Plikten går foran taushetsplikten.", "Straffeloven § 196"],
+          ["Taushetsplikt", "Opplysninger om elevers personlige forhold er taushetsbelagt. Du kan likevel drøfte saker anonymt, og dele det som er nødvendig for å hjelpe eleven eller når loven pålegger det.", "Forvaltningsloven § 13"],
+          ["Trygt og godt skolemiljø", "Skolen har plikt til å følge med, gripe inn, varsle og sette inn tiltak når en elev ikke har det trygt og godt på skolen.", "Opplæringslova kapittel 12"],
+          ["Ordensreglement", "Reaksjoner, som bortvisning, må ha grunnlag i skolens ordensreglement og følge saksbehandlingsreglene. Eleven skal få si sin mening før reaksjonen.", "Opplæringslova og forskrift om ordensreglement"],
+          ["Ransaking og rustest", "Skolen kan ikke ransake elever eller eiendelene deres, og kan ikke kreve rustest. Eleven kan vise frem noe frivillig. Ellers er det politiets oppgave.", ""],
+          ["Tobakk, snus og e-sigaretter", "Det er forbudt å bruke tobakk, snus og e-sigaretter i skolens lokaler og på skolens område. Det er 18-årsgrense for kjøp. Reaksjoner følger skolens ordensreglement.", "Tobakksskadeloven"],
+          ["Elever over 18", "Myndige elever bestemmer selv over egne opplysninger. Foresatte kan ikke informeres uten samtykke, unntatt når liv og helse står på spill.", ""]
+        ];
+        return items.map(function (x) { return "<div class='card'><h3>" + x[0] + "</h3><p>" + x[1] + "</p>" + (x[2] ? "<span class='tag'>" + x[2] + "</span>" : "") + "</div>"; }).join("") +
+          "<p class='note'>Lovtekstene finner du på lovdata.no. Paragrafnumre kan endres når lover revideres. Kontroller mot gjeldende lov og skolens rutiner.</p>";
+      },
+      choices: [{ l: "Kilder og videre lesing", to: "kilder", tone: "primary" }]
+    }
+  };
+
+
+  RUS.forEach(function (r) {
+    INFO["rus-" + r.id] = {
+      sec: "Rusmidler", title: r.navn, lead: r.kort + ". " + (r.regler ? "Nikotin gir rask avhengighet, og bruk starter ofte i ungdomsskolealder." : "Ingen tegn alene beviser rusbruk."),
+      html: function () {
+        function card(t, list, cls) { return "<div class='" + (cls || "panel") + "'><h3>" + t + "</h3><ul class='bullets'>" + list.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul></div>"; }
+        return "<div class='illus illus-lg'>" + ILL[r.id] + "</div>" + card("Tegn på påvirkning", r.tegn) + card("Dette kan bli farlig", r.fare, "callout red") + card("Gjør dette", r.gjor) + (r.regler ? card("Regler på skolen", r.regler, "callout amber") : "");
+      },
+      choices: [{ l: "En elev er ruset nå", s: "Start akutt-veiledning", to: "akutt", tone: "primary" }, { l: "Tegn å se etter generelt", to: "tegn" }]
+    };
+  });
+
+  /* ---------- Veiviser: ett spørsmål om gangen ---------- */
+  var ANS = {};          // svar per veiviser, bare i minnet
+  var NOTE_PREFILL = null;
+
+  function visibleQs(w, a) { return WIZ[w].questions.filter(function (q) { return !q.showIf || q.showIf(a); }); }
+  function qIndex(w, q) { return WIZ[w].questions.indexOf(q); }
+  function firstOpen(w) {
+    var a = ANS[w] || {}, vis = visibleQs(w, a);
+    for (var i = 0; i < vis.length; i++) if (a[vis[i].id] === undefined) return vis[i];
+    return null;
+  }
+  function stopped(w) {
+    var a = ANS[w] || {};
+    return visibleQs(w, a).some(function (q) { return q.options.some(function (o) { return o.stop && a[q.id] === o.v; }); });
+  }
+  function nextHash(w, fromQ) {
+    var a = ANS[w] || {};
+    var opt = fromQ.options.filter(function (o) { return o.v === a[fromQ.id]; })[0];
+    if (opt && opt.stop) return w + "-resultat";
+    var vis = visibleQs(w, a), pos = vis.indexOf(fromQ);
+    for (var i = pos + 1; i < vis.length; i++) return w + "-" + qIndex(w, vis[i]);
+    return w + "-resultat";
+  }
+  function answerLabel(q, v) {
+    if (Array.isArray(v)) return v.length ? v.map(function (x) { return q.options.filter(function (o) { return o.v === x; })[0].l; }).join(", ") : "Ingen av disse";
+    var o = q.options.filter(function (o) { return o.v === v; })[0];
+    return o ? o.l : "";
+  }
+
+  function renderQuestion(w, q) {
+    var W = WIZ[w], a = ANS[w] || (ANS[w] = {});
+    var vis = visibleQs(w, a), pos = vis.indexOf(q) + 1, total = vis.length;
+    setWhere(W.title);
+    var h = "<section class='screen' data-sec='" + W.sec + "'>";
+    h += "<div class='wiz-top'><span class='pill'>" + ico(SEC_ICON[W.sec]) + W.sec + "</span><span class='count'>Spørsmål " + pos + " av " + total + "</span></div>";
+    h += "<div class='bar wiz-bar'><i style='width:" + Math.round((pos - 1) / total * 100) + "%'></i></div>";
+    if (pos === 1 && W.intro) h += "<div class='callout green'><h3>Før du starter</h3><div>" + W.intro + "</div></div>";
+    h += "<h1 class='wiz-q'>" + q.q + "</h1>";
+    if (q.help) h += Array.isArray(q.help)
+      ? "<div class='panel'><ul class='bullets'>" + q.help.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul></div>"
+      : "<p class='lead'>" + q.help + "</p>";
+    if (q.multi) {
+      var cur = a[q.id] || [];
+      h += "<div class='list plain'>" + q.options.map(function (o) {
+        var on = cur.indexOf(o.v) > -1;
+        return "<button class='row opt multi" + (on ? " on" : "") + "' data-multi='" + o.v + "' role='checkbox' aria-checked='" + on + "'><span class='box sq-box'>" + CHECK_SVG + "</span><span class='row-txt'><b>" + o.l + "</b></span></button>";
+      }).join("") + "</div>";
+      h += "<button class='cta' data-next='1'><span>" + "Neste" + "</span>" + ico("arrow") + "</button>";
+    } else {
+      h += "<div class='list plain'>" + q.options.map(function (o) {
+        var sel = a[q.id] === o.v, danger = o.tone === "red";
+        return "<button class='row opt" + (danger ? " danger" : "") + (sel ? " sel" : "") + "' data-ans='" + o.v + "'>" +
+          "<span class='radio'></span><span class='row-txt'><b>" + o.l + "</b>" + (o.s ? "<small>" + o.s + "</small>" : "") + "</span>" + ico("chev", "chev") + "</button>";
+      }).join("") + "</div>";
+    }
+    h += "</section>";
+    app.innerHTML = h;
+    app.dataset.w = w; app.dataset.q = q.id;
+  }
+
+  function renderResult(w) {
+    var W = WIZ[w], a = ANS[w] || {}, R = W.result(a), L = LEVELS[R.level];
+    setWhere("Veiledning");
+    var h = "<section class='screen' data-sec='" + W.sec + "'>";
+    h += "<div class='result-head c-" + L.c + "'><span class='lvl'><span class='lvl-dot'></span>" + L.l + "</span><p class='kicker'>Veiledning · " + W.title + "</p><h1>" + R.title + "</h1><p class='lead'>" + R.summary + "</p></div>";
+    if (R.nums && R.nums.length && R.level === "akutt") h += "<div class='list'>" + R.nums.map(function (k) { return telRow(k, k === "amk" || k === "pol"); }).join("") + "</div>";
+    (R.groups || []).forEach(function (g) {
+      h += blockHtml({ t: "steps", check: true, items: g.items, title: g.title });
+    });
+    if (R.callout) h += blockHtml({ t: "callout", tone: R.callout.tone, title: R.callout.title, html: R.callout.html });
+    if (R.nums && R.nums.length && R.level !== "akutt") h += "<p class='label'>Nyttige nummer</p><div class='list'>" + R.nums.map(function (k) { return telRow(k, k === "amk" || k === "pol"); }).join("") + "</div>";
+
+    // svarene
+    var vis = visibleQs(w, a).filter(function (q) { return a[q.id] !== undefined; });
+    if (stopped(w)) { var cut = []; for (var i = 0; i < vis.length; i++) { cut.push(vis[i]); if (vis[i].options.some(function (o) { return o.stop && a[vis[i].id] === o.v; })) break; } vis = cut; }
+    h += "<p class='label'>Dine svar</p><div class='list plain'>" + vis.map(function (q) {
+      return "<button class='row ans' data-go='" + w + "-" + qIndex(w, q) + "'><span class='row-txt'><small>" + q.short + "</small><b>" + answerLabel(q, a[q.id]) + "</b></span><span class='edit'>Endre</span></button>";
+    }).join("") + "</div>";
+
+    h += "<div class='q-block'><button class='cta' data-note='" + w + "'><span>Lag notat med svarene</span>" + ico("arrow") + "</button><div class='list plain'>" +
+      (R.links || []).map(function (l) { return "<button class='row choice' data-go='" + l.to + "'><span class='row-txt'><b>" + l.l + "</b></span>" + ico("chev", "chev") + "</button>"; }).join("") +
+      "<button class='row choice' data-restart='" + w + "'><span class='row-txt'><b>Start på nytt</b></span>" + ico("chev", "chev") + "</button>" +
+      "<button class='row choice' data-go='hjem'><span class='row-txt'><b>Til forsiden</b></span>" + ico("chev", "chev") + "</button></div></div>";
+    h += "<p class='foot'>Veiledningen er generell. Bruk egen vurdering, og følg skolens beredskapsplan og kommunens rutiner.</p></section>";
+    app.innerHTML = h;
+  }
+
+  function routeWizard(w, part) {
+    var a = ANS[w] || (ANS[w] = {});
+    if (part === "resultat") {
+      if (!stopped(w) && firstOpen(w)) { location.replace("#" + w + "-" + qIndex(w, firstOpen(w))); return; }
+      renderResult(w); return;
+    }
+    var idx = part === undefined ? 0 : parseInt(part, 10);
+    var q = WIZ[w].questions[idx];
+    if (!q || (q.showIf && !q.showIf(a))) { q = firstOpen(w) || WIZ[w].questions[0]; }
+    // ikke hopp over ubesvarte spørsmål foran
+    var vis = visibleQs(w, a);
+    for (var i = 0; i < vis.indexOf(q); i++) if (a[vis[i].id] === undefined) { q = vis[i]; break; }
+    renderQuestion(w, q);
+  }
+
+  function answer(v) {
+    var w = app.dataset.w, qid = app.dataset.q, q = WIZ[w].questions.filter(function (x) { return x.id === qid; })[0];
+    ANS[w][qid] = v;
+    app.querySelectorAll("[data-ans]").forEach(function (b) { b.classList.toggle("sel", b.getAttribute("data-ans") === v); });
+    setTimeout(function () { go(nextHash(w, q)); }, 140);
+  }
+  function toggleMulti(btn) {
+    var w = app.dataset.w, qid = app.dataset.q, cur = ANS[w][qid] || [], v = btn.getAttribute("data-multi");
+    var i = cur.indexOf(v); if (i > -1) cur.splice(i, 1); else cur.push(v);
+    ANS[w][qid] = cur;
+    btn.classList.toggle("on", i === -1); btn.setAttribute("aria-checked", i === -1 ? "true" : "false");
+  }
+  function multiNext() {
+    var w = app.dataset.w, qid = app.dataset.q, q = WIZ[w].questions.filter(function (x) { return x.id === qid; })[0];
+    if (!ANS[w][qid]) ANS[w][qid] = [];
+    go(nextHash(w, q));
+  }
+  function makeNote(w) {
+    var a = ANS[w] || {}, R = WIZ[w].result(a);
+    var lines = visibleQs(w, a).filter(function (q) { return a[q.id] !== undefined; }).map(function (q) { return "• " + q.short + ": " + answerLabel(q, a[q.id]); });
+    NOTE_PREFILL = { obs: "Situasjon: " + WIZ[w].title + "\n" + lines.join("\n") + "\n\nEgne observasjoner:\n", videre: "Veiledning fra Varde: " + R.title };
+    go("notat");
+  }
+
+  /* ---------- Rendering ---------- */
+  var app = document.getElementById("app");
+  var backBtn = document.getElementById("back");
+  var where = document.getElementById("where");
+
+  var P = {
+    alert: "M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z M12 9v4 M12 17h.01",
+    eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z M12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z",
+    chat: "M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-5.2A8.4 8.4 0 1 1 21 11.5z",
+    search: "M11 4a7 7 0 1 0 0 14a7 7 0 0 0 0-14z M21 21l-4.3-4.3",
+    users: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8a4 4 0 0 0 0-8z M22 21v-2a4 4 0 0 0-3-3.9 M16 3.1a4 4 0 0 1 0 7.8",
+    scale: "M12 3v18 M7 21h10 M4 7h16 M7 7l-3 7a3 3 0 0 0 6 0z M17 7l-3 7a3 3 0 0 0 6 0z",
+    phone: "M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z",
+    doc: "M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z M14 3v6h6 M8 13h8 M8 17h5",
+    book: "M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z M4 19.5V21h16",
+    check: "M22 11.1V12a10 10 0 1 1-5.9-9.1 M22 4L12 14l-3-3",
+    pill: "M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z M8.5 8.5l7 7",
+    grid: "M4 4h6v6H4z M14 4h6v6h-6z M4 14h6v6H4z M14 14h6v6h-6z",
+    chev: "M9 18l6-6-6-6",
+    arrow: "M5 12h14 M13 6l6 6-6 6"
+  };
+  function ico(k, cls) { return "<svg class='ic" + (cls ? " " + cls : "") + "' viewBox='0 0 24 24' aria-hidden='true'><path d='" + P[k] + "'/></svg>"; }
+  var SEC_ICON = { "Rusmidler": "pill", "Akutt": "alert", "Bekymring": "eye", "Eleven forteller": "chat", "Funn og salg": "search", "Miljø": "users", "Etterpå": "check", "Verktøy": "grid" };
+  var PAGE_ICON = { tegn: "eye", samtale: "chat", plikter: "scale", kontakter: "phone", notat: "doc", kilder: "book" };
+  var CHECK_SVG = "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M5 12.5l4.5 4.5L19 7.5' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function telHref(n) { return "tel:" + n.replace(/\s/g, ""); }
+
+  function telRow(k, urgent) {
+    var x = N[k];
+    return "<div class='tel" + (urgent ? " urgent" : "") + "'><div><span class='tel-lbl'>" + x.lbl + "</span><span class='tel-n'>" + x.n + "</span></div>" +
+      "<div class='tel-act'><a class='ring' href='" + telHref(x.n) + "'>Ring</a><button class='copy' data-copy='" + x.n + "'>Kopier</button></div><small>" + x.what + "</small></div>";
+  }
+
+  function choicesHtml(list) {
+    var primary = list.filter(function (c) { return c.tone === "primary"; });
+    var rest = list.filter(function (c) { return c.tone !== "primary"; });
+    var h = primary.map(function (c) {
+      return "<button class='cta' data-go='" + c.to + "'><span>" + c.l + (c.s ? "<small style='display:block;font-weight:400;opacity:.7;font-size:.88rem'>" + c.s + "</small>" : "") + "</span>" + ico("arrow") + "</button>";
+    }).join("");
+    if (rest.length) h += "<div class='list plain'>" + rest.map(function (c) {
+      var danger = c.tone === "red";
+      return "<button class='row choice" + (danger ? " danger" : "") + "' data-go='" + c.to + "'>" + (danger ? "<span class='dot'></span>" : "") +
+        "<span class='row-txt'><b>" + c.l + "</b>" + (c.s ? "<small>" + c.s + "</small>" : "") + "</span>" + ico("chev", "chev") + "</button>";
+    }).join("") + "</div>";
+    return h;
+  }
+
+  function blockHtml(b) {
+    if (b.t === "bullets") return "<div class='panel'><ul class='bullets'>" + b.items.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul></div>";
+    if (b.t === "steps" && b.check) {
+      return "<div class='panel' data-check><div class='panel-head'><span>" + (b.title || "Sjekkliste") + "</span><span class='count'>0 av " + b.items.length + "</span></div><div class='bar'><i></i></div>" +
+        "<ol class='checklist'>" + b.items.map(function (i) {
+          return "<li tabindex='0' role='checkbox' aria-checked='false'><span class='box'>" + CHECK_SVG + "</span><div><b>" + i[0] + "</b>" + (i[1] ? "<small>" + i[1] + "</small>" : "") + "</div></li>";
+        }).join("") + "</ol></div>";
+    }
+    if (b.t === "steps") return "<div class='panel'><ol class='steps'>" + b.items.map(function (i) {
+      return "<li><div><b>" + i[0] + "</b>" + (i[1] ? "<small>" + i[1] + "</small>" : "") + "</div></li>";
+    }).join("") + "</ol></div>";
+    if (b.t === "callout") return "<div class='callout " + b.tone + "'><h3>" + b.title + "</h3><div>" + b.html + "</div></div>";
+    if (b.t === "nums") return "<div class='list'>" + b.keys.map(function (k) { return telRow(k, k === "amk" || k === "pol"); }).join("") + "</div>";
+    if (b.t === "link") return "<div class='list plain'><button class='row choice' data-go='" + b.to + "'><span class='row-txt'><b>" + b.l + "</b></span>" + ico("chev", "chev") + "</button></div>";
+    return "";
+  }
+
+  function head(sec, title, lead, icon) {
+    return "<div class='page-head'><span class='pill'>" + ico(icon || SEC_ICON[sec] || "grid") + sec + "</span><h1>" + title + "</h1>" + (lead ? "<p class='lead'>" + lead + "</p>" : "") + "</div>";
+  }
+  function updateProg(panel) {
+    if (!panel) return;
+    var all = panel.querySelectorAll(".checklist li").length, done = panel.querySelectorAll(".checklist li.done").length;
+    panel.querySelector(".bar i").style.width = (all ? Math.round(done / all * 100) : 0) + "%";
+    panel.querySelector(".count").textContent = done === all ? "Alt er gjort" : done + " av " + all;
+  }
+  var MARK = "<svg class='mark' viewBox='0 0 64 64' aria-hidden='true'><rect width='64' height='64' rx='15' fill='#111216'/><rect x='13' y='41' width='38' height='11' rx='5.5' fill='#fff'/><rect x='18.5' y='29' width='27' height='10' rx='5' fill='#fff'/><rect x='24' y='17.5' width='16' height='9.5' rx='4.75' fill='#14b39f'/></svg>";
+  function setWhere(t) { if (t === null) where.innerHTML = "<span class='brand'>" + MARK + "Varde</span>"; else where.textContent = t; }
+
+  function renderHome() {
+    setWhere("");
+    var sit = [
+      ["bekymring", "c-bek", "eye", "Jeg er bekymret", "Mistanke om rusbruk eller endringer hos eleven"],
+      ["forteller", "c-fort", "chat", "Eleven forteller noe", "Om eget eller andres rusbruk"],
+      ["funn", "c-funn", "search", "Funn eller salg", "Rusmidler funnet, eller mistanke om salg"],
+      ["miljo", "c-miljo", "users", "Belastet miljø", "Eldre venner, penger, gjeld, kriminalitet"]
+    ];
+    var tools = [["tegn", "Tegn å se etter"], ["samtale", "Samtaleguide"], ["plikter", "Plikter og lovverk"], ["kontakter", "Kontakter"], ["notat", "Notatmal"], ["kilder", "Kilder"]];
+    app.innerHTML = "<section class='screen'>" +
+      "<div class='hero-brand'>" + MARK + "<div><p class='wordmark'>Varde</p><p class='kicker'>Veileder om rus for ansatte i skolen</p></div></div>" + "<div class='illus hero-illus'>" + ILL.hero + "</div>" + "<div class='home-head'><h1>Hva har skjedd?</h1></div>" +
+      "<button class='emergency' data-go='akutt'><span class='em-ic'>" + ico("alert") + "</span><span><strong>En elev er ruset nå</strong><small>Steg for steg: sikkerhet, hvem du ringer, foresatte</small></span>" + ico("chev") + "</button>" +
+      "<p class='label'>Andre situasjoner</p>" +
+      "<div class='list'>" + sit.map(function (s) {
+        return "<button class='row " + s[1] + "' data-go='" + s[0] + "'><span class='chip'>" + ico(s[2]) + "</span><span class='row-txt'><b>" + s[3] + "</b><small>" + s[4] + "</small></span>" + ico("chev", "chev") + "</button>";
+      }).join("") + "</div>" +
+      "<p class='label'>Kjenn igjen rusmidler, tobakk og snus</p>" +
+      "<div class='subs'>" + RUS.map(function (r) {
+        return "<button class='sub' data-go='rus-" + r.id + "'>" + ILL[r.id] + "<b>" + r.navn + "<small>" + r.kort + "</small></b></button>";
+      }).join("") + "</div>" +
+      "<p class='label'>Verktøy</p>" +
+      "<div class='grid'>" + tools.map(function (t) {
+        return "<button class='sq c-verk' data-go='" + t[0] + "'><span class='chip'>" + ico(PAGE_ICON[t[0]]) + "</span>" + t[1] + "</button>";
+      }).join("") + "</div>" +
+      "<p class='foot'>Bygger på råd fra Helsedirektoratet, helsenorge.no, politiet, Bufdir og Utdanningsdirektoratet. Erstatter ikke skolens beredskapsplan eller kommunens rutiner. Ved fare for liv: ring 113.</p>" +
+      "</section>";
+  }
+
+  function renderFlow(id, d) {
+    setWhere(d.title);
+    var h = "<section class='screen' data-sec='" + d.sec + "'>" + head(d.sec, d.title, d.lead, PAGE_ICON[id]);
+    (d.blocks || []).forEach(function (b) { h += blockHtml(b); });
+    if (d.html) h += d.html();
+    if (d.q || d.choices) {
+      h += "<div class='q-block'>" + (d.q ? "<h2 class='q-title'>" + d.q + "</h2>" : "<p class='label' style='padding-top:0'>Neste steg</p>") + choicesHtml(d.choices || []) + "</div>";
+    }
+    h += "</section>";
+    app.innerHTML = h;
+  }
+
+  function renderKontakter() {
+    setWhere("Kontakter");
+    var loc = loadLocal();
+    var h = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Kontakter", "Nummer du kan trenge. Fyll inn skolens egne kontakter nederst.", "phone");
+    h += "<p class='label'>Nød</p><div class='list'>" + telRow("amk", true) + telRow("pol", true) + "</div>";
+    h += "<p class='label'>Råd og hjelp</p><div class='list'>" + ["gift", "lv", "pol2", "alarm", "mh", "kph"].map(function (k) { return telRow(k); }).join("") + "</div>";
+    h += "<p class='label'>Nettsteder</p><div class='list'>" +
+      [["https://www.rusinfo.no", "rusinfo.no", "Anonym informasjon om rus for unge, foreldre og fagfolk"], ["https://www.ung.no", "ung.no", "Spørretjeneste for ungdom"], ["https://www.helsenorge.no", "helsenorge.no", "Helseinformasjon og hjelpetilbud"]]
+        .map(function (s) { return "<a class='src' href='" + s[0] + "' target='_blank' rel='noopener'><b>" + s[1] + "</b><span>" + s[2] + "</span></a>"; }).join("") + "</div>";
+    h += "<p class='label'>Skolens egne kontakter</p><form class='panel' id='localForm'><p class='hint'>Lagres bare på denne enheten.</p>";
+    LOCAL_DEFS.forEach(function (d) {
+      h += "<div class='field'><label for='loc-" + d[0] + "'>" + d[1] + "</label><input id='loc-" + d[0] + "' name='" + d[0] + "' value='" + esc(loc[d[0]] || "") + "' placeholder='Navn, 000 00 000'></div>";
+    });
+    h += "<button class='btn' type='submit'>Lagre kontakter</button></form></section>";
+    app.innerHTML = h;
+    document.getElementById("localForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var o = {};
+      LOCAL_DEFS.forEach(function (d) { o[d[0]] = document.getElementById("loc-" + d[0]).value.trim(); });
+      toast(saveLocal(o) ? "Kontakter lagret" : "Kunne ikke lagre i denne nettleseren");
+    });
+  }
+
+  function nowLocal() {
+    var d = new Date(), p = function (n) { return String(n).padStart(2, "0"); };
+    return p(d.getDate()) + "." + p(d.getMonth() + 1) + "." + d.getFullYear() + " kl. " + p(d.getHours()) + ":" + p(d.getMinutes());
+  }
+
+  var NOTE_FIELDS = [
+    ["n-tid", "Dato og tid", "input", "", ""],
+    ["n-sted", "Sted", "input", "F.eks. klasserom 2B, skolegården", ""],
+    ["n-elev", "Elev", "input", "Initialer og klasse, ikke fullt navn", ""],
+    ["n-obs", "Hva så og hørte du?", "textarea", "Bare fakta. F.eks. «Kom 20 min for sent, luktet hasj, røde øyne, svarte langsomt.»", "Skill mellom det du observerte og det du tror."],
+    ["n-sitat", "Hva sa eleven?", "textarea", "Elevens egne ord i anførselstegn", ""],
+    ["n-tilstede", "Hvem var til stede?", "input", "Ansatte og eventuelt elever", ""],
+    ["n-tiltak", "Hva ble gjort?", "textarea", "F.eks. tatt ut av klassen, helsesykepleier tilkalt, foresatte ringt kl. 10.15", ""],
+    ["n-varslet", "Hvem er varslet?", "input", "Rektor, foresatte, barnevern, politi …", ""],
+    ["n-videre", "Videre oppfølging", "textarea", "Hvem gjør hva, og når", ""],
+    ["n-skrevet", "Skrevet av", "input", "Navn og rolle", ""]
+  ];
+
+  function renderNotat() {
+    setWhere("Notatmal");
+    var h = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Notatmal", "Skriv ned det som skjedde mens det er ferskt, og kopier teksten inn i skolens system.", "doc");
+    h += "<div class='callout amber'><h3>Lagres ikke</h3><div>Notatet forsvinner når du lukker siden. Taushetsbelagte opplysninger hører hjemme i skolens arkiv eller saksbehandlingssystem, ikke på privat telefon, e-post eller chat.</div></div>";
+    h += "<form class='panel' id='noteForm'>";
+    NOTE_FIELDS.forEach(function (f) {
+      var val = f[0] === "n-tid" ? nowLocal() : "";
+      h += "<div class='field'><label for='" + f[0] + "'>" + f[1] + "</label>" +
+        (f[2] === "textarea" ? "<textarea id='" + f[0] + "' placeholder='" + esc(f[3]) + "'></textarea>" : "<input id='" + f[0] + "' value='" + esc(val) + "' placeholder='" + esc(f[3]) + "'>") +
+        (f[4] ? "<span class='hint'>" + f[4] + "</span>" : "") + "</div>";
+    });
+    h += "<div class='btnrow'><button class='btn' type='submit'>Kopier notat</button><button class='btn ghost' type='button' id='clearNote'>Tøm</button></div>";
+    h += "<pre class='out' id='noteOut'></pre></form></section>";
+    app.innerHTML = h;
+    var form = document.getElementById("noteForm"), out = document.getElementById("noteOut");
+    function build() {
+      var lines = ["NOTAT – HENDELSE / BEKYMRING KNYTTET TIL RUS", ""];
+      NOTE_FIELDS.forEach(function (f) { lines.push(f[1].replace("?", "") + ": " + (document.getElementById(f[0]).value.trim() || "–")); });
+      return lines.join("\n");
+    }
+    function update() { out.textContent = build(); }
+    if (NOTE_PREFILL) { document.getElementById("n-obs").value = NOTE_PREFILL.obs; document.getElementById("n-videre").value = NOTE_PREFILL.videre; NOTE_PREFILL = null; }
+    form.addEventListener("input", update);
+    update();
+    form.addEventListener("submit", function (e) { e.preventDefault(); copy(build(), out); });
+    document.getElementById("clearNote").addEventListener("click", function () {
+      NOTE_FIELDS.forEach(function (f) { document.getElementById(f[0]).value = f[0] === "n-tid" ? nowLocal() : ""; });
+      update(); toast("Skjemaet er tømt");
+    });
+  }
+
+  function renderKilder() {
+    setWhere("Kilder");
+    var S = [
+      ["Helsedirektoratet", "Rusforebygging blant barn og unge, støtte til skolen og veilederen «Tidlig inn».", "https://www.helsedirektoratet.no/forebygging-diagnose-og-behandling/forebygging-og-levevaner/alkohol-og-rusmidler/rusmidler-og-rusmiddelbruk-stotte-til-undervisning-i-skolen/samarbeid-om-rusmiddelforebyggende-arbeid-blant-barn-og-unge"],
+      ["Helsenorge", "Informasjon om rus, skolehelsetjenesten og hvor man får hjelp.", "https://www.helsenorge.no"],
+      ["Politiet", "Politikontakt, bekymringssamtale, SLT og tips om narkotika.", "https://www.politiet.no"],
+      ["Bufdir", "Opplysningsplikt til barnevernet og råd om å snakke med unge om rus.", "https://www.bufdir.no"],
+      ["Utdanningsdirektoratet", "Skolens plikter: opplysningsplikt, skolemiljø og ordensreglement.", "https://www.udir.no"],
+      ["Statsforvalteren", "Oppmerksomhetsplikt og meldeplikt til barneverntjenesten.", "https://www.statsforvalteren.no/rogaland/barnehage-og-opplaring/grunnskule-og-vidaregaande-opplaring/skolens-meldeplikt-til-barnevernet/"],
+      ["RUSinfo", "Nasjonal, anonym informasjonstjeneste om rusmidler.", "https://www.rusinfo.no"],
+      ["Norsk resuscitasjonsråd", "Førstehjelp: stabilt sideleie og hjerte-lunge-redning.", "https://nrr.org"],
+      ["Lovdata", "Barnevernsloven, opplæringslova, straffeloven og forvaltningsloven.", "https://lovdata.no"]
+    ];
+    var h = "<section class='screen' data-sec='Verktøy'>" + head("Verktøy", "Kilder", "Rådene i appen er satt sammen fra disse kildene.", "book");
+    h += "<div class='list'>" + S.map(function (s) {
+      return "<a class='src' href='" + s[2] + "' target='_blank' rel='noopener'><b>" + s[0] + "</b><span>" + s[1] + "</span><em>" + s[2].replace(/^https:\/\/(www\.)?/, "").split("/")[0] + "</em></a>";
+    }).join("") + "</div>";
+    h += "<div class='callout amber'><h3>Tilpass til din skole</h3><div>Skolens beredskapsplan, rutiner for melding til barnevernet og avtaler med politiet (SLT) går foran de generelle rådene her.</div></div>";
+    h += "<p class='label'>Om appen</p><div class='panel about'>" + MARK + "<div><h3>Varde</h3><p class='lead' style='font-size:.92rem'>En varde er steiner stablet for å vise vei i terrenget. Appen viser vei når du står i en vanskelig situasjon med en elev.</p></div></div>";
+    h += "<p class='foot'>Sist gjennomgått oktober 2026.</p></section>";
+    app.innerHTML = h;
+  }
+
+  /* ---------- Navigasjon ---------- */
+  function route() {
+    var id = (location.hash || "").replace("#", "") || "hjem";
+    if (id === "hjem") renderHome();
+    else if (id === "kontakter") renderKontakter();
+    else if (id === "notat") renderNotat();
+    else if (id === "kilder") renderKilder();
+    else if (/^[a-z]+(-(\d+|resultat))?$/.test(id) && WIZ[id.split("-")[0]]) routeWizard(id.split("-")[0], id.split("-")[1]);
+    else if (INFO[id]) renderFlow(id, INFO[id]);
+    else { renderHome(); id = "hjem"; }
+    backBtn.hidden = id === "hjem";
+    document.querySelectorAll(".tab").forEach(function (t) {
+      if (t.getAttribute("data-go") === id) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+  }
+  var depth = 0;
+  function go(id) {
+    if (("#" + id) === location.hash || (id === "hjem" && !location.hash)) { route(); return; }
+    depth++;
+    location.hash = id;
+  }
+  window.addEventListener("hashchange", route);
+  backBtn.addEventListener("click", function () {
+    if (depth > 0) { depth--; history.back(); } else { location.hash = "hjem"; }
+  });
+  document.getElementById("sos").addEventListener("click", function () { go("akutt"); });
+
+  var topEl = document.getElementById("top");
+  window.addEventListener("scroll", function () { topEl.classList.toggle("scrolled", window.scrollY > 4); }, { passive: true });
+
+  document.addEventListener("click", function (e) {
+    var g = e.target.closest("[data-go]");
+    if (g) { e.preventDefault(); go(g.getAttribute("data-go")); return; }
+    var an = e.target.closest("[data-ans]");
+    if (an) { answer(an.getAttribute("data-ans")); return; }
+    var mu = e.target.closest("[data-multi]");
+    if (mu) { toggleMulti(mu); return; }
+    if (e.target.closest("[data-next]")) { multiNext(); return; }
+    var rs = e.target.closest("[data-restart]");
+    if (rs) { var rw = rs.getAttribute("data-restart"); ANS[rw] = {}; go(rw); return; }
+    var nt = e.target.closest("[data-note]");
+    if (nt) { makeNote(nt.getAttribute("data-note")); return; }
+    var c = e.target.closest("[data-copy]");
+    if (c) { copy(c.getAttribute("data-copy"), null); return; }
+    var li = e.target.closest(".checklist li");
+    if (li) toggle(li);
+  });
+  document.addEventListener("keydown", function (e) {
+    var li = e.target.closest && e.target.closest(".checklist li");
+    if (li && (e.key === " " || e.key === "Enter")) { e.preventDefault(); toggle(li); }
+  });
+  function toggle(li) {
+    var on = li.classList.toggle("done");
+    li.setAttribute("aria-checked", on ? "true" : "false");
+    updateProg(li.closest("[data-check]"));
+  }
+
+  var tsBtn = document.getElementById("textsize");
+  function applyTextSize(on) {
+    document.documentElement.classList.toggle("big-text", on);
+    tsBtn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  try { applyTextSize(localStorage.getItem("rusveileder-stortekst") === "1"); } catch (e) {}
+  tsBtn.addEventListener("click", function () {
+    var on = !document.documentElement.classList.contains("big-text");
+    applyTextSize(on);
+    try { localStorage.setItem("rusveileder-stortekst", on ? "1" : "0"); } catch (e) {}
+  });
+
+  function copy(text, fallbackEl) {
+    function selectFallback() {
+      if (fallbackEl) {
+        var r = document.createRange(); r.selectNodeContents(fallbackEl);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        toast("Teksten er markert. Kopier den manuelt.");
+      } else toast("Kunne ikke kopiere. Skriv av nummeret.");
+    }
+    try { navigator.clipboard.writeText(text).then(function () { toast("Kopiert"); }, selectFallback); }
+    catch (e) { selectFallback(); }
+  }
+  var tt;
+  function toast(msg) {
+    var el = document.querySelector(".toast");
+    if (!el) { el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); document.body.appendChild(el); }
+    el.textContent = msg; el.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function () { el.hidden = true; }, 2200);
+  }
+
+  route();
+})();
+</script>
+</body>
+</html>

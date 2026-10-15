@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" width="660" height="192">
+  <rect width="64" height="64" rx="15" fill="#111216"/>
+  <rect x="13" y="41" width="38" height="11" rx="5.5" fill="#ffffff"/>
+  <rect x="18.5" y="29" width="27" height="10" rx="5" fill="#ffffff"/>
+  <rect x="24" y="17.5" width="16" height="9.5" rx="4.75" fill="#14b39f"/>
+  <text x="80" y="43" font-family="Geist, Helvetica Neue, Arial, sans-serif" font-size="34" font-weight="600" letter-spacing="-1.4" fill="#111216">Varde</text>
+</svg>
