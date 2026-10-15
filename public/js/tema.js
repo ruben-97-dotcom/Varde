@@ -7,7 +7,7 @@
   function system() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
   function bruk(t) {
     root.classList.toggle("dark", t === "dark");
-    var m = document.querySelector("meta[name=theme-color]"); if (m) m.content = t === "dark" ? "#0e0f12" : "#f7f7f9";
+    var m = document.querySelector("meta[name=theme-color]"); if (m) m.content = t === "dark" ? "#121812" : "#E8EEE2";
     document.querySelectorAll("[data-tema]").forEach(function (b) { b.setAttribute("aria-label", t === "dark" ? "Bytt til lys modus" : "Bytt til mørk modus"); b.setAttribute("aria-pressed", t === "dark"); });
   }
   bruk(lagret() || system());
