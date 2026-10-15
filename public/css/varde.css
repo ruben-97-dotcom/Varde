@@ -162,11 +162,18 @@ body:not(.sub) .where { display: none; }
 @media (hover: hover) { .sit:hover, .sym:hover { box-shadow: inset 0 0 0 1.5px var(--ink); } }
 
 .symlist { background: var(--surface); border-radius: var(--r-lg); padding: 4px 0; }
-.sym { display: grid; grid-template-columns: 18px minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; gap: 14px; width: 100%; min-height: 48px; padding: 10px 16px; border: 0; background: transparent; text-align: left; border-radius: 0; }
+.sym { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; min-height: 48px; padding: 10px 16px; border: 0; background: transparent; text-align: left; border-radius: 0; }
 .sym + .sym { border-top: 1px dashed var(--line); }
-.sym b { font-weight: 700; line-height: 1.2; }
+.sym b { display: block; font-weight: 800; line-height: 1.2; }
+.sym-txt { min-width: 0; }
+.sym-txt small { display: block; margin-top: 2px; }
+.sym-more { display: inline-flex; align-items: center; gap: 2px; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B8432C; white-space: nowrap; }
+:root.dark .sym-more { color: var(--accent); }
+.sym-more .ic { width: 16px; height: 16px; stroke-width: 2.4; }
+.sym:active { background: var(--sunken); }
+.sym-help { font-size: 14px; color: var(--muted); padding: 0 2px; margin-top: -4px; }
 .sym small { font-size: 13px; color: var(--muted); line-height: 1.3; }
-.sym svg { width: 18px; height: 18px; }
+.sym > svg { width: 18px; height: 18px; }
 .sym .sym-stroke { stroke: var(--ink); }
 
 .toolgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }

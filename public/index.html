@@ -81,13 +81,36 @@ img { max-width: 100%; }
     akutt: {
       sec: "Akutt", title: "En elev er ruset nå",
       questions: [
-        { id: "fare", short: "Faretegn", q: "Ser du noen av disse faretegnene?",
-          help: ["Bevisstløs eller lar seg ikke vekke ordentlig", "Puster langsomt, uregelmessig eller snorker", "Blå eller grå lepper, kald og klam hud", "Kramper", "Brystsmerter, svært høy puls eller veldig varm", "Sterk forvirring, hallusinasjoner eller panikk"],
-          options: [
-            { v: "ja", l: "Ja, ett eller flere", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
-            { v: "usikker", l: "Jeg er usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
-            { v: "nei", l: "Nei", s: "Eleven er våken, puster normalt og kan svare" }
-          ] },
+        { id: "f1", short: "Faretegn 1/6 · Bevissthet", q: "Er eleven bevisstløs, eller lar seg ikke vekke ordentlig?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Gå videre til neste faretegn" }
+        ] },
+        { id: "f2", short: "Faretegn 2/6 · Pust", q: "Puster eleven langsomt, uregelmessig eller med snorkelyder?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Gå videre til neste faretegn" }
+        ] },
+        { id: "f3", short: "Faretegn 3/6 · Hud og lepper", q: "Har eleven blå eller grå lepper, eller kald og klam hud?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Gå videre til neste faretegn" }
+        ] },
+        { id: "f4", short: "Faretegn 4/6 · Kramper", q: "Har eleven kramper?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Gå videre til neste faretegn" }
+        ] },
+        { id: "f5", short: "Faretegn 5/6 · Hjerte og temperatur", q: "Har eleven brystsmerter, svært høy puls eller er veldig varm?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Gå videre til neste faretegn" }
+        ] },
+        { id: "f6", short: "Faretegn 6/6 · Forvirring", q: "Er eleven sterkt forvirret, har hallusinasjoner eller panikk?", options: [
+          { v: "ja", l: "Ja", s: "Du får beskjed om å ringe 113 med en gang", tone: "red", stop: true },
+          { v: "usikker", l: "Usikker", s: "Ved tvil: ring 113", tone: "red", stop: true },
+          { v: "nei", l: "Nei", s: "Ingen faretegn. Gå videre" }
+        ] },
         { id: "tilstand", short: "Tilstand", q: "Hvordan virker eleven nå?", options: [
           { v: "rolig", l: "Rolig og kontaktbar" },
           { v: "slov", l: "Trøtt eller sløv", s: "Men lar seg vekke og svarer" },
@@ -111,9 +134,11 @@ img { max-width: 100%; }
         ] }
       ],
       result: function (a) {
-        if (a.fare === "ja" || a.fare === "usikker") return {
+        var FT = ["f1", "f2", "f3", "f4", "f5", "f6"];
+        var fare = FT.some(function (k) { return a[k] === "ja"; }) ? "ja" : FT.some(function (k) { return a[k] === "usikker"; }) ? "usikker" : "nei";
+        if (fare === "ja" || fare === "usikker") return {
           level: "akutt", title: "Ring 113 nå",
-          summary: a.fare === "ja" ? "Eleven har faretegn. Dette kan være livstruende." : "Du er usikker. Ved tvil skal du alltid ringe. Det er bedre å ringe én gang for mye.",
+          summary: fare === "ja" ? "Eleven har faretegn. Dette kan være livstruende." : "Du er usikker. Ved tvil skal du alltid ringe. Det er bedre å ringe én gang for mye.",
           nums: ["amk", "gift"],
           groups: [
             { title: "Gjør nå", items: [
@@ -930,8 +955,9 @@ img { max-width: 100%; }
         return "<button class='sit' data-go='" + x[0] + "'><span class='ring-ic'>" + stones("var(--ink)", "var(" + x[1] + ")", 20) + "</span><span><b>" + x[2] + "</b><small>" + x[3] + "</small></span></button>";
       }).join("") + "</div>" +
       "<h2 class='label'>Kjenn igjen <span class='label-m'>Rusmidler, tobakk, snus</span></h2>" +
+      "<p class='lead sym-help'>Trykk på et rusmiddel for å se tegn på påvirkning, farer og hva du gjør.</p>" +
       "<div class='symlist'>" + RUS.map(function (r) {
-        return "<button class='sym' data-go='rus-" + r.id + "'><svg viewBox='0 0 20 20' aria-hidden='true'>" + SYM[r.id] + "</svg><b>" + r.navn.replace("Sentralstimulerende", "Sentral&shy;stimulerende") + "</b><small>" + r.kort + "</small></button>";
+        return "<button class='sym' data-go='rus-" + r.id + "'><svg viewBox='0 0 20 20' aria-hidden='true'>" + SYM[r.id] + "</svg><span class='sym-txt'><b>" + r.navn.replace("Sentralstimulerende", "Sentral&shy;stimulerende") + "</b><small>" + r.kort + "</small></span><span class='sym-more'>Tegn og råd" + ico("chev") + "</span></button>";
       }).join("") + "</div>" +
       "<h2 class='label'>Verktøy</h2>" +
       "<div class='toolgrid'>" + tools.map(function (t, i) {
