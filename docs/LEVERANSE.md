@@ -11,7 +11,7 @@ Varde er i dag en **demo**. Dette må være gjort før løsningen tas i bruk med
 - [ ] Lagringstid for endringslogg avtalt
 
 ## Innlogging og tilgang
-- [ ] Feide-innlogging registrert og godkjent hos Sikt
+- [ ] Innloggingsløsning avklart med skoleeier (akutt-delen åpen uten innlogging, rask opplåsing for lærere)
 - [ ] Tofaktorinnlogging påkrevd for skoleleder, rusansvarlig og skoleeier
 - [ ] Første skoleleder per skole opprettet av skoleeier, og rutine for dette avtalt
 - [ ] Rutine for halvårlig gjennomgang av brukere og roller

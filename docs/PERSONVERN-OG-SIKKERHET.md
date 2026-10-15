@@ -62,17 +62,14 @@ Tilgangen er definert ett sted (`TILGANG` i `public/js/varde-core.js`) og **hån
 
 Alle reglene over er dekket av automatiske tester (`npm test`).
 
-### Anbefalt for ekte bruk: Feide
+### Innlogging for ekte bruk
 
-Brukernavn og passord er greit for demo, men for ekte bruk bør innlogging skje med **Feide** (Sikt), som skolene allerede bruker:
+Brukernavn og passord er greit for demo. Innloggingsløsningen for ekte bruk avklares med skoleeier, slik at den passer med det skolene bruker i dag. Kravene er:
 
-- Ansatte bruker samme innlogging som ellers. Ingen nye passord.
-- Skoletilhørighet kommer automatisk fra Feide.
-- Når en ansatt slutter, mister hen tilgang automatisk.
-- Feide støtter tofaktorinnlogging. Det bør være **påkrevd** for skoleledere, rusansvarlige og skoleeiere.
-- Rollene i Varde (rusansvarlig, skoleleder) styres fortsatt i portalen eller via Feide-grupper.
-
-Feide krever at tjenesten registreres og godkjennes hos Sikt.
+- **Akutt-delen skal aldri stå bak en innlogging.** Faretegn, «Ring 113» og Kjenn igjen er åpen informasjon og skal virke med en gang, også uten nett.
+- **Rask for lærerne:** Full innlogging første gang på en telefon, deretter opplåsing med Face ID eller en kode læreren lager selv, med sperre etter flere feil forsøk.
+- **Streng for portalen:** Tofaktorinnlogging er påkrevd for skoleledere, rusansvarlige, helsesykepleiere og skoleeiere.
+- Skoletilhørighet og roller styres i portalen, og skolen stenger tilgangen når en ansatt slutter.
 
 ## 5. Hvor data lagres
 
@@ -124,7 +121,7 @@ Da må alt dette være på plass før funksjonen slås på:
 4. **Streng tilgang:** Bare den som skrev notatet, og navngitte roller (rektor, rusansvarlig) i saker de er tildelt, kan lese det. Kommune og fylkeskommune skal aldri ha tilgang.
 5. **Tilgangslogg** for hver gang et notat leses, endres eller slettes, som skoleleder og personvernombud kan gå gjennom.
 6. **Kryptering** av notatinnholdet i databasen med nøkler som holdes adskilt fra databasen (nøkkelhvelv).
-7. **Tofaktorinnlogging** (Feide med MFA) for alle som kan skrive eller lese notater.
+7. **Sterk innlogging** for alle som kan skrive eller lese notater: tofaktor, eller opplåsing med Face ID eller kode på en telefon som er registrert på den ansatte.
 8. **Kort lagringstid** og automatisk sletting, og retting og sletting på forespørsel.
 9. **Innsynsrett:** Elever og foresatte har rett til innsyn i opplysninger om seg selv. Det må finnes en rutine for å hente ut alt om én elev.
 10. **Sikkerhetstest** (penetrasjonstest) av funksjonen før den tas i bruk.
